@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sellout/screens/auth/auth_type_screen.dart';
+import 'package:sellout/screens/auth/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
       ),
       home: const AuthTypeScreen(),
       routes: <String, WidgetBuilder>{
-        AuthTypeScreen.routeName: (BuildContext ctx) => const AuthTypeScreen(),
+        AuthTypeScreen.routeName: (_) => const AuthTypeScreen(),
+        LoginScreen.routeName: (_) => const LoginScreen(),
       },
     );
   }

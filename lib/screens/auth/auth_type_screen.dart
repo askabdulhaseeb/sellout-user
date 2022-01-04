@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sellout/screens/auth/login_screen.dart';
 import 'package:sellout/utilities/app_images.dart';
 import 'package:sellout/utilities/utilities.dart';
 import 'package:sellout/widgets/custom_elevated_button.dart';
@@ -23,7 +24,8 @@ class AuthTypeScreen extends StatelessWidget {
             ),
             CustomElevatedButton(
               title: 'Login',
-              onTap: () {},
+              onTap: () => Navigator.of(context)
+                  .pushReplacementNamed(LoginScreen.routeName),
               bgColor: Colors.white,
               borderRadius: BorderRadius.circular(10),
               textStyle: TextStyle(

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
-    required this.onTap,
     required this.title,
+    required this.onTap,
     this.margin,
     this.padding,
     this.bgColor,
@@ -12,8 +12,8 @@ class CustomElevatedButton extends StatelessWidget {
     this.textStyle,
     Key? key,
   }) : super(key: key);
-  final VoidCallback onTap;
   final String title;
+  final VoidCallback onTap;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
   final Color? bgColor;
