@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sellout.sellout">
    <application
-        android:label="sellout"
+        android:label="Sell Out"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
