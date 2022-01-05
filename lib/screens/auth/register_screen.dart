@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/phone_number.dart';
-import 'package:sellout/screens/auth/login_screen.dart';
-import 'package:sellout/utilities/app_images.dart';
-import 'package:sellout/utilities/custom_validators.dart';
-import 'package:sellout/utilities/utilities.dart';
-import 'package:sellout/widgets/custom_elevated_button.dart';
-import 'package:sellout/widgets/custom_textformfield.dart';
-import 'package:sellout/widgets/dob_dropdown.dart';
-import 'package:sellout/widgets/gender_selection_button.dart';
-import 'package:sellout/widgets/password_textformfield.dart';
-import 'package:sellout/widgets/phone_number_field.dart';
+import '../../utilities/app_images.dart';
+import '../../utilities/custom_validators.dart';
+import '../../utilities/utilities.dart';
+import '../../widgets/custom_elevated_button.dart';
+import '../../widgets/custom_textformfield.dart';
+import '../../widgets/dob_dropdown.dart';
+import '../../widgets/gender_selection_button.dart';
+import '../../widgets/password_textformfield.dart';
+import '../../widgets/phone_number_field.dart';
+import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);

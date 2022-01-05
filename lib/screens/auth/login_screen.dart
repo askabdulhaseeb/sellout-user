@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sellout/screens/auth/register_screen.dart';
-
-import 'package:sellout/utilities/app_images.dart';
-import 'package:sellout/utilities/custom_validators.dart';
-import 'package:sellout/utilities/utilities.dart';
-import 'package:sellout/widgets/custom_elevated_button.dart';
-import 'package:sellout/widgets/custom_textformfield.dart';
-import 'package:sellout/widgets/password_textformfield.dart';
+import '../../utilities/app_images.dart';
+import '../../utilities/custom_validators.dart';
+import '../../utilities/utilities.dart';
+import '../../widgets/custom_elevated_button.dart';
+import '../../widgets/custom_textformfield.dart';
+import '../../widgets/password_textformfield.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -87,7 +86,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ],
         ),
-        const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -148,7 +146,7 @@ class _SocialMediaLoginButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(Utilities.borderRadius / 2),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(Utilities.padding),
         child: Column(
           children: <Widget>[icon, const SizedBox(height: 6), Text(text)],
         ),

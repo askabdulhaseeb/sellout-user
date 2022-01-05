@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sellout/screens/auth/login_screen.dart';
-import 'package:sellout/screens/auth/register_screen.dart';
-import 'package:sellout/utilities/app_images.dart';
-import 'package:sellout/utilities/utilities.dart';
-import 'package:sellout/widgets/custom_elevated_button.dart';
+import '../../utilities/app_images.dart';
+import '../../utilities/utilities.dart';
+import '../../widgets/custom_elevated_button.dart';
+import 'login_screen.dart';
+import 'register_screen.dart';
 
 class AuthTypeScreen extends StatelessWidget {
   const AuthTypeScreen({Key? key}) : super(key: key);

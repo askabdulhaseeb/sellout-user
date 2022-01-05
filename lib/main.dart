@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sellout/screens/auth/auth_type_screen.dart';
-import 'package:sellout/screens/auth/login_screen.dart';
-import 'package:sellout/screens/auth/register_screen.dart';
+import 'screens/auth/auth_type_screen.dart';
+import 'screens/auth/login_screen.dart';
+import 'screens/auth/register_screen.dart';
 
 void main() {
   runApp(const MyApp());
