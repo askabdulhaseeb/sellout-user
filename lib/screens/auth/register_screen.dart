@@ -100,7 +100,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(height: 10),
                       CustomElevatedButton(
                         title: 'Register',
-                        onTap: () {},
+                        onTap: () {
+                          // TODO: Register Button Code
+                        },
                       ),
                       const SizedBox(height: 160),
                     ],

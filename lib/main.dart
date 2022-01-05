@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sellout/screens/auth/forget_password_screen.dart';
 import 'screens/auth/auth_type_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
     const Color _kPrimaryColor = Color(0xFFD32F2F);
     const Color _kSecondaryColor = Color(0xFF7C4DFF);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'SellOut',
       theme: ThemeData(
         primaryColor: _kPrimaryColor,
@@ -38,6 +40,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         AuthTypeScreen.routeName: (_) => const AuthTypeScreen(),
         LoginScreen.routeName: (_) => const LoginScreen(),
+        ForgetPasswordScreen.routeName: (_) => const ForgetPasswordScreen(),
         RegisterScreen.routeName: (_) => const RegisterScreen(),
       },
     );

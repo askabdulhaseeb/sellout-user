@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sellout/screens/auth/forget_password_screen.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/custom_validators.dart';
 import '../../utilities/utilities.dart';
@@ -82,7 +83,9 @@ class _LoginScreenState extends State<LoginScreen> {
             _SocialMediaLoginButton(
               text: 'Apple',
               icon: const Icon(FontAwesomeIcons.apple, color: Colors.black),
-              onTap: () {},
+              onTap: () {
+                // TODO: Login Button Code
+              },
             ),
           ],
         ),
@@ -108,7 +111,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   TextButton _forgetPassword() {
     return TextButton(
-      onPressed: () {},
+      onPressed: () =>
+          Navigator.of(context).pushNamed(ForgetPasswordScreen.routeName),
       child: const Text(
         'Forget Password?',
         style: TextStyle(
