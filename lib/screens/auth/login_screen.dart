@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sellout/screens/auth/register_screen.dart';
 
 import 'package:sellout/utilities/app_images.dart';
+import 'package:sellout/utilities/custom_validators.dart';
 import 'package:sellout/utilities/utilities.dart';
 import 'package:sellout/widgets/custom_elevated_button.dart';
 import 'package:sellout/widgets/custom_textformfield.dart';
@@ -20,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: EdgeInsets.all(Utilities.padding),
         child: Column(
@@ -30,16 +33,21 @@ class _LoginScreenState extends State<LoginScreen> {
               child: SizedBox(
                 height: 140,
                 width: 140,
-                child: Image.asset(AppImages.iconBorder),
+                child: Image.asset(AppImages.logo),
               ),
             ),
             const SizedBox(height: 60),
             _titleText('EMAIL ADDRESS'),
-            CustomTextFormField(controller: _email),
+            CustomTextFormField(
+              controller: _email,
+              hint: 'test@test.com',
+              keyboardType: TextInputType.emailAddress,
+              validator: (String? value) => CustomValidator.email(value),
+            ),
             const SizedBox(height: 6),
             _titleText('PASSWORD'),
             PasswordTextFormField(controller: _password),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             CustomElevatedButton(
               title: 'Log In',
               onTap: () {},
@@ -90,11 +98,12 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () => Navigator.of(context)
+                  .pushReplacementNamed(RegisterScreen.routeName),
               child: const Text('Register'),
             ),
           ],
-        )
+        ),
       ],
     );
   }
@@ -137,6 +146,7 @@ class _SocialMediaLoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.circular(Utilities.borderRadius / 2),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

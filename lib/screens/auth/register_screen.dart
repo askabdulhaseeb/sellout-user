@@ -1,0 +1,138 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:sellout/screens/auth/login_screen.dart';
+import 'package:sellout/utilities/app_images.dart';
+import 'package:sellout/utilities/custom_validators.dart';
+import 'package:sellout/utilities/utilities.dart';
+import 'package:sellout/widgets/custom_elevated_button.dart';
+import 'package:sellout/widgets/custom_textformfield.dart';
+import 'package:sellout/widgets/dob_dropdown.dart';
+import 'package:sellout/widgets/gender_selection_button.dart';
+import 'package:sellout/widgets/password_textformfield.dart';
+
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
+  static const String routeName = '/RegisterScreen';
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  final TextEditingController _fullName = TextEditingController();
+  final TextEditingController _username = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController _confirmPassword = TextEditingController();
+  GenderTypes _gender = GenderTypes.MALE;
+  DateOfBirth _dob = DateOfBirth(date: 0, month: 0, year: 0);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Form(
+        key: _key,
+        child: Padding(
+          padding: EdgeInsets.all(Utilities.padding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(height: 20),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const SizedBox(height: 40),
+                      Center(
+                        child: SizedBox(
+                          height: 140,
+                          width: 140,
+                          child: Image.asset(AppImages.logo),
+                        ),
+                      ),
+                      _titleText('FULL NAME'),
+                      CustomTextFormField(
+                        controller: _fullName,
+                        keyboardType: TextInputType.name,
+                        validator: (String? value) =>
+                            CustomValidator.lessThen3(value),
+                      ),
+                      _titleText('USERNAME'),
+                      CustomTextFormField(
+                        controller: _username,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (String? value) =>
+                            CustomValidator.lessThen3(value),
+                      ),
+                      const SizedBox(height: 10),
+                      _titleText('GENDER'),
+                      GenderSectionButton(
+                        onChanged: (GenderTypes? gender) => _gender = gender!,
+                      ),
+                      _titleText('DATE OF BIRTH'),
+                      DOBDropdown(
+                        onChanged: (DateOfBirth dob) {
+                          _dob = dob;
+                        },
+                      ),
+                      _titleText('EMAIL'),
+                      CustomTextFormField(
+                        controller: _email,
+                        hint: 'test@test.com',
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (String? value) =>
+                            CustomValidator.email(value),
+                      ),
+                      _titleText('PASSWORD'),
+                      PasswordTextFormField(
+                        controller: _password,
+                        textInputAction: TextInputAction.next,
+                      ),
+                      _titleText('CONFIRM PASSWORD'),
+                      PasswordTextFormField(controller: _confirmPassword),
+                      const SizedBox(height: 10),
+                      CustomElevatedButton(
+                        title: 'Register',
+                        onTap: () {},
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text(
+                    '''Already have a account?''',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context)
+                        .pushReplacementNamed(LoginScreen.routeName),
+                    child: const Text('Sign In'),
+                  ),
+                ],
+              ),
+              const Text(
+                'By registering you accept Customer Aggrement conditions and privacy policy',
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 10),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Text _titleText(String title) {
+    return Text(
+      ' $title',
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+}

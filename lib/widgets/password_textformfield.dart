@@ -6,10 +6,12 @@ import '../utilities/utilities.dart';
 class PasswordTextFormField extends StatefulWidget {
   const PasswordTextFormField({
     required TextEditingController controller,
+    this.textInputAction = TextInputAction.done,
     Key? key,
   })  : _controller = controller,
         super(key: key);
   final TextEditingController _controller;
+  final TextInputAction? textInputAction;
   @override
   PasswordTextFormFieldState createState() => PasswordTextFormFieldState();
 }
@@ -40,7 +42,8 @@ class PasswordTextFormFieldState extends State<PasswordTextFormField> {
       child: TextFormField(
         controller: widget._controller,
         obscureText: _notVisible,
-        textInputAction: TextInputAction.done,
+        keyboardType: TextInputType.visiblePassword,
+        textInputAction: widget.textInputAction,
         cursorColor: Theme.of(context).colorScheme.secondary,
         validator: (String? value) => CustomValidator.password(value),
         decoration: InputDecoration(
