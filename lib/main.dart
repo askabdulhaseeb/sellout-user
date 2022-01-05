@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    // const Color _kPrimaryColor = Color(0xFFC01719);
     const Color _kPrimaryColor = Color(0xFFD32F2F);
     const Color _kSecondaryColor = Color(0xFF7C4DFF);
     return MaterialApp(

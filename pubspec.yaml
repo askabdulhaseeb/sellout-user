@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-    
+
   cupertino_icons: ^1.0.4
   font_awesome_flutter: ^9.2.0
 
@@ -23,6 +23,7 @@ flutter_icons:
   android: true
   ios: true
   remove_alpha_ios: true
+  adaptive_icon_background: "#C01719"
   image_path: "assets/images/logo.png"
 
 flutter:
