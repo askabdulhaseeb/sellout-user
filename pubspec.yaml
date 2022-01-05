@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  intl_phone_field: ^2.1.0
   cupertino_icons: ^1.0.4
   font_awesome_flutter: ^9.2.0
 

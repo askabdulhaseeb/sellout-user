@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:intl_phone_field/phone_number.dart';
 import 'package:sellout/screens/auth/login_screen.dart';
 import 'package:sellout/utilities/app_images.dart';
 import 'package:sellout/utilities/custom_validators.dart';
@@ -9,6 +9,7 @@ import 'package:sellout/widgets/custom_textformfield.dart';
 import 'package:sellout/widgets/dob_dropdown.dart';
 import 'package:sellout/widgets/gender_selection_button.dart';
 import 'package:sellout/widgets/password_textformfield.dart';
+import 'package:sellout/widgets/phone_number_field.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -24,11 +25,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
+  PhoneNumber? _number;
   GenderTypes _gender = GenderTypes.MALE;
   DateOfBirth _dob = DateOfBirth(date: 0, month: 0, year: 0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Form(
         key: _key,
         child: Padding(
@@ -75,6 +78,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           _dob = dob;
                         },
                       ),
+                      PhoneNumberField(
+                        onChange: (PhoneNumber number) => _number = number,
+                      ),
+                      const SizedBox(height: 10),
                       _titleText('EMAIL'),
                       CustomTextFormField(
                         controller: _email,
@@ -94,7 +101,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       CustomElevatedButton(
                         title: 'Register',
                         onTap: () {},
-                      )
+                      ),
+                      const SizedBox(height: 160),
                     ],
                   ),
                 ),
