@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 // ignore_for_file: constant_identifier_names
-enum GenderTypes { MALE, FEMALE, OTHERS }
+enum GenderTypes { MALE, FEMALE, OTHERS, NOTAVAIABLE }
 
 class GenderSectionButton extends StatefulWidget {
-  const GenderSectionButton({required this.onChanged, Key? key}) : super(key: key);
+  const GenderSectionButton({required this.onChanged, Key? key})
+      : super(key: key);
   final void Function(GenderTypes?)? onChanged;
 
   @override
