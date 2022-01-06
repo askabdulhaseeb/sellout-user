@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:sellout/screens/main_screen/main_screen.dart';
 import 'screens/auth/forget_password_screen.dart';
 import 'screens/auth/auth_type_screen.dart';
 import 'screens/auth/login_screen.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName: (_) => const LoginScreen(),
         ForgetPasswordScreen.routeName: (_) => const ForgetPasswordScreen(),
         RegisterScreen.routeName: (_) => const RegisterScreen(),
+        MainScreen.rotueName: (_) => const MainScreen(),
       },
     );
   }

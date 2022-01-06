@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sellout/database/auth_methods.dart';
 import 'package:sellout/screens/auth/forget_password_screen.dart';
+import 'package:sellout/screens/main_screen/main_screen.dart';
+import 'package:sellout/widgets/show_loading.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/custom_validators.dart';
 import '../../utilities/utilities.dart';
@@ -19,46 +23,66 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
         padding: EdgeInsets.all(Utilities.padding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const SizedBox(height: 40),
-            Center(
-              child: SizedBox(
-                height: 140,
-                width: 140,
-                child: Image.asset(AppImages.logo),
+        child: Form(
+          key: _key,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(height: 40),
+              Center(
+                child: SizedBox(
+                  height: 140,
+                  width: 140,
+                  child: Image.asset(AppImages.logo),
+                ),
               ),
-            ),
-            const SizedBox(height: 60),
-            _titleText('EMAIL ADDRESS'),
-            CustomTextFormField(
-              controller: _email,
-              hint: 'test@test.com',
-              keyboardType: TextInputType.emailAddress,
-              validator: (String? value) => CustomValidator.email(value),
-            ),
-            const SizedBox(height: 6),
-            _titleText('PASSWORD'),
-            PasswordTextFormField(controller: _password),
-            const SizedBox(height: 16),
-            CustomElevatedButton(
-              title: 'Log In',
-              onTap: () {},
-            ),
-            _forgetPassword(),
-            const Spacer(),
-            _otherAuthMethods(),
-          ],
+              const SizedBox(height: 60),
+              _titleText('EMAIL ADDRESS'),
+              CustomTextFormField(
+                controller: _email,
+                hint: 'test@test.com',
+                keyboardType: TextInputType.emailAddress,
+                validator: (String? value) => CustomValidator.email(value),
+              ),
+              const SizedBox(height: 6),
+              _titleText('PASSWORD'),
+              PasswordTextFormField(controller: _password),
+              const SizedBox(height: 16),
+              CustomElevatedButton(
+                title: 'Log In',
+                onTap: () => _submitForm(),
+              ),
+              _forgetPassword(),
+              const Spacer(),
+              _otherAuthMethods(),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Future<void> _submitForm() async {
+    if (_key.currentState!.validate()) {
+      showLoadingDislog(context);
+      final User? _user = await AuthMethods().loginWithEmailAndPassword(
+        _email.text,
+        _password.text,
+      );
+      if (_user != null) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            MainScreen.rotueName, (Route<dynamic> route) => false);
+      } else {
+        Navigator.of(context).pop();
+      }
+    }
   }
 
   Column _otherAuthMethods() {
@@ -73,18 +97,22 @@ class _LoginScreenState extends State<LoginScreen> {
             _SocialMediaLoginButton(
               text: 'Facebook',
               icon: const Icon(FontAwesomeIcons.facebookF, color: Colors.blue),
-              onTap: () {},
+              onTap: () {
+                //TODO: Login with facebook
+              },
             ),
             _SocialMediaLoginButton(
               text: 'Google',
               icon: const Icon(FontAwesomeIcons.google, color: Colors.red),
-              onTap: () {},
+              onTap: () {
+                //TODO: Login with Google
+              },
             ),
             _SocialMediaLoginButton(
               text: 'Apple',
               icon: const Icon(FontAwesomeIcons.apple, color: Colors.black),
               onTap: () {
-                // TODO: Login Button Code
+                // TODO: Login with Apple
               },
             ),
           ],

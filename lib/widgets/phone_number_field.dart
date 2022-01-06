@@ -4,7 +4,7 @@ import 'package:intl_phone_field/phone_number.dart';
 import '../utilities/utilities.dart';
 
 class PhoneNumberField extends StatefulWidget {
-  const PhoneNumberField({Key? key, required this.onChange}) : super(key: key);
+  const PhoneNumberField({required this.onChange, Key? key}) : super(key: key);
   final Function(PhoneNumber)? onChange;
   @override
   State<PhoneNumberField> createState() => _PhoneNumberFieldState();
