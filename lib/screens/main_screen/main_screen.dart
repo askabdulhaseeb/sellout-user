@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sellout/services/user_local_data.dart';
+import 'package:provider/provider.dart';
+import '../../providers/main_bottom_nav_bar_provider.dart';
+import 'main_bottom_navigation_bar.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -9,12 +11,19 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  static const List<Widget> _pages = <Widget>[
+    Center(child: Text('Home')),
+    Center(child: Text('Cart')),
+    Center(child: Text('Add')),
+    Center(child: Text('Chat')),
+    Center(child: Text('Profile')),
+  ];
   @override
   Widget build(BuildContext context) {
+    int _currentIndex =
+        Provider.of<MainBottomNavBarProvider>(context).currentTap;
     return Scaffold(
-      body: Center(
-        child: Text(UserLocalData.getDisplayName),
-      ),
-    );
+        body: _pages[_currentIndex],
+        bottomNavigationBar: const MainBottomNavigationBar());
   }
 }
