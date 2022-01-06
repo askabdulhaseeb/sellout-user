@@ -41,12 +41,12 @@ class AppUser {
   final List<String>? supporters;
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'uid': uid,
       'displayName': displayName,
       'username': username,
       'imageURL': imageURL ?? '',
-      'gender': gender,
+      'gender': GenderConverter.genderToString(gender),
       'dob': dob,
       'countryCode': countryCode,
       'phoneNumber': phoneNumber,
@@ -68,7 +68,7 @@ class AppUser {
       displayName: doc.data()!['displayName'] ?? '',
       username: doc.data()!['username'] ?? '',
       imageURL: doc.data()!['imageURL'],
-      gender: doc.data()!['gender'],
+      gender: GenderConverter.stringToGender(doc.data()!['gender']),
       dob: doc.data()!['dob'] ?? '',
       countryCode: doc.data()!['countryCode'] ?? '',
       phoneNumber: doc.data()!['phoneNumber'] ?? '',

@@ -1,14 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sellout/screens/auth/forget_password_screen.dart';
+import 'screens/auth/forget_password_screen.dart';
 import 'screens/auth/auth_type_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
+import 'services/user_local_data.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // await UserLocalData.init();
+  await UserLocalData.init();
   runApp(const MyApp());
 }
 

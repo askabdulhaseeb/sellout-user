@@ -56,7 +56,7 @@ class AuthMethods {
     return false;
   }
 
-  Future<User?> signupWithEmailAndPassword({
+  Future<User?>? signupWithEmailAndPassword({
     required String email,
     required String password,
   }) async {

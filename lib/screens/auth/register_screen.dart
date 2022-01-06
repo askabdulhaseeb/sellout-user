@@ -1,5 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/phone_number.dart';
+import 'package:sellout/database/auth_methods.dart';
+import 'package:sellout/database/user_api.dart';
+import 'package:sellout/models/app_user.dart';
+import 'package:sellout/widgets/custom_toast.dart';
+import 'package:sellout/widgets/show_loading.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/custom_validators.dart';
 import '../../utilities/utilities.dart';
@@ -100,9 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(height: 10),
                       CustomElevatedButton(
                         title: 'Register',
-                        onTap: () {
-                          // TODO: Register Button Code
-                        },
+                        onTap: () => _submitForm(),
                       ),
                       const SizedBox(height: 160),
                     ],
@@ -135,6 +139,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  void _submitForm() async {
+    if (_key.currentState!.validate()) {
+      if (_password.text != _confirmPassword.text) {
+        CustomToast.errorToast(
+          message: 'Password and Confirm password is not same',
+        );
+        return;
+      } else if (_dob.isValid == false) {
+        CustomToast.errorToast(
+          message: 'Date of Birth is missing!',
+        );
+        return;
+      }
+      showLoadingDislog(context);
+      final User? _myUser = await AuthMethods().signupWithEmailAndPassword(
+        email: _email.text,
+        password: _password.text,
+      );
+      if (_myUser != null) {
+        final AppUser _appUser = AppUser(
+          uid: _myUser.uid,
+          displayName: _fullName.text.trim(),
+          username: _username.text.trim(),
+          gender: _gender,
+          dob: _dob.dob,
+          countryCode: _number!.countryCode!,
+          phoneNumber: _number!.number!,
+          email: _email.text.trim(),
+        );
+        final bool _okay = await UserAPI().addUser(_appUser);
+        if (_okay) {
+          CustomToast.successToast(message: 'Register Successfully');
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            LoginScreen.routeName,
+            (Route<dynamic> route) => false,
+          );
+        } else {
+          Navigator.of(context).pop();
+        }
+      }
+    }
   }
 
   Text _titleText(String title) {
