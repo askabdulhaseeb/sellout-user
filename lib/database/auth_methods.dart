@@ -97,6 +97,16 @@ class AuthMethods {
     }
   }
 
+  Future<bool> forgetPassword(String email) async {
+    try {
+      _auth.sendPasswordResetEmail(email: email.trim());
+      return true;
+    } catch (error) {
+      CustomToast.errorToast(message: error.toString());
+    }
+    return false;
+  }
+
   Future<void> signOut() async {
     UserLocalData.signout();
     await _auth.signOut();

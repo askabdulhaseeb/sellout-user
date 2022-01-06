@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:sellout/database/auth_methods.dart';
+import 'package:sellout/screens/auth/login_screen.dart';
 import 'package:sellout/utilities/app_images.dart';
 import 'package:sellout/utilities/custom_validators.dart';
 import 'package:sellout/utilities/utilities.dart';
 import 'package:sellout/widgets/custom_elevated_button.dart';
 import 'package:sellout/widgets/custom_textformfield.dart';
+import 'package:sellout/widgets/custom_toast.dart';
+import 'package:sellout/widgets/show_loading.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({Key? key}) : super(key: key);
@@ -14,6 +18,7 @@ class ForgetPasswordScreen extends StatefulWidget {
 
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   final TextEditingController _email = TextEditingController();
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,56 +26,70 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
       body: Padding(
         padding: EdgeInsets.all(Utilities.padding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Center(
-              child: SizedBox(
-                height: 140,
-                width: 140,
-                child: Image.asset(AppImages.logo),
+        child: Form(
+          key: _key,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Center(
+                child: SizedBox(
+                  height: 140,
+                  width: 140,
+                  child: Image.asset(AppImages.logo),
+                ),
               ),
-            ),
-            const SizedBox(height: 30),
-            _titleText('EMAIL ADDRESS'),
-            CustomTextFormField(
-              controller: _email,
-              hint: 'test@test.com',
-              keyboardType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.done,
-              validator: (String? value) => CustomValidator.email(value),
-            ),
-            // const SizedBox(height: 10),
-            const Text(
-              'Please enter your email address to reset your password',
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            CustomElevatedButton(
-              title: 'Reset Password',
-              onTap: () {
-                // TODO: Reset Button code
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  '''Already have a account?''',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+              const SizedBox(height: 30),
+              _titleText('EMAIL ADDRESS'),
+              CustomTextFormField(
+                controller: _email,
+                hint: 'test@test.com',
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.done,
+                validator: (String? value) => CustomValidator.email(value),
+              ),
+              // const SizedBox(height: 10),
+              const Text(
+                'Please enter your email address to reset your password',
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              CustomElevatedButton(
+                title: 'Reset Password',
+                onTap: () => _submitForm(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text(
+                    '''Already have a account?''',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Sign In'),
-                ),
-              ],
-            ),
-          ],
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Sign In'),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Future<void> _submitForm() async {
+    if (_key.currentState!.validate()) {
+      showLoadingDislog(context);
+      final bool sended = await AuthMethods().forgetPassword(_email.text);
+      if (sended) {
+        CustomToast.successSnackBar(
+            context: context, text: 'Email send at ${_email.text.trim()}');
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            LoginScreen.routeName, (Route<dynamic> route) => false);
+      }
+    }
   }
 
   Text _titleText(String title) {
