@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sellout/screens/main_screen/pages/my_profile_page.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
 import 'main_bottom_navigation_bar.dart';
 
@@ -16,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
     Center(child: Text('Cart')),
     Center(child: Text('Add')),
     Center(child: Text('Chat')),
-    Center(child: Text('Profile')),
+    MyProdilePage(),
   ];
   @override
   Widget build(BuildContext context) {

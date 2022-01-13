@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sellout/providers/product_category_provider.dart';
 import 'package:sellout/screens/main_screen/main_screen.dart';
 import 'providers/main_bottom_nav_bar_provider.dart';
 import 'screens/auth/forget_password_screen.dart';
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<MainBottomNavBarProvider>(
           create: (BuildContext context) => MainBottomNavBarProvider(),
+        ),
+        ChangeNotifierProvider<ProdCatProvider>(
+          create: (BuildContext context) => ProdCatProvider(),
         ),
       ],
       child: MaterialApp(

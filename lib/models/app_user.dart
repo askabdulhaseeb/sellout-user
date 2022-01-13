@@ -11,6 +11,7 @@ class AppUser {
     required this.countryCode,
     required this.phoneNumber,
     required this.email,
+    this.isPublicProfile = true,
     this.imageURL = '',
     this.isBlock = false,
     this.isVerified = false,
@@ -30,6 +31,7 @@ class AppUser {
   final String countryCode;
   final String phoneNumber;
   final String email;
+  final bool? isPublicProfile;
   final bool? isBlock;
   final bool? isVerified;
   final double? rating;
@@ -49,6 +51,7 @@ class AppUser {
       'countryCode': countryCode,
       'phoneNumber': phoneNumber,
       'email': email,
+      'isPublicProfile': isPublicProfile ?? true,
       'isBlock': isBlock ?? false,
       'isVerified': isVerified ?? false,
       'rating': rating ?? 0,
@@ -71,6 +74,7 @@ class AppUser {
       countryCode: doc.data()!['countryCode'] ?? '',
       phoneNumber: doc.data()!['phoneNumber'] ?? '',
       email: doc.data()!['email'] ?? '',
+      isPublicProfile: doc.data()!['isPublicProfile'] ?? false,
       isBlock: doc.data()!['isBlock'],
       rating: doc.data()!['rating']?.toDouble(),
       bio: doc.data()!['bio'],
