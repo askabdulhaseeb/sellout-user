@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sellout/models/product_category.dart';
-import 'package:sellout/utilities/utilities.dart';
+import '../models/product_category.dart';
+import '../utilities/utilities.dart';
 
 class ProdCatDropdown extends StatelessWidget {
   const ProdCatDropdown({
@@ -17,12 +17,12 @@ class ProdCatDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const TextStyle textStyle = TextStyle(color: Colors.grey);
+    const TextStyle textStyle = TextStyle(color: Colors.black);
     return Container(
       height: height,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).primaryColor.withOpacity(0.8),
         borderRadius: BorderRadius.circular(Utilities.borderRadius),
       ),
       child: DropdownButton<ProdCategory>(

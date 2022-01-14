@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sellout/widgets/gender_selection_button.dart';
 import '../models/app_user.dart';
 import '../services/user_local_data.dart';
+import '../widgets/gender_selection_button.dart';
 import '../widgets/custom_toast.dart';
 import 'user_api.dart';
 
@@ -28,12 +28,9 @@ class AuthMethods {
             ),
           );
           final User _user = authResult.user!;
-          print('Login State: User get');
           final AppUser? _alreadySignin =
               await UserAPI().getInfo(uid: _user.uid);
-          print('Login State: Bool found');
           if (_alreadySignin == null) {
-            print('Login State: New User');
             final AppUser _appUser = AppUser(
               uid: _user.uid,
               displayName: _user.displayName!,
@@ -53,12 +50,10 @@ class AuthMethods {
               return false;
             }
           } else {
-            print('Login State: Already Exist');
             UserLocalData().storeAppUserData(appUser: _alreadySignin);
           }
           return true;
         } catch (error) {
-          print('Login State: Exception found - $error');
           CustomToast.errorToast(message: error.toString());
         }
       }

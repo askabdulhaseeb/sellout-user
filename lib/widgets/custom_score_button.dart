@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sellout/utilities/utilities.dart';
+import '../utilities/utilities.dart';
 
 class CustomScoreButton extends StatelessWidget {
   const CustomScoreButton({

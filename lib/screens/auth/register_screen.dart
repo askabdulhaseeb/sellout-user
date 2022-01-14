@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/phone_number.dart';
-import 'package:sellout/database/auth_methods.dart';
-import 'package:sellout/database/user_api.dart';
-import 'package:sellout/models/app_user.dart';
-import 'package:sellout/widgets/custom_toast.dart';
-import 'package:sellout/widgets/show_loading.dart';
+import 'package:provider/provider.dart';
+import '../../database/auth_methods.dart';
+import '../../database/user_api.dart';
+import '../../enums/screen_state_enum.dart';
+import '../../models/app_user.dart';
+import '../../providers/auth_state_provider.dart';
+import '../../widgets/custom_toast.dart';
+import '../../widgets/show_loading.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/custom_validators.dart';
 import '../../utilities/utilities.dart';
@@ -34,8 +37,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   PhoneNumber? _number;
   GenderTypes _gender = GenderTypes.MALE;
   DateOfBirth _dob = DateOfBirth(date: 0, month: 0, year: 0);
+
   @override
   Widget build(BuildContext context) {
+    final AuthStateProvider _state = Provider.of<AuthStateProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Form(
@@ -104,31 +109,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       _titleText('CONFIRM PASSWORD'),
                       PasswordTextFormField(controller: _confirmPassword),
                       const SizedBox(height: 10),
-                      CustomElevatedButton(
-                        title: 'Register',
-                        onTap: () => _submitForm(),
-                      ),
+                      _state.currentState == ScreenStateEnum.WAITING
+                          ? const ShowLoading()
+                          : CustomElevatedButton(
+                              title: 'Register',
+                              onTap: () => _submitForm(_state),
+                            ),
                       const SizedBox(height: 160),
                     ],
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
-                    '''Already have a account?''',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+              _state.currentState == ScreenStateEnum.WAITING
+                  ? const SizedBox()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Text(
+                          '''Already have a account?''',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(context)
+                              .pushReplacementNamed(LoginScreen.routeName),
+                          child: const Text('Sign In'),
+                        ),
+                      ],
                     ),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.of(context)
-                        .pushReplacementNamed(LoginScreen.routeName),
-                    child: const Text('Sign In'),
-                  ),
-                ],
-              ),
               const Text(
                 'By registering you accept Customer Aggrement conditions and privacy policy',
                 textAlign: TextAlign.center,
@@ -141,7 +150,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void _submitForm() async {
+  void _submitForm(AuthStateProvider state) async {
     if (_key.currentState!.validate()) {
       if (_password.text != _confirmPassword.text) {
         CustomToast.errorToast(
@@ -154,7 +163,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
         return;
       }
-      showLoadingDislog(context);
+      state.updateState(ScreenStateEnum.WAITING);
       final User? _myUser = await AuthMethods().signupWithEmailAndPassword(
         email: _email.text,
         password: _password.text,
@@ -171,17 +180,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
           email: _email.text.trim(),
         );
         final bool _okay = await UserAPI().addUser(_appUser);
+        state.resetState();
         if (_okay) {
           CustomToast.successToast(message: 'Register Successfully');
           Navigator.of(context).pushNamedAndRemoveUntil(
             LoginScreen.routeName,
             (Route<dynamic> route) => false,
           );
-        } else {
-          Navigator.of(context).pop();
         }
       }
     }
+    state.resetState();
   }
 
   Text _titleText(String title) {

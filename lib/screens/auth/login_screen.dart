@@ -2,18 +2,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:sellout/database/auth_methods.dart';
-import 'package:sellout/enums/screen_state_enum.dart';
-import 'package:sellout/providers/auth_state_provider.dart';
-import 'package:sellout/screens/auth/forget_password_screen.dart';
-import 'package:sellout/screens/main_screen/main_screen.dart';
-import 'package:sellout/widgets/show_loading.dart';
+import '../../database/auth_methods.dart';
+import '../../enums/screen_state_enum.dart';
+import '../../providers/auth_state_provider.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/custom_validators.dart';
 import '../../utilities/utilities.dart';
+import '../../widgets/show_loading.dart';
+import '../../widgets/show_info_dialog.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_textformfield.dart';
 import '../../widgets/password_textformfield.dart';
+import '../main_screen/main_screen.dart';
+import 'forget_password_screen.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -111,7 +112,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       : Colors.blue),
               onTap: () {
                 //TODO: Login with facebook
-                state.updateState(ScreenStateEnum.WAITING);
+
+                // state.updateState(ScreenStateEnum.WAITING);
+                showInfoDialog(context);
+                // state.resetState();
               },
             ),
             _SocialMediaLoginButton(
@@ -140,27 +144,31 @@ class _LoginScreenState extends State<LoginScreen> {
                       : Colors.black),
               onTap: () {
                 // TODO: Login with Apple
-                state.updateState(ScreenStateEnum.WAITING);
+                // state.updateState(ScreenStateEnum.WAITING);
+                showInfoDialog(context);
+                // state.resetState();
               },
             ),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              '''Don't have an account?''',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+        state.currentState == ScreenStateEnum.WAITING
+            ? const SizedBox(height: 40)
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text(
+                    '''Don't have an account?''',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context)
+                        .pushReplacementNamed(RegisterScreen.routeName),
+                    child: const Text('Register'),
+                  ),
+                ],
               ),
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(context)
-                  .pushReplacementNamed(RegisterScreen.routeName),
-              child: const Text('Register'),
-            ),
-          ],
-        ),
       ],
     );
   }

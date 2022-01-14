@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sellout/enums/screen_state_enum.dart';
+import '../enums/screen_state_enum.dart';
 
 class AuthStateProvider extends ChangeNotifier {
   // ignore: prefer_final_fields

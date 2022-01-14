@@ -11,6 +11,7 @@ class AuthTypeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: Padding(
@@ -36,12 +37,12 @@ class AuthTypeScreen extends StatelessWidget {
               ),
             ),
             CustomElevatedButton(
-              onTap: () => Navigator.of(context)
-                  .pushReplacementNamed(RegisterScreen.routeName),
-              title: 'Register',
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.white),
-            )
+                    onTap: () => Navigator.of(context)
+                        .pushReplacementNamed(RegisterScreen.routeName),
+                    title: 'Register',
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.white),
+                  )
           ],
         ),
       ),

@@ -1,17 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sellout/database/auth_methods.dart';
-import 'package:sellout/models/product_category.dart';
-import 'package:sellout/providers/product_category_provider.dart';
-import 'package:sellout/screens/auth/login_screen.dart';
-import 'package:sellout/services/user_local_data.dart';
-import 'package:sellout/utilities/utilities.dart';
-import 'package:sellout/widgets/circular_profile_image.dart';
-import 'package:sellout/widgets/prod_cat_dropdown.dart';
-import 'package:sellout/widgets/custom_icon_button.dart';
-import 'package:sellout/widgets/custom_rating_stars.dart';
-import 'package:sellout/widgets/custom_score_button.dart';
+import 'package:sellout/widgets/show_info_dialog.dart';
+import '../../../database/auth_methods.dart';
+import '../../../models/product_category.dart';
+import '../../../providers/product_category_provider.dart';
+import '../../../services/user_local_data.dart';
+import '../../../utilities/utilities.dart';
+import '../../../widgets/circular_profile_image.dart';
+import '../../../widgets/prod_cat_dropdown.dart';
+import '../../../widgets/custom_icon_button.dart';
+import '../../../widgets/custom_rating_stars.dart';
+import '../../../widgets/custom_score_button.dart';
+import '../../auth/login_screen.dart';
 
 class MyProdilePage extends StatelessWidget {
   const MyProdilePage({Key? key}) : super(key: key);
@@ -165,6 +166,11 @@ class MyProdilePage extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       //TODO: Navigate to Edit profile
+                      showInfoDialog(
+                        context,
+                        title: 'Next Milestone',
+                        message: 'This is a part of next milestone',
+                      );
                     },
                     child: Text(
                       'Edit',
@@ -176,11 +182,17 @@ class MyProdilePage extends StatelessWidget {
               CustomRatingStars(rating: UserLocalData.getRating),
               SizedBox(
                 width: _totalWidth / 1.8,
-                child: Text(
-                  UserLocalData.getBio + 'Bio',
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                child: UserLocalData.getBio == ''
+                    ? const Text(
+                        'No Bio',
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    : Text(
+                        UserLocalData.getBio,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
               ),
             ],
           )

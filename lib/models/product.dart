@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sellout/enums/delivery_type.dart';
-import 'package:sellout/enums/privacy_type.dart';
-import 'package:sellout/enums/product_condition.dart';
-import 'package:sellout/models/product_category.dart';
+import '../enums/delivery_type.dart';
+import '../enums/privacy_type.dart';
+import '../enums/product_condition.dart';
+import 'product_category.dart';
 
 class Product {
   Product({

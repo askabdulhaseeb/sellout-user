@@ -8,3 +8,5 @@ linter:
     sort_constructors_first: true
     prefer_single_quotes: true
     argument_type_not_assignable: true
+    prefer_relative_imports: true
+    avoid_relative_lib_imports: true

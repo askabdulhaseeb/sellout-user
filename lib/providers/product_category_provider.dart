@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sellout/models/product_category.dart';
+import '../models/product_category.dart';
 
 class ProdCatProvider extends ChangeNotifier {
   ProdCategory? _selectedCat;
