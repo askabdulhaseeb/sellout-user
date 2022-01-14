@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>582580713866-v6tgbihhsin29o49vs62hditck058c4d.apps.googleusercontent.com</string>
+	<string>582580713866-kmr0iqia58cpcv2efl0rplosrlm0bh3v.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.582580713866-v6tgbihhsin29o49vs62hditck058c4d</string>
+	<string>com.googleusercontent.apps.582580713866-kmr0iqia58cpcv2efl0rplosrlm0bh3v</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAznl7RVymX-I-MaMnpeTc4UahYINGU4tQ</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.sellout.sellout</string>
+	<string>com.sellouttest.sellouttest</string>
 	<key>PROJECT_ID</key>
 	<string>sellout-db</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:582580713866:ios:1faeef4a58ee1e8a367073</string>
+	<string>1:582580713866:ios:2db3f365de3d51f8367073</string>
 </dict>
 </plist>

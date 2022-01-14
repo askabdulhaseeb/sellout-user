@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "582580713866",
+    "project_id": "sellout-db",
+    "storage_bucket": "sellout-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582580713866:android:5f3e2df7280ea371367073",
+        "android_client_info": {
+          "package_name": "com.sellouttest.sellouttest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582580713866-39otr7uldej35645rl7e6pfgle45iemm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3wjHzQG8ix-0Un2qHwT6CSpH4kaSp0mw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582580713866-39otr7uldej35645rl7e6pfgle45iemm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "582580713866-kmr0iqia58cpcv2efl0rplosrlm0bh3v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sellouttest.sellouttest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

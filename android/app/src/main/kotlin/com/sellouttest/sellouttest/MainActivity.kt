@@ -1,4 +1,4 @@
-package com.sellout.sellout
+package com.sellouttest.sellouttest
 
 import io.flutter.embedding.android.FlutterActivity
 
