@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:sellout/models/product_category.dart';
 import 'package:sellout/utilities/utilities.dart';
 
