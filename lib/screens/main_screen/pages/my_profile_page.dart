@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sellout/database/auth_methods.dart';
 import 'package:sellout/models/product_category.dart';
 import 'package:sellout/providers/product_category_provider.dart';
+import 'package:sellout/screens/auth/login_screen.dart';
 import 'package:sellout/services/user_local_data.dart';
 import 'package:sellout/utilities/utilities.dart';
 import 'package:sellout/widgets/circular_profile_image.dart';
@@ -22,11 +24,16 @@ class MyProdilePage extends StatelessWidget {
         elevation: 0,
         actions: <Widget>[
           IconButton(
-            onPressed: () {
-              // TODO: add more values
+            onPressed: () async {
+              await AuthMethods().signOut();
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                LoginScreen.routeName,
+                (Route<dynamic> route) => false,
+              );
             },
             splashRadius: 20,
-            icon: const Icon(Icons.more_vert_rounded),
+            // icon: const Icon(Icons.more_vert_rounded),
+            icon: const Icon(Icons.logout_outlined),
           ),
         ],
       ),

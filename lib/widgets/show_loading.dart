@@ -1,4 +1,4 @@
-	import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 // ignore: always_specify_types
 Future showLoadingDislog(BuildContext context) {
@@ -14,4 +14,12 @@ Future showLoadingDislog(BuildContext context) {
       );
     },
   );
+}
+
+class ShowLoading extends StatelessWidget {
+  const ShowLoading({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: CircularProgressIndicator.adaptive());
+  }
 }

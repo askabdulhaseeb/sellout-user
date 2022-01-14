@@ -28,26 +28,37 @@ class AuthMethods {
             ),
           );
           final User _user = authResult.user!;
-          // TODO: need to be update
-          final AppUser _appUser = AppUser(
-            uid: _user.uid,
-            displayName: _user.displayName!,
-            email: _user.email!,
-            imageURL: _user.photoURL!,
-            countryCode: '',
-            phoneNumber: '',
-            dob: '',
-            gender: GenderTypes.NOTAVAIABLE,
-            username: _user.email!,
-          );
-          final bool _isOkay = await UserAPI().addUser(_appUser);
-          if (_isOkay) {
-            UserLocalData().storeAppUserData(appUser: _appUser);
+          print('Login State: User get');
+          final AppUser? _alreadySignin =
+              await UserAPI().getInfo(uid: _user.uid);
+          print('Login State: Bool found');
+          if (_alreadySignin == null) {
+            print('Login State: New User');
+            final AppUser _appUser = AppUser(
+              uid: _user.uid,
+              displayName: _user.displayName!,
+              email: _user.email!,
+              imageURL: _user.photoURL!,
+              countryCode: '',
+              phoneNumber: '',
+              dob: '',
+              gender: GenderTypes.NOTAVAIABLE,
+              username: _user.email!,
+            );
+
+            final bool _isOkay = await UserAPI().addUser(_appUser);
+            if (_isOkay) {
+              UserLocalData().storeAppUserData(appUser: _appUser);
+            } else {
+              return false;
+            }
           } else {
-            return false;
+            print('Login State: Already Exist');
+            UserLocalData().storeAppUserData(appUser: _alreadySignin);
           }
           return true;
         } catch (error) {
+          print('Login State: Exception found - $error');
           CustomToast.errorToast(message: error.toString());
         }
       }
@@ -88,8 +99,8 @@ class AuthMethods {
         CustomToast.errorToast(message: obj.toString());
       });
       final User? user = result.user;
-      final AppUser appUser = await UserAPI().getInfo(uid: user!.uid);
-      UserLocalData().storeAppUserData(appUser: appUser);
+      final AppUser? appUser = await UserAPI().getInfo(uid: user!.uid);
+      UserLocalData().storeAppUserData(appUser: appUser!);
       return user;
     } catch (signUpError) {
       CustomToast.errorToast(message: signUpError.toString());

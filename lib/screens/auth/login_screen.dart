@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:sellout/database/auth_methods.dart';
+import 'package:sellout/enums/screen_state_enum.dart';
+import 'package:sellout/providers/auth_state_provider.dart';
 import 'package:sellout/screens/auth/forget_password_screen.dart';
 import 'package:sellout/screens/main_screen/main_screen.dart';
 import 'package:sellout/widgets/show_loading.dart';
@@ -26,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final AuthStateProvider _state = Provider.of<AuthStateProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
@@ -55,13 +59,16 @@ class _LoginScreenState extends State<LoginScreen> {
               _titleText('PASSWORD'),
               PasswordTextFormField(controller: _password),
               const SizedBox(height: 16),
-              CustomElevatedButton(
-                title: 'Log In',
-                onTap: () => _submitForm(),
-              ),
+              _state.currentState == ScreenStateEnum.WAITING
+                  ? const ShowLoading()
+                  : CustomElevatedButton(
+                      title: 'Log In',
+                      onTap: () => _submitForm(),
+                    ),
               _forgetPassword(),
               const Spacer(),
-              _otherAuthMethods(),
+              const SizedBox(height: 16),
+              _otherAuthMethods(_state),
             ],
           ),
         ),
@@ -71,21 +78,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _submitForm() async {
     if (_key.currentState!.validate()) {
-      showLoadingDislog(context);
+      Provider.of<AuthStateProvider>(context, listen: false)
+          .updateState(ScreenStateEnum.WAITING);
       final User? _user = await AuthMethods().loginWithEmailAndPassword(
         _email.text,
         _password.text,
       );
+      Provider.of<AuthStateProvider>(context, listen: false)
+          .updateState(ScreenStateEnum.DONE);
       if (_user != null) {
         Navigator.of(context).pushNamedAndRemoveUntil(
             MainScreen.rotueName, (Route<dynamic> route) => false);
-      } else {
-        Navigator.of(context).pop();
       }
     }
   }
 
-  Column _otherAuthMethods() {
+  Column _otherAuthMethods(AuthStateProvider state) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -96,23 +104,43 @@ class _LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             _SocialMediaLoginButton(
               text: 'Facebook',
-              icon: const Icon(FontAwesomeIcons.facebookF, color: Colors.blue),
+              isDisable: state.currentState != ScreenStateEnum.DONE,
+              icon: Icon(FontAwesomeIcons.facebookF,
+                  color: state.currentState != ScreenStateEnum.DONE
+                      ? Colors.grey
+                      : Colors.blue),
               onTap: () {
                 //TODO: Login with facebook
+                state.updateState(ScreenStateEnum.WAITING);
               },
             ),
             _SocialMediaLoginButton(
               text: 'Google',
-              icon: const Icon(FontAwesomeIcons.google, color: Colors.red),
-              onTap: () {
-                //TODO: Login with Google
+              isDisable: state.currentState != ScreenStateEnum.DONE,
+              icon: Icon(FontAwesomeIcons.google,
+                  color: state.currentState != ScreenStateEnum.DONE
+                      ? Colors.grey
+                      : Colors.red),
+              onTap: () async {
+                state.updateState(ScreenStateEnum.WAITING);
+                final bool _okay = await AuthMethods().signinWithGoogle();
+                if (_okay) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      MainScreen.rotueName, (Route<dynamic> route) => false);
+                }
+                state.resetState();
               },
             ),
             _SocialMediaLoginButton(
               text: 'Apple',
-              icon: const Icon(FontAwesomeIcons.apple, color: Colors.black),
+              isDisable: state.currentState != ScreenStateEnum.DONE,
+              icon: Icon(FontAwesomeIcons.apple,
+                  color: state.currentState != ScreenStateEnum.DONE
+                      ? Colors.grey
+                      : Colors.black),
               onTap: () {
                 // TODO: Login with Apple
+                state.updateState(ScreenStateEnum.WAITING);
               },
             ),
           ],
@@ -166,21 +194,32 @@ class _SocialMediaLoginButton extends StatelessWidget {
     required this.text,
     required this.icon,
     required this.onTap,
+    this.isDisable = false,
     Key? key,
   }) : super(key: key);
   final String text;
   final Icon icon;
   final VoidCallback onTap;
+  final bool isDisable;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: isDisable ? () {} : onTap,
       borderRadius: BorderRadius.circular(Utilities.borderRadius / 2),
       child: Padding(
         padding: EdgeInsets.all(Utilities.padding),
         child: Column(
-          children: <Widget>[icon, const SizedBox(height: 6), Text(text)],
+          children: <Widget>[
+            icon,
+            const SizedBox(height: 6),
+            Text(
+              text,
+              style: isDisable
+                  ? const TextStyle(color: Colors.grey)
+                  : const TextStyle(),
+            )
+          ],
         ),
       ),
     );
