@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sellout/providers/prod_provider.dart';
 import 'screens/main_screen/main_screen.dart';
 import 'screens/auth/auth_type_screen.dart';
 import 'screens/auth/forget_password_screen.dart';
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<MainBottomNavBarProvider>(
           create: (BuildContext context) => MainBottomNavBarProvider(),
+        ),
+        ChangeNotifierProvider<ProdProvider>(
+          create: (BuildContext context) => ProdProvider(),
         ),
         ChangeNotifierProvider<ProdCatProvider>(
           create: (BuildContext context) => ProdCatProvider(),

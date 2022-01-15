@@ -52,22 +52,22 @@ class Product {
     this.isAvailable = true,
   });
 
-  final String pid;
-  final String uid;
-  final List<ProductURL> prodURL;
-  final String thumbnail;
-  final ProdConditionEnum condition;
-  final String description;
-  final List<String> categories;
-  final List<String> subCategories;
-  final double price;
-  final int quantity;
-  final bool acceptOffers;
-  final ProdPrivacyTypeEnum privacy;
-  final DeliveryTypeEnum delivery;
-  final double deliveryFree;
-  final int? timestamp;
-  final bool isAvailable; // available for sale any more are not
+  late String pid;
+  late String uid;
+  late List<ProductURL> prodURL;
+  late String thumbnail;
+  late ProdConditionEnum condition;
+  late String description;
+  late List<String> categories;
+  late List<String> subCategories;
+  late double price;
+  late int quantity;
+  late bool acceptOffers;
+  late ProdPrivacyTypeEnum privacy;
+  late DeliveryTypeEnum delivery;
+  late double deliveryFree;
+  late int? timestamp;
+  late bool isAvailable; // available for sale any more are not
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{

@@ -10,7 +10,7 @@ import '../../../widgets/circular_profile_image.dart';
 import '../../../widgets/custom_icon_button.dart';
 import '../../../widgets/custom_rating_stars.dart';
 import '../../../widgets/custom_score_button.dart';
-import '../../../widgets/prod_cat_dropdown.dart';
+import '../../../widgets/product/prod_cat_dropdown.dart';
 import '../../../widgets/show_info_dialog.dart';
 import '../../auth/login_screen.dart';
 
@@ -68,14 +68,19 @@ class MyProdilePage extends StatelessWidget {
               //TODO: on bag click
             },
           ),
+          const SizedBox(width: 16),
           Consumer<ProdCatProvider>(
-            builder: (BuildContext context, ProdCatProvider cat, _) =>
-                ProdCatDropdown(
-              items: cat.category,
-              selectedItem: cat.selectedCategroy,
-              onChanged: (ProdCategory? update) => cat.updateSelection(update!),
+            builder: (BuildContext context, ProdCatProvider cat, _) => Flexible(
+              child: ProdCatDropdown(
+                items: cat.category,
+                selectedItem: cat.selectedCategroy,
+                margin: const EdgeInsets.symmetric(vertical: 0),
+                onChanged: (ProdCategory? update) =>
+                    cat.updateSelection(update!),
+              ),
             ),
           ),
+          const SizedBox(width: 16),
           IconButton(
             onPressed: () {
               // TODO: on cart click

@@ -7,9 +7,11 @@ class CustomTextFormField extends StatefulWidget {
     required TextEditingController controller,
     this.keyboardType,
     this.textInputAction,
+    this.onChanged,
     this.validator,
     this.initialValue,
     this.hint,
+    this.showPrefixIcon = true,
     this.readOnly = false,
     this.autoFocus = false,
     this.textAlign = TextAlign.start,
@@ -19,6 +21,8 @@ class CustomTextFormField extends StatefulWidget {
   final TextEditingController _controller;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
+  final void Function(String)? onChanged;
+  final bool showPrefixIcon;
   final String? Function(String? value)? validator;
   final String? initialValue;
   final String? hint;
@@ -59,6 +63,7 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
         textInputAction: widget.textInputAction ?? TextInputAction.next,
         autofocus: widget.autoFocus,
         textAlign: widget.textAlign,
+        onChanged: widget.onChanged,
         validator: (String? value) => widget.validator!(value),
         cursorColor: Theme.of(context).colorScheme.secondary,
         decoration: InputDecoration(
@@ -66,13 +71,15 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
           hintText: widget.hint,
           suffixIcon: (widget._controller.text.isEmpty)
               ? const SizedBox()
-              : IconButton(
-                  splashRadius: Utilities.padding,
-                  onPressed: () => setState(() {
-                    widget._controller.clear();
-                  }),
-                  icon: const Icon(CupertinoIcons.clear, size: 18),
-                ),
+              : (widget.showPrefixIcon == false)
+                  ? const SizedBox()
+                  : IconButton(
+                      splashRadius: Utilities.padding,
+                      onPressed: () => setState(() {
+                        widget._controller.clear();
+                      }),
+                      icon: const Icon(CupertinoIcons.clear, size: 18),
+                    ),
           focusColor: Theme.of(context).primaryColor,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
