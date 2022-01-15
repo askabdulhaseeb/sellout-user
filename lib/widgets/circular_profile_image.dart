@@ -4,22 +4,22 @@ import 'package:flutter/material.dart';
 class CircularProfileImage extends StatelessWidget {
   const CircularProfileImage({
     required this.imageURL,
-    this.radious = 30,
+    this.radius = 30,
     Key? key,
   }) : super(key: key);
   final String imageURL;
-  final double radious;
+  final double radius;
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: radious,
+      radius: radius,
       backgroundColor: Theme.of(context).primaryColor,
       child: CircleAvatar(
-        radius: radious - 2,
+        radius: radius - 2,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         child: CircleAvatar(
-          radius: radious - 4,
+          radius: radius - 4,
           backgroundColor: Theme.of(context).primaryColor,
           child: imageURL.isEmpty
               ? const FittedBox(
@@ -33,8 +33,8 @@ class CircularProfileImage extends StatelessWidget {
                 ))
               : ExtendedImage.network(
                   imageURL,
-                  width: radious * 2,
-                  height: radious * 2,
+                  width: radius * 2,
+                  height: radius * 2,
                   fit: BoxFit.cover,
                   cache: true,
                   shape: BoxShape.circle,

@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sellout/widgets/show_info_dialog.dart';
 import '../../../database/auth_methods.dart';
-import '../../../models/product_category.dart';
+import '../../../models/prod_category.dart';
 import '../../../providers/product_category_provider.dart';
 import '../../../services/user_local_data.dart';
 import '../../../utilities/utilities.dart';
 import '../../../widgets/circular_profile_image.dart';
-import '../../../widgets/prod_cat_dropdown.dart';
 import '../../../widgets/custom_icon_button.dart';
 import '../../../widgets/custom_rating_stars.dart';
 import '../../../widgets/custom_score_button.dart';
+import '../../../widgets/prod_cat_dropdown.dart';
+import '../../../widgets/show_info_dialog.dart';
 import '../../auth/login_screen.dart';
 
 class MyProdilePage extends StatelessWidget {
@@ -144,10 +144,7 @@ class MyProdilePage extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          CircularProfileImage(
-            imageURL: UserLocalData.getImageURL,
-            radious: 34,
-          ),
+          CircularProfileImage(imageURL: UserLocalData.getImageURL, radius: 34),
           const SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

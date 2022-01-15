@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sellout/screens/main_screen/pages/add_page.dart';
 import 'pages/my_profile_page.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
 import 'main_bottom_navigation_bar.dart';
@@ -15,7 +16,7 @@ class _MainScreenState extends State<MainScreen> {
   static const List<Widget> _pages = <Widget>[
     Center(child: Text('Home')),
     Center(child: Text('Cart')),
-    Center(child: Text('Add')),
+    AddPage(),
     Center(child: Text('Chat')),
     MyProdilePage(),
   ];

@@ -1,14 +1,31 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../models/product_category.dart';
+import '../models/prod_sub_category.dart';
+import '../models/prod_category.dart';
 
 class ProdCatProvider extends ChangeNotifier {
   ProdCategory? _selectedCat;
   final List<ProdCategory> _cat = <ProdCategory>[
-    ProdCategory(catID: 'trousers', title: 'Trousers'),
-    ProdCategory(catID: 'accessories', title: 'Accessories'),
-    ProdCategory(catID: 'hats', title: 'Hats'),
-    ProdCategory(catID: 'jewellery', title: 'Jewellery'),
+    ProdCategory(
+      catID: 'trousers',
+      title: 'Trousers',
+      subCategories: <ProdSubCategory>[],
+    ),
+    ProdCategory(
+      catID: 'accessories',
+      title: 'Accessories',
+      subCategories: <ProdSubCategory>[],
+    ),
+    ProdCategory(
+      catID: 'hats',
+      title: 'Hats',
+      subCategories: <ProdSubCategory>[],
+    ),
+    ProdCategory(
+      catID: 'jewellery',
+      title: 'Jewellery',
+      subCategories: <ProdSubCategory>[],
+    ),
   ];
 
   List<ProdCategory> get category => <ProdCategory>[..._cat];

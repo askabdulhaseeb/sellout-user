@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/product_category.dart';
+import '../models/prod_category.dart';
 import '../utilities/utilities.dart';
 
 class ProdCatDropdown extends StatelessWidget {
