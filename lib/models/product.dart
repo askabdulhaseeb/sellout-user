@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../enums/delivery_type.dart';
 import '../enums/privacy_type.dart';
 import '../enums/product_condition.dart';
-import 'prod_category.dart';
 
 class ProductURL {
   ProductURL({

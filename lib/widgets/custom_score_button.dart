@@ -66,7 +66,9 @@ class CustomScoreButton extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style: const TextStyle(fontSize: 10),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 9),
                 ),
               ],
             ),

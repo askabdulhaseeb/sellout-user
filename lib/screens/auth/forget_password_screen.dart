@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sellout/enums/screen_state_enum.dart';
+import 'package:sellout/providers/auth_state_provider.dart';
 import '../../database/auth_methods.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/custom_validators.dart';
@@ -21,6 +24,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final AuthStateProvider _state = Provider.of<AuthStateProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
@@ -53,25 +57,29 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
-              CustomElevatedButton(
-                title: 'Reset Password',
-                onTap: () => _submitForm(),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
-                    '''Already have a account?''',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+              _state.currentState == ScreenStateEnum.WAITING
+                  ? const ShowLoading()
+                  : CustomElevatedButton(
+                      title: 'Reset Password',
+                      onTap: () => _submitForm(_state),
                     ),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Sign In'),
-                  ),
-                ],
-              ),
+              _state.currentState == ScreenStateEnum.WAITING
+                  ? const SizedBox()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Text(
+                          '''Already have a account?''',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text('Sign In'),
+                        ),
+                      ],
+                    ),
             ],
           ),
         ),
@@ -79,10 +87,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     );
   }
 
-  Future<void> _submitForm() async {
+  Future<void> _submitForm(AuthStateProvider state) async {
     if (_key.currentState!.validate()) {
-      showLoadingDislog(context);
+      state.updateState(ScreenStateEnum.WAITING);
       final bool sended = await AuthMethods().forgetPassword(_email.text);
+      state.resetState();
       if (sended) {
         CustomToast.successSnackBar(
             context: context, text: 'Email send at ${_email.text.trim()}');

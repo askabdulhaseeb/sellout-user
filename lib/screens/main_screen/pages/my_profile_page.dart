@@ -91,14 +91,14 @@ class MyProdilePage extends StatelessWidget {
 
   Widget _scoreSection(BuildContext context) {
     final double _totalWidth = MediaQuery.of(context).size.width;
-    final double _boxWidth = (_totalWidth / 4) - 30;
+    final double _boxWidth = (_totalWidth / 4) - 16;
     return Padding(
       padding: EdgeInsets.all(Utilities.padding),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           CustomIconButton(
-            height: _boxWidth,
+            height: _boxWidth - 20,
             width: _boxWidth,
             icon: Icons.wallet_membership,
             onTap: () {
@@ -108,7 +108,7 @@ class MyProdilePage extends StatelessWidget {
           CustomScoreButton(
             score: UserLocalData.getPost.length.toString(),
             title: 'Posts',
-            height: _boxWidth,
+            height: _boxWidth - 20,
             width: _boxWidth,
             onTap: () {
               // TODO: on Posts click
@@ -117,7 +117,7 @@ class MyProdilePage extends StatelessWidget {
           CustomScoreButton(
             score: UserLocalData.getSupporting.length.toString(),
             title: 'Supporting',
-            height: _boxWidth,
+            height: _boxWidth - 20,
             width: _boxWidth,
             onTap: () {
               // TODO: on Supporting click
@@ -126,7 +126,7 @@ class MyProdilePage extends StatelessWidget {
           CustomScoreButton(
             score: UserLocalData.getSupporters.length.toString(),
             title: 'Supporters',
-            height: _boxWidth,
+            height: _boxWidth - 20,
             width: _boxWidth,
             onTap: () {
               // TODO: on Supporters click

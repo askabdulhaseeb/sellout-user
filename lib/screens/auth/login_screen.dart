@@ -163,8 +163,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => Navigator.of(context)
-                        .pushReplacementNamed(RegisterScreen.routeName),
+                    onPressed: () {
+                      Provider.of<AuthStateProvider>(context, listen: false)
+                          .resetState();
+                      Navigator.of(context)
+                          .pushReplacementNamed(RegisterScreen.routeName);
+                    },
                     child: const Text('Register'),
                   ),
                 ],

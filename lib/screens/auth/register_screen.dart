@@ -132,14 +132,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () => Navigator.of(context)
-                              .pushReplacementNamed(LoginScreen.routeName),
+                          onPressed: () {
+                            Provider.of<AuthStateProvider>(context,
+                                    listen: false)
+                                .resetState();
+                            Navigator.of(context)
+                                .pushReplacementNamed(LoginScreen.routeName);
+                          },
                           child: const Text('Sign In'),
                         ),
                       ],
                     ),
               const Text(
-                'By registering you accept Customer Aggrement conditions and privacy policy',
+                'By registering you accept Customer Agreement conditions and privacy policy',
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 10),
@@ -193,11 +198,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
     state.resetState();
   }
 
-  Text _titleText(String title) {
-    return Text(
-      ' $title',
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
+  Padding _titleText(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Text(
+        ' $title',
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sellout/providers/auth_state_provider.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/custom_elevated_button.dart';
@@ -11,7 +13,6 @@ class AuthTypeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: Padding(
@@ -25,9 +26,13 @@ class AuthTypeScreen extends StatelessWidget {
               child: Image.asset(AppImages.iconSimple),
             ),
             CustomElevatedButton(
-              title: 'Login',
-              onTap: () => Navigator.of(context)
-                  .pushReplacementNamed(LoginScreen.routeName),
+              title: 'Log In',
+              onTap: () {
+                Provider.of<AuthStateProvider>(context, listen: false)
+                    .resetState();
+                Navigator.of(context)
+                    .pushReplacementNamed(LoginScreen.routeName);
+              },
               bgColor: Colors.white,
               borderRadius: BorderRadius.circular(10),
               textStyle: TextStyle(
@@ -37,12 +42,16 @@ class AuthTypeScreen extends StatelessWidget {
               ),
             ),
             CustomElevatedButton(
-                    onTap: () => Navigator.of(context)
-                        .pushReplacementNamed(RegisterScreen.routeName),
-                    title: 'Register',
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.white),
-                  )
+              onTap: () {
+                Provider.of<AuthStateProvider>(context, listen: false)
+                    .resetState();
+                Navigator.of(context)
+                    .pushReplacementNamed(RegisterScreen.routeName);
+              },
+              title: 'Register',
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.white),
+            )
           ],
         ),
       ),

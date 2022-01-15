@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sellout/services/user_local_data.dart';
-import 'package:sellout/utilities/utilities.dart';
-import 'package:sellout/widgets/circular_profile_image.dart';
+import '../../../services/user_local_data.dart';
+import '../../../utilities/utilities.dart';
+import '../../../widgets/circular_profile_image.dart';
 
 class AddPage extends StatelessWidget {
   const AddPage({Key? key}) : super(key: key);

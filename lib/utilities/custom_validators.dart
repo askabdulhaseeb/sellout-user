@@ -1,9 +1,9 @@
-	class CustomValidator {
+class CustomValidator {
   static String? email(String? value) {
     if (!RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(value!)) {
-      return 'Email is Invalide';
+      return 'Email is Invalid';
     }
     return null;
   }
