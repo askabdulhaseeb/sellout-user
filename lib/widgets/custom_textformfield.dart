@@ -12,6 +12,8 @@ class CustomTextFormField extends StatefulWidget {
     this.initialValue,
     this.hint,
     this.color,
+    this.minLines = 1,
+    this.maxLines = 1,
     this.showPrefixIcon = true,
     this.readOnly = false,
     this.autoFocus = false,
@@ -25,6 +27,8 @@ class CustomTextFormField extends StatefulWidget {
   final void Function(String)? onChanged;
   final bool showPrefixIcon;
   final String? Function(String? value)? validator;
+  final int? minLines;
+  final int? maxLines;
   final Color? color;
   final String? initialValue;
   final String? hint;
@@ -55,7 +59,7 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
       margin: const EdgeInsets.symmetric(vertical: 6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
-        color: widget.color?? Colors.grey[300],
+        color: widget.color ?? Colors.grey[300],
       ),
       child: TextFormField(
         initialValue: widget.initialValue,
@@ -66,6 +70,8 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
         autofocus: widget.autoFocus,
         textAlign: widget.textAlign,
         onChanged: widget.onChanged,
+        minLines: widget.minLines,
+        maxLines: widget.maxLines,
         validator: (String? value) => widget.validator!(value),
         cursorColor: Theme.of(context).colorScheme.secondary,
         decoration: InputDecoration(

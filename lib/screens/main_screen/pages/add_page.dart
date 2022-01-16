@@ -104,16 +104,15 @@ class _AddPageState extends State<AddPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const SizedBox(height: 16),
-        Text(
-          'Select the Condition of your product'.toUpperCase(),
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        ProdConditionWidget(
-          onChanged: (ProdConditionEnum? p0) => _condition = p0!,
-        ),
+        _additionalInformation('Basic information'),
         _titleText('Description'.toUpperCase()),
         CustomTextFormField(
           controller: _description,
+          minLines: 1,
+          maxLines: 5,
+          hint: 'Write something about product',
+          textInputAction: TextInputAction.newline,
+          keyboardType: TextInputType.multiline,
           validator: (String? p0) => null,
         ),
         _titleText('Category'.toUpperCase()),
@@ -135,18 +134,25 @@ class _AddPageState extends State<AddPage> {
           selectedItem: category.selectedSubCategory,
           onChanged: (ProdSubCategory? update) {},
         ),
-        _titleText('Price'.toUpperCase()),
+        _titleText('Unit Price'.toUpperCase()),
         CustomTextFormField(
           controller: _price,
+          hint: 'Price of one product',
           validator: (String? value) => CustomValidator.isEmpty(value),
           keyboardType: TextInputType.number,
           textInputAction: TextInputAction.next,
         ),
         _titleText('Quantity'.toUpperCase()),
         _quantityTextFormField(),
-        ProdAcceptOfferWidget(
-          onChanged: (bool p0) => _acceptOffer = p0,
+        const SizedBox(height: 16),
+        _additionalInformation('additional information'),
+        const SizedBox(height: 10),
+        _titleText('Select the Condition of your product'.toUpperCase()),
+        ProdConditionWidget(
+          onChanged: (ProdConditionEnum? p0) => _condition = p0!,
         ),
+        _titleText('Accept Offer'.toUpperCase()),
+        ProdAcceptOfferWidget(onChanged: (bool p0) => _acceptOffer = p0),
         _titleText('Privacy'.toUpperCase()),
         ProdPrivacyWidget(
           onChanged: (ProdPrivacyTypeEnum? p0) {
@@ -172,7 +178,7 @@ class _AddPageState extends State<AddPage> {
             ),
             const SizedBox(width: 16),
             SizedBox(
-              width: 100,
+              width: 120,
               child: CustomTextFormField(
                 controller: _deliveryFee,
                 showPrefixIcon: false,
@@ -189,6 +195,31 @@ class _AddPageState extends State<AddPage> {
         const Text(
           'Please note that all delivery must be track and signed for. Please keep that in account when deciding delivery fee.\nThank you.',
           style: TextStyle(fontSize: 12),
+        ),
+      ],
+    );
+  }
+
+  Row _additionalInformation(String title) {
+    return Row(
+      children: <Widget>[
+        Flexible(
+          child: Container(
+            width: double.infinity,
+            height: 1,
+            color: Colors.grey[300],
+          ),
+        ),
+        Text(
+          '  $title  '.toUpperCase(),
+          style: TextStyle(color: Colors.grey[400]),
+        ),
+        Flexible(
+          child: Container(
+            width: double.infinity,
+            height: 1,
+            color: Colors.grey[300],
+          ),
         ),
       ],
     );
