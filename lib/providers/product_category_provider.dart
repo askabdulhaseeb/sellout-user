@@ -53,10 +53,15 @@ class ProdCatProvider extends ChangeNotifier {
   ProdCategory? get selectedCategroy => _selectedCat;
   ProdSubCategory? get selectedSubCategory => _selectedSubCat;
 
-  void updateSelection(ProdCategory updatedCategroy) {
+  void updateCatSelection(ProdCategory updatedCategroy) {
     _selectedCat = updatedCategroy;
     _subCategory = updatedCategroy.subCategories;
     _selectedSubCat = null;
+    notifyListeners();
+  }
+
+  void updateSubCategorySection(ProdSubCategory update) {
+    _selectedSubCat = update;
     notifyListeners();
   }
 }

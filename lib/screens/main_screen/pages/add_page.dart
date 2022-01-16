@@ -80,6 +80,9 @@ class _AddPageState extends State<AddPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     _headerSection(),
+                    const SizedBox(height: 16),
+                    const _GetProductImages(),
+                    const SizedBox(height: 20),
                     _infoSection(category),
                     const SizedBox(height: 16),
                     CustomElevatedButton(
@@ -103,7 +106,6 @@ class _AddPageState extends State<AddPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const SizedBox(height: 16),
         _additionalInformation('Basic information'),
         _titleText('Description'.toUpperCase()),
         CustomTextFormField(
@@ -123,7 +125,7 @@ class _AddPageState extends State<AddPage> {
           hintText: 'Select...',
           selectedItem: category.selectedCategroy,
           onChanged: (ProdCategory? update) {
-            category.updateSelection(update!);
+            category.updateCatSelection(update!);
           },
         ),
         _titleText('Sub Category'.toUpperCase()),
@@ -132,12 +134,14 @@ class _AddPageState extends State<AddPage> {
           color: Colors.grey[300],
           hintText: 'Select...',
           selectedItem: category.selectedSubCategory,
-          onChanged: (ProdSubCategory? update) {},
+          onChanged: (ProdSubCategory? update) {
+            category.updateSubCategorySection(update!);
+          },
         ),
-        _titleText('Unit Price'.toUpperCase()),
+        _titleText('Price'.toUpperCase()),
         CustomTextFormField(
           controller: _price,
-          hint: 'Price of one product',
+          hint: 'Select Price',
           validator: (String? value) => CustomValidator.isEmpty(value),
           keyboardType: TextInputType.number,
           textInputAction: TextInputAction.next,
@@ -165,9 +169,8 @@ class _AddPageState extends State<AddPage> {
             if (p0 == DeliveryTypeEnum.COLLOCATION) {
               _deliveryFee.text = '0';
             }
-            setState(() {
-              _delivery = p0!;
-            });
+            _delivery = p0!;
+            setState(() {});
           },
         ),
         Row(
@@ -312,6 +315,103 @@ class _AddPageState extends State<AddPage> {
           ),
         )
       ],
+    );
+  }
+}
+
+class _GetProductImages extends StatefulWidget {
+  const _GetProductImages({Key? key}) : super(key: key);
+
+  @override
+  __GetProductImagesState createState() => __GetProductImagesState();
+}
+
+class __GetProductImagesState extends State<_GetProductImages> {
+  @override
+  Widget build(BuildContext context) {
+    final double _width = MediaQuery.of(context).size.width - 32 - 25;
+    return Column(
+      children: <Widget>[
+        Container(
+          width: double.infinity,
+          height: (_width / 5) * 2,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            border: Border.all(width: 0.5),
+            color: Colors.grey[300],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const <Widget>[
+              SizedBox(height: 10),
+              Icon(Icons.add_circle_rounded),
+              SizedBox(height: 6),
+              Text('Add Images/Videos'),
+              Text(
+                'Only 10 images/video are allowed',
+                style: TextStyle(color: Colors.grey),
+              )
+            ],
+          ),
+        ),
+        const SizedBox(height: 5),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            _ImageBox(index: 1, width: _width / 5),
+            _ImageBox(index: 2, width: _width / 5),
+            _ImageBox(index: 3, width: _width / 5),
+            _ImageBox(index: 4, width: _width / 5),
+            _ImageBox(index: 5, width: _width / 5),
+          ],
+        ),
+        const SizedBox(height: 6),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            _ImageBox(index: 6, width: _width / 5),
+            _ImageBox(index: 7, width: _width / 5),
+            _ImageBox(index: 8, width: _width / 5),
+            _ImageBox(index: 9, width: _width / 5),
+            _ImageBox(index: 10, width: _width / 5),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _ImageBox extends StatelessWidget {
+  const _ImageBox({required this.index, required double width, Key? key})
+      : _width = width,
+        super(key: key);
+
+  final double _width;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: _width,
+      width: _width,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black, width: 0.5),
+      ),
+      child: Container(
+        height: double.infinity,
+        width: double.infinity,
+        padding: const EdgeInsets.all(10),
+        color: Colors.grey[300],
+        child: FittedBox(
+          child: Text(
+            index.toString(),
+            style: TextStyle(
+              color: Theme.of(context).primaryColor.withOpacity(0.2),
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

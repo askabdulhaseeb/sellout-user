@@ -78,7 +78,7 @@ class MyProdilePage extends StatelessWidget {
                 selectedItem: cat.selectedCategroy,
                 margin: const EdgeInsets.symmetric(vertical: 0),
                 onChanged: (ProdCategory? update) =>
-                    cat.updateSelection(update!),
+                    cat.updateCatSelection(update!),
               ),
             ),
           ),

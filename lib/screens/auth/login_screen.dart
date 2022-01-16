@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       title: 'Log In',
                       onTap: () => _submitForm(),
                     ),
-              _forgetPassword(),
+              _forgetPassword(_state),
               const Spacer(),
               const SizedBox(height: 16),
               _otherAuthMethods(_state),
@@ -187,14 +187,19 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  TextButton _forgetPassword() {
+  TextButton _forgetPassword(AuthStateProvider state) {
     return TextButton(
-      onPressed: () =>
-          Navigator.of(context).pushNamed(ForgetPasswordScreen.routeName),
-      child: const Text(
+      onPressed: () {
+        if (state.currentState != ScreenStateEnum.WAITING) {
+          Navigator.of(context).pushNamed(ForgetPasswordScreen.routeName);
+        }
+      },
+      child: Text(
         'Forget Password?',
         style: TextStyle(
-          color: Colors.black,
+          color: state.currentState == ScreenStateEnum.WAITING
+              ? Colors.grey
+              : Colors.black,
           decoration: TextDecoration.underline,
         ),
       ),

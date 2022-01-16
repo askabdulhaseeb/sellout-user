@@ -17,10 +17,10 @@ class _ProdDeliveryTypeWidgetState extends State<ProdDeliveryTypeWidget> {
       children: <Widget>[
         InkWell(
           onTap: () {
+            widget.onChanged!(DeliveryTypeEnum.DELIVERY);
             setState(() {
               _enum = DeliveryTypeEnum.DELIVERY;
             });
-            widget.onChanged!(DeliveryTypeEnum.DELIVERY);
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -30,10 +30,10 @@ class _ProdDeliveryTypeWidgetState extends State<ProdDeliveryTypeWidget> {
                 groupValue: _enum,
                 activeColor: Theme.of(context).primaryColor,
                 onChanged: (DeliveryTypeEnum? value) {
+                  widget.onChanged!(value);
                   setState(() {
                     _enum = value!;
                   });
-                  widget.onChanged!(value);
                 },
               ),
               const Text('Delivery'),
@@ -42,10 +42,10 @@ class _ProdDeliveryTypeWidgetState extends State<ProdDeliveryTypeWidget> {
         ),
         InkWell(
           onTap: () {
+            widget.onChanged!(DeliveryTypeEnum.COLLOCATION);
             setState(() {
               _enum = DeliveryTypeEnum.COLLOCATION;
             });
-            widget.onChanged!(DeliveryTypeEnum.COLLOCATION);
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -55,10 +55,10 @@ class _ProdDeliveryTypeWidgetState extends State<ProdDeliveryTypeWidget> {
                 groupValue: _enum,
                 activeColor: Theme.of(context).primaryColor,
                 onChanged: (DeliveryTypeEnum? value) {
+                  widget.onChanged!(value);
                   setState(() {
                     _enum = value!;
                   });
-                  widget.onChanged!(value);
                 },
               ),
               const Text('Collection'),
@@ -67,10 +67,10 @@ class _ProdDeliveryTypeWidgetState extends State<ProdDeliveryTypeWidget> {
         ),
         InkWell(
           onTap: () {
+            widget.onChanged!(DeliveryTypeEnum.BOTH);
             setState(() {
               _enum = DeliveryTypeEnum.BOTH;
             });
-            widget.onChanged!(DeliveryTypeEnum.BOTH);
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -80,10 +80,10 @@ class _ProdDeliveryTypeWidgetState extends State<ProdDeliveryTypeWidget> {
                 groupValue: _enum,
                 activeColor: Theme.of(context).primaryColor,
                 onChanged: (DeliveryTypeEnum? value) {
+                  widget.onChanged!(value);
                   setState(() {
                     _enum = value!;
                   });
-                  widget.onChanged!(value);
                 },
               ),
               const Text('Both'),
