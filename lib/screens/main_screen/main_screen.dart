@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../services/custom_services.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
 import 'main_bottom_navigation_bar.dart';
 import 'pages/add_page.dart';
@@ -13,6 +14,12 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  @override
+  void initState() {
+    CustomService.statusBar();
+    super.initState();
+  }
+
   static const List<Widget> _pages = <Widget>[
     Center(child: Text('Home')),
     Center(child: Text('Cart')),

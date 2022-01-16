@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../database/auth_methods.dart';
 import '../../enums/screen_state_enum.dart';
 import '../../providers/auth_state_provider.dart';
+import '../../providers/main_bottom_nav_bar_provider.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/custom_validators.dart';
 import '../../utilities/utilities.dart';
@@ -88,6 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
       Provider.of<AuthStateProvider>(context, listen: false)
           .updateState(ScreenStateEnum.DONE);
       if (_user != null) {
+        Provider.of<MainBottomNavBarProvider>(context, listen: false)
+            .onTabTapped(0);
         Navigator.of(context).pushNamedAndRemoveUntil(
             MainScreen.rotueName, (Route<dynamic> route) => false);
       }
@@ -125,14 +128,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: state.currentState != ScreenStateEnum.DONE
                       ? Colors.grey
                       : Colors.red),
-              onTap: () async {
-                state.updateState(ScreenStateEnum.WAITING);
-                final bool _okay = await AuthMethods().signinWithGoogle();
-                if (_okay) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      MainScreen.rotueName, (Route<dynamic> route) => false);
-                }
-                state.resetState();
+              // onTap: () async {
+              //   state.updateState(ScreenStateEnum.WAITING);
+              //   final bool _okay = await AuthMethods().signinWithGoogle();
+              //   if (_okay) {
+              //     Navigator.of(context).pushNamedAndRemoveUntil(
+              //         MainScreen.rotueName, (Route<dynamic> route) => false);
+              //   }
+              //   state.resetState();
+              // },
+              onTap: () {
+                //TODO: Login with Google
+
+                // state.updateState(ScreenStateEnum.WAITING);
+                showInfoDialog(context);
+                // state.resetState();
               },
             ),
             _SocialMediaLoginButton(

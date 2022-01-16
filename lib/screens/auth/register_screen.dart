@@ -37,7 +37,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   PhoneNumber? _number;
   GenderTypes _gender = GenderTypes.MALE;
   DateOfBirth _dob = DateOfBirth(date: 0, month: 0, year: 0);
-
   @override
   Widget build(BuildContext context) {
     final AuthStateProvider _state = Provider.of<AuthStateProvider>(context);

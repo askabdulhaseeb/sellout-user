@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sellout/enums/screen_state_enum.dart';
-import 'package:sellout/providers/auth_state_provider.dart';
 import '../../database/auth_methods.dart';
+import '../../enums/screen_state_enum.dart';
+import '../../providers/auth_state_provider.dart';
+import '../../services/custom_services.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/custom_validators.dart';
 import '../../utilities/utilities.dart';
@@ -22,12 +23,17 @@ class ForgetPasswordScreen extends StatefulWidget {
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   final TextEditingController _email = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     final AuthStateProvider _state = Provider.of<AuthStateProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
+      appBar: AppBar(
+        systemOverlayStyle: CustomService.systemUIOverlayStyle(),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Padding(
         padding: EdgeInsets.all(Utilities.padding),
         child: Form(

@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sellout/models/prod_category.dart';
-import 'package:sellout/models/prod_sub_category.dart';
-import 'package:sellout/providers/product_category_provider.dart';
-import 'package:sellout/utilities/custom_validators.dart';
-import 'package:sellout/widgets/custom_elevated_button.dart';
-import 'package:sellout/widgets/product/prod_accept_offer.dart';
-import 'package:sellout/widgets/product/prod_cat_dropdown.dart';
-import 'package:sellout/widgets/product/prod_delivery_type_widget.dart';
-import 'package:sellout/widgets/product/prod_privacy_widget.dart';
-import 'package:sellout/widgets/product/prod_sub_cat_dropdown.dart';
-
 import '../../../enums/delivery_type.dart';
 import '../../../enums/privacy_type.dart';
 import '../../../enums/product_condition.dart';
-import '../../../providers/prod_provider.dart';
+import '../../../models/prod_category.dart';
+import '../../../models/prod_sub_category.dart';
+import '../../../providers/product_category_provider.dart';
+import '../../../services/custom_services.dart';
 import '../../../services/user_local_data.dart';
+import '../../../utilities/custom_validators.dart';
 import '../../../utilities/utilities.dart';
 import '../../../widgets/circular_profile_image.dart';
+import '../../../widgets/custom_elevated_button.dart';
 import '../../../widgets/custom_textformfield.dart';
+import '../../../widgets/product/prod_accept_offer.dart';
+import '../../../widgets/product/prod_cat_dropdown.dart';
 import '../../../widgets/product/prod_confition_widget.dart';
+import '../../../widgets/product/prod_delivery_type_widget.dart';
+import '../../../widgets/product/prod_privacy_widget.dart';
+import '../../../widgets/product/prod_sub_cat_dropdown.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -41,9 +40,16 @@ class _AddPageState extends State<AddPage> {
   bool _acceptOffer = true;
 
   @override
+  void initState() {
+    CustomService.statusBar();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        systemOverlayStyle: CustomService.systemUIOverlayStyle(),
         title: Text(
           'Start Selling',
           style: TextStyle(
@@ -55,31 +61,36 @@ class _AddPageState extends State<AddPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: Utilities.padding),
-        child: Form(
-          key: _key,
-          child: SingleChildScrollView(
-            child: Consumer<ProdCatProvider>(
-              builder: (
-                BuildContext context,
-                ProdCatProvider category,
-                _,
-              ) =>
-                  Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  _headerSection(),
-                  _infoSection(category),
-                  const SizedBox(height: 16),
-                  CustomElevatedButton(
-                    title: 'Post',
-                    onTap: () {
-                      if (_key.currentState!.validate()) {}
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                ],
+      body: GestureDetector(
+        onTap: () {
+          CustomService.dismissKeyboard();
+        },
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: Utilities.padding),
+          child: Form(
+            key: _key,
+            child: SingleChildScrollView(
+              child: Consumer<ProdCatProvider>(
+                builder: (
+                  BuildContext context,
+                  ProdCatProvider category,
+                  _,
+                ) =>
+                    Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    _headerSection(),
+                    _infoSection(category),
+                    const SizedBox(height: 16),
+                    CustomElevatedButton(
+                      title: 'Post',
+                      onTap: () {
+                        if (_key.currentState!.validate()) {}
+                      },
+                    ),
+                    const SizedBox(height: 40),
+                  ],
+                ),
               ),
             ),
           ),
@@ -138,7 +149,9 @@ class _AddPageState extends State<AddPage> {
         ),
         _titleText('Privacy'.toUpperCase()),
         ProdPrivacyWidget(
-          onChanged: (ProdPrivacyTypeEnum? p0) => _privacy = p0!,
+          onChanged: (ProdPrivacyTypeEnum? p0) {
+            _privacy = p0!;
+          },
         ),
         _titleText('Delivery Type'.toUpperCase()),
         ProdDeliveryTypeWidget(
@@ -146,7 +159,9 @@ class _AddPageState extends State<AddPage> {
             if (p0 == DeliveryTypeEnum.COLLOCATION) {
               _deliveryFee.text = '0';
             }
-            _delivery = p0!;
+            setState(() {
+              _delivery = p0!;
+            });
           },
         ),
         Row(
@@ -165,6 +180,7 @@ class _AddPageState extends State<AddPage> {
                 readOnly: _delivery == DeliveryTypeEnum.COLLOCATION,
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
+                color: Colors.transparent,
               ),
             ),
           ],
@@ -200,7 +216,7 @@ class _AddPageState extends State<AddPage> {
             color: Theme.of(context).primaryColor,
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 20),
         Expanded(
           child: CustomTextFormField(
             controller: _quantity,
@@ -211,7 +227,7 @@ class _AddPageState extends State<AddPage> {
             textAlign: TextAlign.center,
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 20),
         IconButton(
           onPressed: () {
             if (_quantity.text.isEmpty) {

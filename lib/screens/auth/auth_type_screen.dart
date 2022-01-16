@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sellout/providers/auth_state_provider.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/utilities.dart';
+import '../../providers/auth_state_provider.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'login_screen.dart';
 import 'register_screen.dart';

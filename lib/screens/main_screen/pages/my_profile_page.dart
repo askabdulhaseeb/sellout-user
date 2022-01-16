@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../database/auth_methods.dart';
 import '../../../models/prod_category.dart';
 import '../../../providers/product_category_provider.dart';
+import '../../../services/custom_services.dart';
 import '../../../services/user_local_data.dart';
 import '../../../utilities/utilities.dart';
 import '../../../widgets/circular_profile_image.dart';
@@ -21,6 +22,7 @@ class MyProdilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        systemOverlayStyle: CustomService.systemUIOverlayStyle(),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: <Widget>[
