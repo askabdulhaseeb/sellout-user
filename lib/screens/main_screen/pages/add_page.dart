@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:file_picker/file_picker.dart';
 import '../../../enums/delivery_type.dart';
 import '../../../enums/privacy_type.dart';
 import '../../../enums/product_condition.dart';
@@ -38,6 +39,7 @@ class _AddPageState extends State<AddPage> {
   final TextEditingController _quantity = TextEditingController(text: '1');
   final TextEditingController _deliveryFee = TextEditingController(text: '0');
   bool _acceptOffer = true;
+  final List<PlatformFile> _files = <PlatformFile>[];
 
   @override
   void initState() {
@@ -81,7 +83,9 @@ class _AddPageState extends State<AddPage> {
                   children: <Widget>[
                     _headerSection(),
                     const SizedBox(height: 16),
-                    const _GetProductImages(),
+                    _GetProductImages(
+                      onTap: () => _fetchMedia(),
+                    ),
                     const SizedBox(height: 20),
                     _infoSection(category),
                     const SizedBox(height: 16),
@@ -100,6 +104,17 @@ class _AddPageState extends State<AddPage> {
         ),
       ),
     );
+  }
+
+  _fetchMedia() async {
+    final FilePickerResult? _result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      type: FileType.media,
+    );
+    if (_result == null) return;
+    _files.clear();
+    _files.addAll(_result.files);
+    setState(() {});
   }
 
   Column _infoSection(ProdCatProvider category) {
@@ -179,12 +194,12 @@ class _AddPageState extends State<AddPage> {
               'Delivery Fee'.toUpperCase(),
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(width: 16),
-            SizedBox(
-              width: 120,
+            const SizedBox(width: 8),
+            Flexible(
               child: CustomTextFormField(
                 controller: _deliveryFee,
                 showPrefixIcon: false,
+                contentPadding: const EdgeInsets.only(left: 40),
                 validator: (String? value) => CustomValidator.isEmpty(value),
                 readOnly: _delivery == DeliveryTypeEnum.COLLOCATION,
                 keyboardType: TextInputType.number,
@@ -192,6 +207,7 @@ class _AddPageState extends State<AddPage> {
                 color: Colors.transparent,
               ),
             ),
+            const SizedBox(width: 30),
           ],
         ),
         const SizedBox(height: 10),
@@ -254,8 +270,9 @@ class _AddPageState extends State<AddPage> {
         Expanded(
           child: CustomTextFormField(
             controller: _quantity,
+            contentPadding: const EdgeInsets.only(left: 40),
             showPrefixIcon: false,
-            validator: (String? value) => null,
+            validator: (String? value) => CustomValidator.isEmpty(value),
             keyboardType: TextInputType.number,
             textInputAction: TextInputAction.next,
             textAlign: TextAlign.center,
@@ -303,9 +320,10 @@ class _AddPageState extends State<AddPage> {
         const SizedBox(width: 6),
         Flexible(
           child: Container(
-            // width: double.infinity,
             padding: EdgeInsets.symmetric(
-                vertical: Utilities.padding / 2, horizontal: Utilities.padding),
+              vertical: Utilities.padding / 2,
+              horizontal: Utilities.padding,
+            ),
             alignment: Alignment.centerLeft,
             decoration: BoxDecoration(
               color: Colors.grey[300],
@@ -320,8 +338,8 @@ class _AddPageState extends State<AddPage> {
 }
 
 class _GetProductImages extends StatefulWidget {
-  const _GetProductImages({Key? key}) : super(key: key);
-
+  const _GetProductImages({required this.onTap, Key? key}) : super(key: key);
+  final VoidCallback onTap;
   @override
   __GetProductImagesState createState() => __GetProductImagesState();
 }
@@ -332,29 +350,32 @@ class __GetProductImagesState extends State<_GetProductImages> {
     final double _width = MediaQuery.of(context).size.width - 32 - 25;
     return Column(
       children: <Widget>[
-        Container(
-          width: double.infinity,
-          height: (_width / 5) * 2,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            border: Border.all(width: 0.5),
-            color: Colors.grey[300],
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
-              SizedBox(height: 10),
-              Icon(Icons.add_circle_rounded),
-              SizedBox(height: 6),
-              Text('Add Images/Videos'),
-              Text(
-                'Only 10 images/video are allowed',
-                style: TextStyle(color: Colors.grey),
-              )
-            ],
+        InkWell(
+          onTap: widget.onTap,
+          child: Container(
+            width: double.infinity,
+            height: (_width / 5) * 2,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              border: Border.all(width: 0.5),
+              color: Colors.grey[300],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[
+                SizedBox(height: 16),
+                Icon(Icons.add_circle_rounded),
+                SizedBox(height: 6),
+                Text('Add Images/Videos'),
+                Text(
+                  'Only 10 images/video are allowed',
+                  style: TextStyle(color: Colors.grey),
+                )
+              ],
+            ),
           ),
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 6),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

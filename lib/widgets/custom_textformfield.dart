@@ -12,6 +12,7 @@ class CustomTextFormField extends StatefulWidget {
     this.initialValue,
     this.hint,
     this.color,
+    this.contentPadding,
     this.minLines = 1,
     this.maxLines = 1,
     this.showPrefixIcon = true,
@@ -27,6 +28,7 @@ class CustomTextFormField extends StatefulWidget {
   final void Function(String)? onChanged;
   final bool showPrefixIcon;
   final String? Function(String? value)? validator;
+  final EdgeInsetsGeometry? contentPadding;
   final int? minLines;
   final int? maxLines;
   final Color? color;
@@ -75,7 +77,8 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
         validator: (String? value) => widget.validator!(value),
         cursorColor: Theme.of(context).colorScheme.secondary,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+          contentPadding: widget.contentPadding ??
+              const EdgeInsets.symmetric(horizontal: 12),
           hintText: widget.hint,
           suffixIcon: (widget._controller.text.isEmpty)
               ? const SizedBox(width: 0, height: 0)

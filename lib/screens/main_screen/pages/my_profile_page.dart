@@ -146,59 +146,67 @@ class MyProdilePage extends StatelessWidget {
 
   Widget _headerSection(BuildContext context) {
     final double _totalWidth = MediaQuery.of(context).size.width;
+    const double _imageRadius = 34;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Utilities.padding),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          CircularProfileImage(imageURL: UserLocalData.getImageURL, radius: 34),
+          CircularProfileImage(
+            imageURL: UserLocalData.getImageURL,
+            radius: _imageRadius,
+          ),
           const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const SizedBox(height: 8),
-              Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: _totalWidth / 2.5,
-                    child: Text(
-                      UserLocalData.getDisplayName,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      //TODO: Navigate to Edit profile
-                      showInfoDialog(
-                        context,
-                        title: 'Next Milestone',
-                        message: 'This is a part of next milestone',
-                      );
-                    },
-                    child: Text(
-                      'Edit',
-                      style: TextStyle(color: Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ],
-              ),
-              CustomRatingStars(rating: UserLocalData.getRating),
-              SizedBox(
-                width: _totalWidth / 1.8,
-                child: UserLocalData.getBio == ''
-                    ? const Text(
-                        'No Bio',
-                        maxLines: 3,
+          SizedBox(
+            width:
+                _totalWidth - (_imageRadius * 2) - (Utilities.padding * 2) - 56,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(height: 8),
+                Row(
+                  children: <Widget>[
+                    Flexible(
+                      child: Text(
+                        UserLocalData.getDisplayName,
                         overflow: TextOverflow.ellipsis,
-                      )
-                    : Text(
-                        UserLocalData.getBio,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-              ),
-            ],
+                    ),
+                    const SizedBox(width: 10),
+                    InkWell(
+                      onTap: () {
+                        //TODO: Navigate to Edit profile
+                        showInfoDialog(
+                          context,
+                          title: 'Next Milestone',
+                          message: 'This is a part of next milestone',
+                        );
+                      },
+                      child: Text(
+                        'Edit',
+                        style: TextStyle(color: Theme.of(context).primaryColor),
+                      ),
+                    ),
+                  ],
+                ),
+                CustomRatingStars(rating: UserLocalData.getRating),
+                SizedBox(
+                  width: _totalWidth / 1.6,
+                  child: UserLocalData.getBio == ''
+                      ? const Text(
+                          'No Bio',
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : Text(
+                          UserLocalData.getBio,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                ),
+              ],
+            ),
           )
         ],
       ),
