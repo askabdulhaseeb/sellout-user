@@ -17,6 +17,16 @@ class ProductAPI {
     return Product.fromDoc(doc!);
   }
 
+  Future<List<Product>> getProducts() async {
+    List<Product> _products = <Product>[];
+    final QuerySnapshot<Map<String, dynamic>> doc =
+        await _instance.collection(_collection).get();
+    for (DocumentSnapshot<Map<String, dynamic>> element in doc.docs) {
+      _products.add(Product.fromDoc(element));
+    }
+    return _products;
+  }
+
   Future<bool> addProduct(Product product) async {
     await _instance
         .collection(_collection)

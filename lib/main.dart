@@ -48,9 +48,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'SellOut',
+        
         theme: ThemeData(
           primaryColor: _kPrimaryColor,
-          colorScheme: const ColorScheme(
+          colorScheme: const ColorScheme( 
             primary: _kPrimaryColor,
             primaryVariant: Colors.red,
             secondary: _kSecondaryColor,
