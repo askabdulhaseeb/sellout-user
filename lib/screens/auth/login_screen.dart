@@ -6,14 +6,15 @@ import '../../database/auth_methods.dart';
 import '../../enums/screen_state_enum.dart';
 import '../../providers/auth_state_provider.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
+import '../../services/custom_services.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/custom_validators.dart';
 import '../../utilities/utilities.dart';
-import '../../widgets/show_loading.dart';
-import '../../widgets/show_info_dialog.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_textformfield.dart';
 import '../../widgets/password_textformfield.dart';
+import '../../widgets/show_info_dialog.dart';
+import '../../widgets/show_loading.dart';
 import '../main_screen/main_screen.dart';
 import 'forget_password_screen.dart';
 import 'register_screen.dart';
@@ -80,6 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _submitForm() async {
     if (_key.currentState!.validate()) {
+      CustomService.dismissKeyboard();
       Provider.of<AuthStateProvider>(context, listen: false)
           .updateState(ScreenStateEnum.WAITING);
       final User? _user = await AuthMethods().loginWithEmailAndPassword(

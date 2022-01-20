@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:extended_image/extended_image.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:sellout/services/user_local_data.dart';
 import '../models/product.dart';
 import '../widgets/custom_toast.dart';
 
@@ -25,5 +28,18 @@ class ProductAPI {
       return false;
     });
     return true;
+  }
+
+  Future<String?> uploadImage({required String pid, required File file}) async {
+    try {
+      TaskSnapshot snapshot = await FirebaseStorage.instance
+          .ref()
+          .child('products/${UserLocalData.getUID}/$pid')
+          .putData(file.readAsBytesSync());
+      String url = (await snapshot.ref.getDownloadURL()).toString();
+      return url;
+    } catch (e) {
+      return null;
+    }
   }
 }

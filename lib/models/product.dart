@@ -36,6 +36,7 @@ class Product {
   Product({
     required this.pid,
     required this.uid,
+    required this.title,
     required this.prodURL,
     required this.thumbnail,
     required this.condition,
@@ -54,6 +55,7 @@ class Product {
 
   late String pid;
   late String uid;
+  late String title;
   late List<ProductURL> prodURL;
   late String thumbnail;
   late ProdConditionEnum condition;
@@ -73,6 +75,7 @@ class Product {
     return <String, dynamic>{
       'pid': pid,
       'uid': uid,
+      'title': title,
       'prodURL': prodURL.map((ProductURL e) => e.toMap()).toList(),
       'thumbnail': thumbnail,
       'condition':
@@ -100,6 +103,7 @@ class Product {
     return Product(
       pid: doc.data()!['pid'] ?? '',
       uid: doc.data()!['uid'] ?? '',
+      title: doc.data()!['title'] ?? '',
       prodURL: _prodURL,
       thumbnail: doc.data()!['thumbnail'] ?? '',
       condition: ProdConditionEnumConvertor.stringToEnum(

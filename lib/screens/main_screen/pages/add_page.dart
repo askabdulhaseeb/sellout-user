@@ -1,6 +1,11 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:sellout/database/product_api.dart';
+import 'package:sellout/models/product.dart';
+import 'package:sellout/widgets/custom_toast.dart';
+import 'package:sellout/widgets/show_loading.dart';
 import '../../../enums/delivery_type.dart';
 import '../../../enums/privacy_type.dart';
 import '../../../enums/product_condition.dart';
@@ -34,12 +39,25 @@ class _AddPageState extends State<AddPage> {
   ProdPrivacyTypeEnum _privacy = ProdPrivacyTypeEnum.PUBLIC;
   DeliveryTypeEnum _delivery = DeliveryTypeEnum.DELIVERY;
 
+  final TextEditingController _title = TextEditingController();
   final TextEditingController _description = TextEditingController();
   final TextEditingController _price = TextEditingController();
   final TextEditingController _quantity = TextEditingController(text: '1');
   final TextEditingController _deliveryFee = TextEditingController(text: '0');
   bool _acceptOffer = true;
-  final List<PlatformFile> _files = <PlatformFile>[];
+  bool _isloading = false;
+  final List<PlatformFile?> _files = <PlatformFile?>[
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+  ];
 
   @override
   void initState() {
@@ -85,16 +103,82 @@ class _AddPageState extends State<AddPage> {
                     const SizedBox(height: 16),
                     _GetProductImages(
                       onTap: () => _fetchMedia(),
+                      file: _files,
                     ),
                     const SizedBox(height: 20),
                     _infoSection(category),
                     const SizedBox(height: 16),
-                    CustomElevatedButton(
-                      title: 'Post',
-                      onTap: () {
-                        if (_key.currentState!.validate()) {}
-                      },
-                    ),
+                    _isloading
+                        ? const ShowLoading()
+                        : CustomElevatedButton(
+                            title: 'Post',
+                            onTap: () async {
+                              if (_key.currentState!.validate()) {
+                                setState(() {
+                                  _isloading = true;
+                                });
+                                String _pid = DateTime.now()
+                                    .microsecondsSinceEpoch
+                                    .toString();
+                                List<ProductURL> _urls = [];
+                                for (int i = 0; i < 10; i++) {
+                                  if (_files[i] != null) {
+                                    String? _tempURL =
+                                        await ProductAPI().uploadImage(
+                                      pid: _pid,
+                                      file: File(_files[0]!.path!),
+                                    );
+                                    _urls.add(
+                                      ProductURL(
+                                        url: _tempURL ?? '',
+                                        isVideo: Utilities.isVideo(
+                                            extension: _files[0]!.extension!),
+                                        index: i,
+                                      ),
+                                    );
+                                  }
+                                }
+                                Product _product = Product(
+                                  pid: DateTime.now()
+                                      .microsecondsSinceEpoch
+                                      .toString(),
+                                  uid: UserLocalData.getUID,
+                                  title: _title.text.trim(),
+                                  prodURL: _urls,
+                                  thumbnail: '',
+                                  condition: _condition,
+                                  description: _description.text.trim(),
+                                  categories: [
+                                    category.selectedCategroy!.catID
+                                  ],
+                                  subCategories: [
+                                    category.selectedSubCategory!.catID
+                                  ],
+                                  price: double.parse(_price.text),
+                                  acceptOffers: _acceptOffer,
+                                  privacy: _privacy,
+                                  delivery: _delivery,
+                                  deliveryFree:
+                                      double.parse(_deliveryFee.text.trim()),
+                                  quantity: int.parse(_quantity.text.trim()),
+                                  isAvailable: true,
+                                  timestamp:
+                                      DateTime.now().microsecondsSinceEpoch,
+                                );
+                                final bool _uploaded =
+                                    await ProductAPI().addProduct(_product);
+                                setState(() {
+                                  _isloading = false;
+                                });
+                                if (_uploaded) {
+                                  CustomToast.successToast(
+                                      message: 'Uploaded Successfully');
+                                } else {
+                                  CustomToast.errorToast(message: 'Error');
+                                }
+                              }
+                            },
+                          ),
                     const SizedBox(height: 40),
                   ],
                 ),
@@ -113,7 +197,14 @@ class _AddPageState extends State<AddPage> {
     );
     if (_result == null) return;
     _files.clear();
-    _files.addAll(_result.files);
+    for (PlatformFile element in _result.files) {
+      // File mediaFile = File(element.path!);
+      _files.add(element);
+    }
+    for (int i = _result.files.length; i < 10; i++) {
+      _files.add(null);
+    }
+
     setState(() {});
   }
 
@@ -319,17 +410,10 @@ class _AddPageState extends State<AddPage> {
         ),
         const SizedBox(width: 6),
         Flexible(
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              vertical: Utilities.padding / 2,
-              horizontal: Utilities.padding,
-            ),
-            alignment: Alignment.centerLeft,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(Utilities.borderRadius),
-            ),
-            child: const Text('What are you selling...?'),
+          child: CustomTextFormField(
+            controller: _title,
+            hint: 'what are you selling ...?',
+            validator: (String? value) => CustomValidator.isEmpty(value),
           ),
         )
       ],
@@ -338,7 +422,9 @@ class _AddPageState extends State<AddPage> {
 }
 
 class _GetProductImages extends StatefulWidget {
-  const _GetProductImages({required this.onTap, Key? key}) : super(key: key);
+  const _GetProductImages({required this.file, required this.onTap, Key? key})
+      : super(key: key);
+  final List<PlatformFile?> file;
   final VoidCallback onTap;
   @override
   __GetProductImagesState createState() => __GetProductImagesState();
@@ -347,7 +433,7 @@ class _GetProductImages extends StatefulWidget {
 class __GetProductImagesState extends State<_GetProductImages> {
   @override
   Widget build(BuildContext context) {
-    final double _width = MediaQuery.of(context).size.width - 32 - 25;
+    final double _width = MediaQuery.of(context).size.width - 32 - 20;
     return Column(
       children: <Widget>[
         InkWell(
@@ -376,26 +462,19 @@ class __GetProductImagesState extends State<_GetProductImages> {
           ),
         ),
         const SizedBox(height: 6),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            _ImageBox(index: 1, width: _width / 5),
-            _ImageBox(index: 2, width: _width / 5),
-            _ImageBox(index: 3, width: _width / 5),
-            _ImageBox(index: 4, width: _width / 5),
-            _ImageBox(index: 5, width: _width / 5),
-          ],
-        ),
-        const SizedBox(height: 6),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            _ImageBox(index: 6, width: _width / 5),
-            _ImageBox(index: 7, width: _width / 5),
-            _ImageBox(index: 8, width: _width / 5),
-            _ImageBox(index: 9, width: _width / 5),
-            _ImageBox(index: 10, width: _width / 5),
-          ],
+        SizedBox(
+          height: _width / 5,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: widget.file.length,
+            separatorBuilder: (BuildContext context, int index) =>
+                const SizedBox(width: 7),
+            itemBuilder: (BuildContext context, int index) => _ImageBox(
+              index: index + 1,
+              width: _width / 5,
+              file: widget.file[index],
+            ),
+          ),
         ),
       ],
     );
@@ -403,12 +482,17 @@ class __GetProductImagesState extends State<_GetProductImages> {
 }
 
 class _ImageBox extends StatelessWidget {
-  const _ImageBox({required this.index, required double width, Key? key})
-      : _width = width,
+  const _ImageBox({
+    required this.index,
+    required double width,
+    this.file,
+    Key? key,
+  })  : _width = width,
         super(key: key);
 
   final double _width;
   final int index;
+  final PlatformFile? file;
 
   @override
   Widget build(BuildContext context) {
@@ -418,21 +502,27 @@ class _ImageBox extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(color: Colors.black, width: 0.5),
       ),
-      child: Container(
-        height: double.infinity,
-        width: double.infinity,
-        padding: const EdgeInsets.all(10),
-        color: Colors.grey[300],
-        child: FittedBox(
-          child: Text(
-            index.toString(),
-            style: TextStyle(
-              color: Theme.of(context).primaryColor.withOpacity(0.2),
-              fontWeight: FontWeight.w900,
+      child: (file == null)
+          ? Container(
+              height: double.infinity,
+              width: double.infinity,
+              padding: const EdgeInsets.all(10),
+              color: Colors.grey[300],
+              child: FittedBox(
+                child: Text(
+                  index.toString(),
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor.withOpacity(0.2),
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+            )
+          : SizedBox(
+              height: double.infinity,
+              width: double.infinity,
+              child: Image.file(File(file!.path!)),
             ),
-          ),
-        ),
-      ),
     );
   }
 }

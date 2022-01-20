@@ -19,6 +19,7 @@ class ProdProvider extends ChangeNotifier {
         DateTime.now().second.toString(),
     uid:
         UserLocalData.getUID + DateTime.now().microsecondsSinceEpoch.toString(),
+        title: '',
     prodURL: <ProductURL>[],
     thumbnail: '',
     condition: ProdConditionEnum.NEW,
@@ -42,6 +43,7 @@ class ProdProvider extends ChangeNotifier {
       uid: UserLocalData.getUID +
           DateTime.now().microsecondsSinceEpoch.toString(),
       prodURL: <ProductURL>[],
+      title: '',
       thumbnail: '',
       condition: ProdConditionEnum.NEW,
       description: '',

@@ -24,6 +24,22 @@
 		<string>$(CURRENT_PROJECT_VERSION)</string>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+		</dict>
+		<key>NSCameraUsageDescription</key>
+		<string>Used to demonstrate image picker plugin</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Used to capture audio for image picker plugin</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Used to demonstrate image picker plugin</string>
+		<key>UIBackgroundModes</key>
+		<array>
+			<string>fetch</string>
+			<string>remote-notification</string>
+		</array>
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
 		<key>UIMainStoryboardFile</key>
@@ -46,23 +62,27 @@
 		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<true/>
-		<!-- My Creativity Start here -->
-		<key>NSCameraUsageDescription</key>
-		<string>Used to demonstrate image picker plugin</string>
-		<key>NSMicrophoneUsageDescription</key>
-		<string>Used to capture audio for image picker plugin</string>
-		<key>NSPhotoLibraryUsageDescription</key>
-		<string>Used to demonstrate image picker plugin</string>
+		<!-- My Creativity Start -->
+		<!--  -->
+		<!-- Video Player -->
 		<key>NSAppTransportSecurity</key>
 		<dict>
 			<key>NSAllowsArbitraryLoads</key>
 			<true/>
 		</dict>
+		<!-- File Picker -->
 		<key>UIBackgroundModes</key>
 		<array>
 			<string>fetch</string>
-			<string>remote-notification</string>
+			<string>Sellout needs remote notification access</string>
 		</array>
-		<!-- My Creativity Ends here -->
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Sellout needs your photo library access</string>
+		<!-- HTTP -->
+		<key>NSBonjourServices</key>
+		<array>
+			<string>_http._tcp</string>
+		</array>
+		<!-- My Creativity Ends -->
 	</dict>
 </plist>
