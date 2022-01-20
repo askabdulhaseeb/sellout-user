@@ -466,13 +466,28 @@ class __GetProductImagesState extends State<_GetProductImages> {
           height: _width / 5,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: widget.file.length,
+            itemCount: 5,
             separatorBuilder: (BuildContext context, int index) =>
-                const SizedBox(width: 7),
+                const SizedBox(width: 5),
             itemBuilder: (BuildContext context, int index) => _ImageBox(
               index: index + 1,
               width: _width / 5,
               file: widget.file[index],
+            ),
+          ),
+        ),
+        const SizedBox(height: 6),
+        SizedBox(
+          height: _width / 5,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: 5,
+            separatorBuilder: (BuildContext context, int index) =>
+                const SizedBox(width: 5),
+            itemBuilder: (BuildContext context, int index) => _ImageBox(
+              index: index + 6,
+              width: _width / 5,
+              file: widget.file[index + 5],
             ),
           ),
         ),
