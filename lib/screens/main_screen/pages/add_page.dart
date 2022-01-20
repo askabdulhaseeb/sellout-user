@@ -126,13 +126,13 @@ class _AddPageState extends State<AddPage> {
                                     String? _tempURL =
                                         await ProductAPI().uploadImage(
                                       pid: _pid,
-                                      file: File(_files[0]!.path!),
+                                      file: File(_files[i]!.path!),
                                     );
                                     _urls.add(
                                       ProductURL(
                                         url: _tempURL ?? '',
                                         isVideo: Utilities.isVideo(
-                                            extension: _files[0]!.extension!),
+                                            extension: _files[i]!.extension!),
                                         index: i,
                                       ),
                                     );

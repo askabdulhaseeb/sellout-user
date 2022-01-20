@@ -18,7 +18,7 @@ class ProdPostTile extends StatelessWidget {
       child: Column(
         children: <Widget>[
           _headerSection(context),
-          _imageSection(),
+          _imageSection(_width),
           SizedBox(
             width: _width - (Utilities.padding * 2),
             child: _infoCard(),
@@ -143,16 +143,18 @@ class ProdPostTile extends StatelessWidget {
     );
   }
 
-  AspectRatio _imageSection() {
+  AspectRatio _imageSection(double width) {
     return AspectRatio(
       aspectRatio: 4 / 3,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: product.prodURL.length,
         itemBuilder: (BuildContext context, int index) {
-          print(product.prodURL[index].url);
-          return ExtendedImage.network(
-            product.prodURL[index].url,
+          return SizedBox(
+            width: width,
+            child: ExtendedImage.network(
+              product.prodURL[index].url,
+            ),
           );
         },
       ),

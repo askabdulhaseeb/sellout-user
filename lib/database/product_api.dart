@@ -43,10 +43,10 @@ class ProductAPI {
   Future<String?> uploadImage({required String pid, required File file}) async {
     try {
       TaskSnapshot snapshot = await FirebaseStorage.instance
-          .ref()
-          .child('products/${UserLocalData.getUID}/$pid')
-          .putData(file.readAsBytesSync());
-      String url = (await snapshot.ref.getDownloadURL()).toString();
+          .ref(
+              'products/${UserLocalData.getUID}/$pid/${DateTime.now().microsecondsSinceEpoch}')
+          .putFile(file);
+      String url = await snapshot.ref.getDownloadURL();
       return url;
     } catch (e) {
       return null;
