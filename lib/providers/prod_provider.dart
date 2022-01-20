@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sellout/enums/delivery_type.dart';
-import 'package:sellout/enums/privacy_type.dart';
-import 'package:sellout/enums/product_condition.dart';
-import 'package:sellout/models/prod_category.dart';
-import 'package:sellout/models/prod_sub_category.dart';
-import 'package:sellout/models/product.dart';
-import 'package:sellout/services/user_local_data.dart';
+import '../enums/delivery_type.dart';
+import '../enums/privacy_type.dart';
+import '../enums/product_condition.dart';
+import '../models/prod_category.dart';
+import '../models/prod_sub_category.dart';
+import '../models/product.dart';
+import '../services/user_local_data.dart';
 
 class ProdProvider extends ChangeNotifier {
   // ignore: prefer_final_fields

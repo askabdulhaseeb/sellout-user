@@ -1,18 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:sellout/services/custom_services.dart';
-import 'screens/main_screen/main_screen.dart';
-import 'screens/auth/auth_type_screen.dart';
-import 'screens/auth/forget_password_screen.dart';
-import 'screens/auth/login_screen.dart';
-import 'screens/auth/register_screen.dart';
-import 'services/user_local_data.dart';
 import 'providers/auth_state_provider.dart';
 import 'providers/main_bottom_nav_bar_provider.dart';
 import 'providers/prod_provider.dart';
 import 'providers/product_category_provider.dart';
+import 'screens/auth/auth_type_screen.dart';
+import 'screens/auth/forget_password_screen.dart';
+import 'screens/auth/login_screen.dart';
+import 'screens/auth/register_screen.dart';
+import 'screens/main_screen/main_screen.dart';
+import 'services/user_local_data.dart';
+import 'services/custom_services.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

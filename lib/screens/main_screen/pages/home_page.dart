@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sellout/database/product_api.dart';
-import 'package:sellout/models/product.dart';
-import 'package:sellout/services/custom_services.dart';
-import 'package:sellout/widgets/prod_post_tile.dart';
-import 'package:sellout/widgets/show_loading.dart';
+import '../../../database/product_api.dart';
+import '../../../models/product.dart';
+import '../../../services/custom_services.dart';
+import '../../../widgets/prod_post_tile.dart';
+import '../../../widgets/show_loading.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,6 +15,15 @@ class HomePage extends StatelessWidget {
         systemOverlayStyle: CustomService.systemUIOverlayStyle(),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        title: Text(
+          'Sellout',
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+            wordSpacing: 1,
+            fontSize: 32,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
         actions: <Widget>[
           IconButton(onPressed: () {}, icon: const Icon(Icons.notifications))
         ],

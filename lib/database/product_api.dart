@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:sellout/services/user_local_data.dart';
+import '../services/user_local_data.dart';
 import '../models/product.dart';
 import '../widgets/custom_toast.dart';
 

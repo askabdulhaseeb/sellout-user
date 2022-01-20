@@ -2,10 +2,10 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:sellout/database/product_api.dart';
-import 'package:sellout/models/product.dart';
-import 'package:sellout/widgets/custom_toast.dart';
-import 'package:sellout/widgets/show_loading.dart';
+import '../../../database/product_api.dart';
+import '../../../models/product.dart';
+import '../../../widgets/custom_toast.dart';
+import '../../../widgets/show_loading.dart';
 import '../../../enums/delivery_type.dart';
 import '../../../enums/privacy_type.dart';
 import '../../../enums/product_condition.dart';
@@ -120,7 +120,7 @@ class _AddPageState extends State<AddPage> {
                                 String _pid = DateTime.now()
                                     .microsecondsSinceEpoch
                                     .toString();
-                                List<ProductURL> _urls = [];
+                                List<ProductURL> _urls = <ProductURL>[];
                                 for (int i = 0; i < 10; i++) {
                                   if (_files[i] != null) {
                                     String? _tempURL =
@@ -148,10 +148,10 @@ class _AddPageState extends State<AddPage> {
                                   thumbnail: '',
                                   condition: _condition,
                                   description: _description.text.trim(),
-                                  categories: [
+                                  categories: <String>[
                                     category.selectedCategroy!.catID
                                   ],
-                                  subCategories: [
+                                  subCategories: <String>[
                                     category.selectedSubCategory!.catID
                                   ],
                                   price: double.parse(_price.text),
