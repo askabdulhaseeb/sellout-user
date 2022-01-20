@@ -3,6 +3,7 @@ import 'package:sellout/database/product_api.dart';
 import 'package:sellout/models/product.dart';
 import 'package:sellout/services/custom_services.dart';
 import 'package:sellout/widgets/prod_post_tile.dart';
+import 'package:sellout/widgets/show_loading.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,17 +25,21 @@ class HomePage extends StatelessWidget {
           if (snapshot.hasError) {
             return const _ErrorWidget();
           } else {
-            List<Product> _products = snapshot.data!;
-            return ListView.separated(
-              itemCount: _products.length,
-              separatorBuilder: (BuildContext context, int index) => Divider(
-                color: Colors.grey[200],
-                thickness: 4,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return ProdPostTile(product: _products[index]);
-              },
-            );
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const ShowLoading();
+            } else {
+              List<Product> _products = snapshot.data!;
+              return ListView.separated(
+                itemCount: _products.length,
+                separatorBuilder: (BuildContext context, int index) => Divider(
+                  color: Colors.grey[200],
+                  thickness: 4,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return ProdPostTile(product: _products[index]);
+                },
+              );
+            }
           }
         },
       ),

@@ -453,10 +453,6 @@ class __GetProductImagesState extends State<_GetProductImages> {
                 Icon(Icons.add_circle_rounded),
                 SizedBox(height: 6),
                 Text('Add Images/Videos'),
-                Text(
-                  'Only 10 images/video are allowed',
-                  style: TextStyle(color: Colors.grey),
-                )
               ],
             ),
           ),
@@ -521,13 +517,13 @@ class _ImageBox extends StatelessWidget {
           ? Container(
               height: double.infinity,
               width: double.infinity,
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(16),
               color: Colors.grey[300],
               child: FittedBox(
                 child: Text(
                   index.toString(),
                   style: TextStyle(
-                    color: Theme.of(context).primaryColor.withOpacity(0.2),
+                    color: Colors.black.withOpacity(0.08),
                     fontWeight: FontWeight.w900,
                   ),
                 ),
