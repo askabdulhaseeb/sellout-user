@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sellout/widgets/custom_widgets/custom_elevated_button.dart';
 import '../../database/product_api.dart';
 import '../../models/app_user.dart';
 import '../../models/prod_category.dart';
@@ -42,6 +44,7 @@ class OthersProfile extends StatelessWidget {
         children: <Widget>[
           _headerSection(context),
           _scoreSection(context),
+          _SuppoertAndMessageButton(user: user),
           (user.isPublicProfile == true)
               ? _selectionSection(context)
               : (user.uid == UserLocalData.getUID ||
@@ -150,7 +153,7 @@ class OthersProfile extends StatelessWidget {
     final double _totalWidth = MediaQuery.of(context).size.width;
     final double _boxWidth = (_totalWidth / 4) - 14;
     return Padding(
-      padding: EdgeInsets.all(Utilities.padding),
+      padding: EdgeInsets.symmetric(vertical: 8, horizontal: Utilities.padding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -240,5 +243,76 @@ class OthersProfile extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _SuppoertAndMessageButton extends StatefulWidget {
+  const _SuppoertAndMessageButton({required this.user, Key? key})
+      : super(key: key);
+
+  final AppUser user;
+
+  @override
+  State<_SuppoertAndMessageButton> createState() =>
+      _SuppoertAndMessageButtonState();
+}
+
+class _SuppoertAndMessageButtonState extends State<_SuppoertAndMessageButton> {
+  static const double _height = 32;
+  final BorderRadius _borderRadius = BorderRadius.circular(4);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8, horizontal: Utilities.padding),
+      child: Row(
+        children: <Widget>[
+          Flexible(
+            child: _supportButton(),
+          ),
+          const SizedBox(width: 6),
+          Flexible(
+            child: InkWell(
+              onTap: () async {},
+              child: Container(
+                height: _height,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: const Text('Message'),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _supportButton() {
+    return (widget.user.supporters?.contains(UserLocalData.getUID) ?? false)
+        ? CustomElevatedButton(
+            title: 'Supporting',
+            onTap: () {},
+            bgColor: Colors.grey[300],
+            borderRadius: _borderRadius,
+          )
+        : (widget.user.supporting?.contains(UserLocalData.getUID) ?? false)
+            ? CustomElevatedButton(
+                title: 'Support Back',
+                onTap: () {},
+                margin: const EdgeInsets.all(0),
+                padding: const EdgeInsets.all(7.5),
+                textStyle: const TextStyle(color: Colors.white),
+                borderRadius: _borderRadius,
+              )
+            : CustomElevatedButton(
+                title: 'Support',
+                onTap: () {},
+                margin: const EdgeInsets.all(0),
+                padding: const EdgeInsets.all(7.5),
+                textStyle: const TextStyle(color: Colors.white),
+                borderRadius: _borderRadius,
+              );
   }
 }
