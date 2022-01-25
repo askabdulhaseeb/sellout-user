@@ -1,10 +1,10 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import '../models/product.dart';
-import '../utilities/utilities.dart';
-import 'custom_elevated_button.dart';
-import 'show_info_dialog.dart';
-import 'custom_profile_image.dart';
+import '../../models/product.dart';
+import '../../utilities/utilities.dart';
+import '../custom_widgets/custom_elevated_button.dart';
+import '../custom_widgets/custom_profile_image.dart';
+import '../custom_widgets/show_info_dialog.dart';
 
 class ProdPostTile extends StatelessWidget {
   const ProdPostTile({required this.product, Key? key}) : super(key: key);

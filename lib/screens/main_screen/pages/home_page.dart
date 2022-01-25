@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../database/product_api.dart';
 import '../../../models/product.dart';
 import '../../../services/custom_services.dart';
-import '../../../widgets/prod_post_tile.dart';
-import '../../../widgets/show_loading.dart';
+import '../../../widgets/product/prod_post_tile.dart';
+import '../../../widgets/custom_widgets/show_loading.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

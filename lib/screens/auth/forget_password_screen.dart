@@ -7,10 +7,10 @@ import '../../services/custom_services.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/custom_validators.dart';
 import '../../utilities/utilities.dart';
-import '../../widgets/custom_elevated_button.dart';
-import '../../widgets/custom_textformfield.dart';
-import '../../widgets/custom_toast.dart';
-import '../../widgets/show_loading.dart';
+import '../../widgets/custom_widgets/custom_elevated_button.dart';
+import '../../widgets/custom_widgets/custom_textformfield.dart';
+import '../../widgets/custom_widgets/custom_toast.dart';
+import '../../widgets/custom_widgets/show_loading.dart';
 import 'login_screen.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {

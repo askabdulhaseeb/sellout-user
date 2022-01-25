@@ -1,6 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:sellout/models/product.dart';
+import '../../models/product.dart';
 
 class GridViewOfProducts extends StatelessWidget {
   const GridViewOfProducts({required this.posts, Key? key}) : super(key: key);

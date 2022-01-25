@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../models/app_user.dart';
 import '../services/user_local_data.dart';
-import '../widgets/gender_selection_button.dart';
-import '../widgets/custom_toast.dart';
+import '../widgets/custom_widgets/gender_selection_button.dart';
+import '../widgets/custom_widgets/custom_toast.dart';
 import 'user_api.dart';
 
 class AuthMethods {

@@ -7,17 +7,17 @@ import '../../database/user_api.dart';
 import '../../enums/screen_state_enum.dart';
 import '../../models/app_user.dart';
 import '../../providers/auth_state_provider.dart';
-import '../../widgets/custom_toast.dart';
-import '../../widgets/show_loading.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/custom_validators.dart';
 import '../../utilities/utilities.dart';
-import '../../widgets/custom_elevated_button.dart';
-import '../../widgets/custom_textformfield.dart';
-import '../../widgets/dob_dropdown.dart';
-import '../../widgets/gender_selection_button.dart';
-import '../../widgets/password_textformfield.dart';
-import '../../widgets/phone_number_field.dart';
+import '../../widgets/custom_widgets/custom_elevated_button.dart';
+import '../../widgets/custom_widgets/custom_toast.dart';
+import '../../widgets/custom_widgets/custom_textformfield.dart';
+import '../../widgets/custom_widgets/dob_dropdown.dart';
+import '../../widgets/custom_widgets/gender_selection_button.dart';
+import '../../widgets/custom_widgets/password_textformfield.dart';
+import '../../widgets/custom_widgets/phone_number_field.dart';
+import '../../widgets/custom_widgets/show_loading.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {

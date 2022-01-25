@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../models/app_user.dart';
 import '../services/user_local_data.dart';
-import '../widgets/custom_toast.dart';
+import '../widgets/custom_widgets/custom_toast.dart';
 
 class UserAPI {
   static const String _collection = 'users';

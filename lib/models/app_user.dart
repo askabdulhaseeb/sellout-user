@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../widgets/gender_selection_button.dart';
+import '../widgets/custom_widgets/gender_selection_button.dart';
 
 class AppUser {
   AppUser({

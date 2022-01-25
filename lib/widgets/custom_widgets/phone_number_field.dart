@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
-import '../utilities/utilities.dart';
+import '../../utilities/utilities.dart';
 
 class PhoneNumberField extends StatefulWidget {
   const PhoneNumberField({required this.onChange, Key? key}) : super(key: key);

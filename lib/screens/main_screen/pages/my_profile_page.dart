@@ -1,21 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sellout/database/product_api.dart';
-import 'package:sellout/models/product.dart';
-import 'package:sellout/widgets/product/grid_view_of_prod.dart';
+import '../../../database/product_api.dart';
 import '../../../database/auth_methods.dart';
 import '../../../models/prod_category.dart';
+import '../../../models/product.dart';
 import '../../../providers/product_category_provider.dart';
 import '../../../services/custom_services.dart';
 import '../../../services/user_local_data.dart';
 import '../../../utilities/utilities.dart';
-import '../../../widgets/custom_profile_image.dart';
-import '../../../widgets/custom_icon_button.dart';
-import '../../../widgets/custom_rating_stars.dart';
-import '../../../widgets/custom_score_button.dart';
+import '../../../widgets/custom_widgets/custom_profile_image.dart';
+import '../../../widgets/custom_widgets/custom_icon_button.dart';
+import '../../../widgets/custom_widgets/custom_rating_stars.dart';
+import '../../../widgets/custom_widgets/custom_score_button.dart';
+import '../../../widgets/custom_widgets/show_info_dialog.dart';
+import '../../../widgets/product/grid_view_of_prod.dart';
 import '../../../widgets/product/prod_cat_dropdown.dart';
-import '../../../widgets/show_info_dialog.dart';
 import '../../auth/login_screen.dart';
 
 class MyProdilePage extends StatelessWidget {
