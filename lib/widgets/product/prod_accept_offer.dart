@@ -37,6 +37,7 @@ class _ProdAcceptOfferWidgetState extends State<ProdAcceptOfferWidget> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Radio<_AcceptOfferEnum>(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 value: _AcceptOfferEnum.YES,
                 activeColor: Theme.of(context).primaryColor,
                 groupValue: _offerEnum,
@@ -62,6 +63,7 @@ class _ProdAcceptOfferWidgetState extends State<ProdAcceptOfferWidget> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Radio<_AcceptOfferEnum>(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 value: _AcceptOfferEnum.NO,
                 groupValue: _offerEnum,
                 activeColor: Theme.of(context).primaryColor,

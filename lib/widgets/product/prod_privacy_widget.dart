@@ -26,6 +26,7 @@ class _ProdPrivacyWidgetState extends State<ProdPrivacyWidget> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Radio<ProdPrivacyTypeEnum>(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 value: ProdPrivacyTypeEnum.PUBLIC,
                 groupValue: _privacy,
                 activeColor: Theme.of(context).primaryColor,
@@ -51,6 +52,7 @@ class _ProdPrivacyWidgetState extends State<ProdPrivacyWidget> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Radio<ProdPrivacyTypeEnum>(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 value: ProdPrivacyTypeEnum.SUPPORTERS,
                 groupValue: _privacy,
                 activeColor: Theme.of(context).primaryColor,
@@ -76,6 +78,7 @@ class _ProdPrivacyWidgetState extends State<ProdPrivacyWidget> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Radio<ProdPrivacyTypeEnum>(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 value: ProdPrivacyTypeEnum.PRIVATE,
                 groupValue: _privacy,
                 activeColor: Theme.of(context).primaryColor,

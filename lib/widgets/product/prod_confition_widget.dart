@@ -26,6 +26,7 @@ class _ProdConditionWidgetState extends State<ProdConditionWidget> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Radio<ProdConditionEnum>(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 value: ProdConditionEnum.NEW,
                 groupValue: _condition,
                 activeColor: Theme.of(context).primaryColor,
@@ -52,6 +53,7 @@ class _ProdConditionWidgetState extends State<ProdConditionWidget> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Radio<ProdConditionEnum>(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 value: ProdConditionEnum.USED,
                 groupValue: _condition,
                 activeColor: Theme.of(context).primaryColor,

@@ -12,12 +12,14 @@ class ProdCatDropdown extends StatelessWidget {
     this.color,
     this.hintText = 'Category',
     this.margin,
+    this.padding,
     Key? key,
   }) : super(key: key);
   final List<ProdCategory> items;
   final ProdCategory? selectedItem;
   final BorderRadiusGeometry? borderRadius;
   final void Function(ProdCategory?) onChanged;
+  final EdgeInsetsGeometry? padding;
   final Color? color;
   final String hintText;
   final EdgeInsetsGeometry? margin;
@@ -47,9 +49,10 @@ class ProdCatDropdown extends StatelessWidget {
           if (value == null) return 'Category Required';
           return null;
         },
+        showAsSuffixIcons: true,
         dropdownSearchDecoration: InputDecoration(
           hintText: hintText,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+          contentPadding: padding ?? const EdgeInsets.symmetric(horizontal: 10),
           border: InputBorder.none,
         ),
       ),

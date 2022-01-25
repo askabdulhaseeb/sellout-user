@@ -26,6 +26,7 @@ class _ProdDeliveryTypeWidgetState extends State<ProdDeliveryTypeWidget> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Radio<DeliveryTypeEnum>(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 value: DeliveryTypeEnum.DELIVERY,
                 groupValue: _enum,
                 activeColor: Theme.of(context).primaryColor,
@@ -51,6 +52,7 @@ class _ProdDeliveryTypeWidgetState extends State<ProdDeliveryTypeWidget> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Radio<DeliveryTypeEnum>(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 value: DeliveryTypeEnum.COLLOCATION,
                 groupValue: _enum,
                 activeColor: Theme.of(context).primaryColor,
@@ -76,6 +78,7 @@ class _ProdDeliveryTypeWidgetState extends State<ProdDeliveryTypeWidget> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Radio<DeliveryTypeEnum>(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 value: DeliveryTypeEnum.BOTH,
                 groupValue: _enum,
                 activeColor: Theme.of(context).primaryColor,

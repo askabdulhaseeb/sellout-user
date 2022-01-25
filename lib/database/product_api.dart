@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:sellout/database/user_api.dart';
 import '../services/user_local_data.dart';
 import '../models/product.dart';
 import '../widgets/custom_toast.dart';
@@ -17,6 +18,18 @@ class ProductAPI {
     return Product.fromDoc(doc!);
   }
 
+  Future<List<Product>> getPersonalProducts({required String uid}) async {
+    List<Product> _products = <Product>[];
+    final QuerySnapshot<Map<String, dynamic>> doc = await _instance
+        .collection(_collection)
+        .where('uid', isEqualTo: uid)
+        .get();
+    for (DocumentSnapshot<Map<String, dynamic>> element in doc.docs) {
+      _products.add(Product.fromDoc(element));
+    }
+    return _products;
+  }
+
   Future<List<Product>> getProducts() async {
     List<Product> _products = <Product>[];
     final QuerySnapshot<Map<String, dynamic>> doc =
@@ -28,16 +41,16 @@ class ProductAPI {
   }
 
   Future<bool> addProduct(Product product) async {
-    await _instance
-        .collection(_collection)
-        .doc(product.pid)
-        .set(product.toMap())
-        .catchError((Object e) {
-      CustomToast.errorToast(message: e.toString());
-      // ignore: invalid_return_type_for_catch_error
+    try {
+      // ignore: always_specify_types
+      Future.wait([
+        _instance.collection(_collection).doc(product.pid).set(product.toMap()),
+        UserAPI().updatePosts(product.pid),
+      ]);
+      return true;
+    } catch (e) {
       return false;
-    });
-    return true;
+    }
   }
 
   Future<String?> uploadImage({required String pid, required File file}) async {

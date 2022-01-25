@@ -4,7 +4,7 @@ import '../models/product.dart';
 import '../utilities/utilities.dart';
 import 'custom_elevated_button.dart';
 import 'show_info_dialog.dart';
-import 'circular_profile_image.dart';
+import 'custom_profile_image.dart';
 
 class ProdPostTile extends StatelessWidget {
   const ProdPostTile({required this.product, Key? key}) : super(key: key);
@@ -167,7 +167,7 @@ class ProdPostTile extends StatelessWidget {
           vertical: Utilities.padding / 2, horizontal: Utilities.padding),
       child: Row(
         children: <Widget>[
-          const CircularProfileImage(imageURL: ''),
+          const CustomProfileImage(imageURL: ''),
           const SizedBox(width: 10),
           const Text(
             'Username',

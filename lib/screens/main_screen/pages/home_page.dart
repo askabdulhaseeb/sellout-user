@@ -15,17 +15,22 @@ class HomePage extends StatelessWidget {
         systemOverlayStyle: CustomService.systemUIOverlayStyle(),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        centerTitle: false,
         title: Text(
           'Sellout',
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             wordSpacing: 1,
-            fontSize: 32,
+            fontSize: 24,
             fontWeight: FontWeight.w900,
           ),
         ),
         actions: <Widget>[
-          IconButton(onPressed: () {}, icon: const Icon(Icons.notifications))
+          IconButton(
+            splashRadius: 20,
+            onPressed: () {},
+            icon: const Icon(Icons.notifications),
+          )
         ],
       ),
       body: FutureBuilder<List<Product>>(

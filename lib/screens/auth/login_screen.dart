@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Image.asset(AppImages.logo),
                 ),
               ),
-              const SizedBox(height: 60),
+              const SizedBox(height: 40),
               _titleText('EMAIL ADDRESS'),
               CustomTextFormField(
                 controller: _email,
@@ -70,7 +70,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
               _forgetPassword(_state),
               const Spacer(),
-              const SizedBox(height: 16),
               _otherAuthMethods(_state),
             ],
           ),
@@ -103,8 +102,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        // const Text('OR'),
-        // const SizedBox(height: 40),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[

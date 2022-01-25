@@ -16,7 +16,7 @@ import '../../../services/custom_services.dart';
 import '../../../services/user_local_data.dart';
 import '../../../utilities/custom_validators.dart';
 import '../../../utilities/utilities.dart';
-import '../../../widgets/circular_profile_image.dart';
+import '../../../widgets/custom_profile_image.dart';
 import '../../../widgets/custom_elevated_button.dart';
 import '../../../widgets/custom_textformfield.dart';
 import '../../../widgets/product/prod_accept_offer.dart';
@@ -63,6 +63,21 @@ class _AddPageState extends State<AddPage> {
   void initState() {
     CustomService.statusBar();
     super.initState();
+  }
+
+  void _reset() {
+    _title.clear();
+    _description.clear();
+    _price.clear();
+    _quantity.text = '1';
+    _deliveryFee.text = '0';
+    _condition = ProdConditionEnum.NEW;
+    _privacy = ProdPrivacyTypeEnum.PUBLIC;
+    _delivery = DeliveryTypeEnum.DELIVERY;
+    _files.clear();
+    for (int i = 0; i < 10; i++) {
+      _files.add(null);
+    }
   }
 
   @override
@@ -112,72 +127,7 @@ class _AddPageState extends State<AddPage> {
                         ? const ShowLoading()
                         : CustomElevatedButton(
                             title: 'Post',
-                            onTap: () async {
-                              if (_key.currentState!.validate()) {
-                                setState(() {
-                                  _isloading = true;
-                                });
-                                String _pid = DateTime.now()
-                                    .microsecondsSinceEpoch
-                                    .toString();
-                                List<ProductURL> _urls = <ProductURL>[];
-                                for (int i = 0; i < 10; i++) {
-                                  if (_files[i] != null) {
-                                    String? _tempURL =
-                                        await ProductAPI().uploadImage(
-                                      pid: _pid,
-                                      file: File(_files[i]!.path!),
-                                    );
-                                    _urls.add(
-                                      ProductURL(
-                                        url: _tempURL ?? '',
-                                        isVideo: Utilities.isVideo(
-                                            extension: _files[i]!.extension!),
-                                        index: i,
-                                      ),
-                                    );
-                                  }
-                                }
-                                Product _product = Product(
-                                  pid: DateTime.now()
-                                      .microsecondsSinceEpoch
-                                      .toString(),
-                                  uid: UserLocalData.getUID,
-                                  title: _title.text.trim(),
-                                  prodURL: _urls,
-                                  thumbnail: '',
-                                  condition: _condition,
-                                  description: _description.text.trim(),
-                                  categories: <String>[
-                                    category.selectedCategroy!.catID
-                                  ],
-                                  subCategories: <String>[
-                                    category.selectedSubCategory!.catID
-                                  ],
-                                  price: double.parse(_price.text),
-                                  acceptOffers: _acceptOffer,
-                                  privacy: _privacy,
-                                  delivery: _delivery,
-                                  deliveryFree:
-                                      double.parse(_deliveryFee.text.trim()),
-                                  quantity: int.parse(_quantity.text.trim()),
-                                  isAvailable: true,
-                                  timestamp:
-                                      DateTime.now().microsecondsSinceEpoch,
-                                );
-                                final bool _uploaded =
-                                    await ProductAPI().addProduct(_product);
-                                setState(() {
-                                  _isloading = false;
-                                });
-                                if (_uploaded) {
-                                  CustomToast.successToast(
-                                      message: 'Uploaded Successfully');
-                                } else {
-                                  CustomToast.errorToast(message: 'Error');
-                                }
-                              }
-                            },
+                            onTap: () => _submitForm(category),
                           ),
                     const SizedBox(height: 40),
                   ],
@@ -188,6 +138,65 @@ class _AddPageState extends State<AddPage> {
         ),
       ),
     );
+  }
+
+  void _submitForm(ProdCatProvider category) async {
+    if (_key.currentState!.validate()) {
+      if (_files[0] == null) {
+        CustomToast.errorToast(message: 'Add Images of the product');
+        return;
+      }
+      CustomService.dismissKeyboard();
+      setState(() {
+        _isloading = true;
+      });
+      String _pid = DateTime.now().microsecondsSinceEpoch.toString();
+      List<ProductURL> _urls = <ProductURL>[];
+      for (int i = 0; i < 10; i++) {
+        if (_files[i] != null) {
+          String? _tempURL = await ProductAPI().uploadImage(
+            pid: _pid,
+            file: File(_files[i]!.path!),
+          );
+          _urls.add(
+            ProductURL(
+              url: _tempURL ?? '',
+              isVideo: Utilities.isVideo(extension: _files[i]!.extension!),
+              index: i,
+            ),
+          );
+        }
+      }
+      Product _product = Product(
+        pid: DateTime.now().microsecondsSinceEpoch.toString(),
+        uid: UserLocalData.getUID,
+        title: _title.text.trim(),
+        prodURL: _urls,
+        thumbnail: '',
+        condition: _condition,
+        description: _description.text.trim(),
+        categories: <String>[category.selectedCategroy!.catID],
+        subCategories: <String>[category.selectedSubCategory!.catID],
+        price: double.parse(_price.text),
+        acceptOffers: _acceptOffer,
+        privacy: _privacy,
+        delivery: _delivery,
+        deliveryFree: double.parse(_deliveryFee.text.trim()),
+        quantity: int.parse(_quantity.text.trim()),
+        isAvailable: true,
+        timestamp: DateTime.now().microsecondsSinceEpoch,
+      );
+      final bool _uploaded = await ProductAPI().addProduct(_product);
+      setState(() {
+        _isloading = false;
+      });
+      if (_uploaded) {
+        _reset();
+        CustomToast.successToast(message: 'Uploaded Successfully');
+      } else {
+        CustomToast.errorToast(message: 'Error');
+      }
+    }
   }
 
   _fetchMedia() async {
@@ -257,7 +266,10 @@ class _AddPageState extends State<AddPage> {
         const SizedBox(height: 16),
         _additionalInformation('additional information'),
         const SizedBox(height: 10),
-        _titleText('Select the Condition of your product'.toUpperCase()),
+        FittedBox(
+          child:
+              _titleText('Select the Condition of your product'.toUpperCase()),
+        ),
         ProdConditionWidget(
           onChanged: (ProdConditionEnum? p0) => _condition = p0!,
         ),
@@ -404,7 +416,7 @@ class _AddPageState extends State<AddPage> {
   Row _headerSection() {
     return Row(
       children: <Widget>[
-        CircularProfileImage(
+        CustomProfileImage(
           imageURL: UserLocalData.getImageURL,
           radius: 24,
         ),

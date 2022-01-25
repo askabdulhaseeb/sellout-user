@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sellout/database/product_api.dart';
+import 'package:sellout/models/product.dart';
+import 'package:sellout/widgets/product/grid_view_of_prod.dart';
 import '../../../database/auth_methods.dart';
 import '../../../models/prod_category.dart';
 import '../../../providers/product_category_provider.dart';
 import '../../../services/custom_services.dart';
 import '../../../services/user_local_data.dart';
 import '../../../utilities/utilities.dart';
-import '../../../widgets/circular_profile_image.dart';
+import '../../../widgets/custom_profile_image.dart';
 import '../../../widgets/custom_icon_button.dart';
 import '../../../widgets/custom_rating_stars.dart';
 import '../../../widgets/custom_score_button.dart';
@@ -46,14 +49,43 @@ class MyProdilePage extends StatelessWidget {
           _headerSection(context),
           _scoreSection(context),
           _selectionSection(context),
-          _footer(context),
+          const Divider(),
+          _footer(),
         ],
       ),
     );
   }
 
-  Widget _footer(BuildContext context) {
-    return Container();
+  Widget _footer() {
+    return Expanded(
+      child: FutureBuilder<List<Product>>(
+        future: ProductAPI().getPersonalProducts(uid: UserLocalData.getUID),
+        builder: (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const SizedBox(
+                height: double.infinity,
+                width: double.infinity,
+                child: CircularProgressIndicator.adaptive(),
+              );
+            default:
+              if ((snapshot.hasError)) {
+                return const Text('Error');
+              } else {
+                if (snapshot.hasData) {
+                  if (snapshot.data!.isNotEmpty) {
+                    return GridViewOfProducts(posts: snapshot.data!);
+                  } else {
+                    return const Text('NO DIGILOGS POSTED');
+                  }
+                } else {
+                  return const Text('NO DIGILOGS POSTED');
+                }
+              }
+          }
+        },
+      ),
+    );
   }
 
   Widget _selectionSection(BuildContext context) {
@@ -65,31 +97,35 @@ class MyProdilePage extends StatelessWidget {
           CustomIconButton(
             icon: Icons.card_travel,
             height: 50,
-            width: 100,
+            width: 80,
             onTap: () {
               //TODO: on bag click
             },
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 8),
           Consumer<ProdCatProvider>(
             builder: (BuildContext context, ProdCatProvider cat, _) => Flexible(
-              child: ProdCatDropdown(
-                items: cat.category,
-                selectedItem: cat.selectedCategroy,
-                margin: const EdgeInsets.symmetric(vertical: 0),
-                onChanged: (ProdCategory? update) =>
-                    cat.updateCatSelection(update!),
+              child: SizedBox(
+                height: 34,
+                child: ProdCatDropdown(
+                  items: cat.category,
+                  selectedItem: cat.selectedCategroy,
+                  padding: const EdgeInsets.only(bottom: 14, left: 8, right: 8),
+                  margin: const EdgeInsets.symmetric(vertical: 0),
+                  onChanged: (ProdCategory? update) =>
+                      cat.updateCatSelection(update!),
+                ),
               ),
             ),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 8),
           IconButton(
             onPressed: () {
               // TODO: on cart click
             },
             padding: const EdgeInsets.all(0),
             splashRadius: 24,
-            icon: const Icon(CupertinoIcons.shopping_cart, size: 30),
+            icon: const Icon(CupertinoIcons.shopping_cart, size: 28),
           ),
         ],
       ),
@@ -146,13 +182,14 @@ class MyProdilePage extends StatelessWidget {
 
   Widget _headerSection(BuildContext context) {
     final double _totalWidth = MediaQuery.of(context).size.width;
-    const double _imageRadius = 34;
+    const double _imageRadius = 40;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Utilities.padding),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          CircularProfileImage(
+          CustomProfileImage(
             imageURL: UserLocalData.getImageURL,
             radius: _imageRadius,
           ),
@@ -163,7 +200,7 @@ class MyProdilePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const SizedBox(height: 8),
+                const SizedBox(height: 2),
                 Row(
                   children: <Widget>[
                     Flexible(
@@ -173,7 +210,7 @@ class MyProdilePage extends StatelessWidget {
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 4),
                     InkWell(
                       onTap: () {
                         //TODO: Navigate to Edit profile
@@ -184,7 +221,7 @@ class MyProdilePage extends StatelessWidget {
                         );
                       },
                       child: Text(
-                        'Edit',
+                        '- Edit',
                         style: TextStyle(color: Theme.of(context).primaryColor),
                       ),
                     ),

@@ -84,9 +84,10 @@ class UserAPI {
     return users;
   }
 
-  Future<void> addpostcount(String digilogId) async {
+  Future<void> updatePosts(String pid) async {
     List<String> posts = UserLocalData.getPost;
-    posts.add(digilogId);
+    posts.add(pid);
+    UserLocalData.setPosts(posts);
     await _instance
         .collection(_collection)
         .doc(UserLocalData.getUID)

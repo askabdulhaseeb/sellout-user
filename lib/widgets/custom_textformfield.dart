@@ -10,7 +10,7 @@ class CustomTextFormField extends StatefulWidget {
     this.onChanged,
     this.validator,
     this.initialValue,
-    this.hint,
+    this.hint = '',
     this.color,
     this.contentPadding,
     this.minLines = 1,
@@ -73,13 +73,16 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
         textAlign: widget.textAlign,
         onChanged: widget.onChanged,
         minLines: widget.minLines,
-        maxLines: widget.maxLines,
+        maxLines: (widget._controller.text.isEmpty) ? 1 : widget.maxLines,
         validator: (String? value) => widget.validator!(value),
         cursorColor: Theme.of(context).colorScheme.secondary,
         decoration: InputDecoration(
           contentPadding: widget.contentPadding ??
               const EdgeInsets.symmetric(horizontal: 12),
           hintText: widget.hint,
+          hintStyle: widget.hint!.length > 15
+              ? const TextStyle(fontSize: 14)
+              : const TextStyle(fontSize: 15),
           suffixIcon: (widget._controller.text.isEmpty)
               ? const SizedBox(width: 0, height: 0)
               : (widget.showPrefixIcon == false)
