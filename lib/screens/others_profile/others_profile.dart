@@ -1,56 +1,60 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../database/product_api.dart';
-import '../../../database/auth_methods.dart';
-import '../../../models/prod_category.dart';
-import '../../../models/product.dart';
-import '../../../providers/product_category_provider.dart';
-import '../../../services/custom_services.dart';
-import '../../../services/user_local_data.dart';
-import '../../../utilities/utilities.dart';
-import '../../../widgets/custom_widgets/custom_profile_image.dart';
-import '../../../widgets/custom_widgets/custom_icon_button.dart';
-import '../../../widgets/custom_widgets/custom_rating_stars.dart';
-import '../../../widgets/custom_widgets/custom_score_button.dart';
-import '../../../widgets/custom_widgets/show_info_dialog.dart';
-import '../../../widgets/product/grid_view_of_prod.dart';
-import '../../../widgets/product/prod_cat_dropdown.dart';
-import '../../auth/login_screen.dart';
+import '../../database/product_api.dart';
+import '../../models/app_user.dart';
+import '../../models/prod_category.dart';
+import '../../models/product.dart';
+import '../../providers/product_category_provider.dart';
+import '../../services/custom_services.dart';
+import '../../services/user_local_data.dart';
+import '../../utilities/utilities.dart';
+import '../../widgets/custom_widgets/custom_icon_button.dart';
+import '../../widgets/custom_widgets/custom_profile_image.dart';
+import '../../widgets/custom_widgets/custom_rating_stars.dart';
+import '../../widgets/custom_widgets/custom_score_button.dart';
+import '../../widgets/private_account_widhet.dart';
+import '../../widgets/product/grid_view_of_prod.dart';
+import '../../widgets/product/prod_cat_dropdown.dart';
 
-class MyProdilePage extends StatelessWidget {
-  const MyProdilePage({Key? key}) : super(key: key);
+class OthersProfile extends StatelessWidget {
+  const OthersProfile({required this.user, Key? key}) : super(key: key);
+  final AppUser user;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         systemOverlayStyle: CustomService.systemUIOverlayStyle(),
+        title: Text(
+          user.username,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        titleSpacing: 0,
+        centerTitle: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: <Widget>[
-          IconButton(
-            onPressed: () async {
-              await AuthMethods().signOut();
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                LoginScreen.routeName,
-                (Route<dynamic> route) => false,
-              );
-            },
-            splashRadius: 20,
-            // icon: const Icon(Icons.more_vert_rounded),
-            icon: const Icon(Icons.logout_outlined),
-          ),
-        ],
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _headerSection(context),
           _scoreSection(context),
-          _selectionSection(context),
+          (user.isPublicProfile == true)
+              ? _selectionSection(context)
+              : (user.uid == UserLocalData.getUID ||
+                      user.supporters!.contains(UserLocalData.getUID))
+                  ? _selectionSection(context)
+                  : const SizedBox(),
           const Divider(),
-          _footer(),
+          (user.isPublicProfile == true)
+              ? _footer()
+              : (user.uid == UserLocalData.getUID ||
+                      user.supporters!.contains(UserLocalData.getUID))
+                  ? _footer()
+                  : const PrivateAccountWidget(),
         ],
       ),
     );
@@ -59,7 +63,7 @@ class MyProdilePage extends StatelessWidget {
   Widget _footer() {
     return Expanded(
       child: FutureBuilder<List<Product>>(
-        future: ProductAPI().getProductsByUID(uid: UserLocalData.getUID),
+        future: ProductAPI().getProductsByUID(uid: user.uid),
         builder: (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -159,7 +163,7 @@ class MyProdilePage extends StatelessWidget {
             },
           ),
           CustomScoreButton(
-            score: UserLocalData.getPost.length.toString(),
+            score: user.posts?.length.toString() ?? '-',
             title: 'Posts',
             height: _boxWidth - 10,
             width: _boxWidth,
@@ -168,7 +172,7 @@ class MyProdilePage extends StatelessWidget {
             },
           ),
           CustomScoreButton(
-            score: UserLocalData.getSupporting.length.toString(),
+            score: user.supporting?.length.toString() ?? '-',
             title: 'Supporting',
             height: _boxWidth - 10,
             width: _boxWidth,
@@ -177,7 +181,7 @@ class MyProdilePage extends StatelessWidget {
             },
           ),
           CustomScoreButton(
-            score: UserLocalData.getSupporters.length.toString(),
+            score: user.supporters?.length.toString() ?? '-',
             title: 'Supporters',
             height: _boxWidth - 10,
             width: _boxWidth,
@@ -200,46 +204,25 @@ class MyProdilePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           CustomProfileImage(
-            imageURL: UserLocalData.getImageURL,
+            imageURL: user.imageURL!,
             radius: _imageRadius,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 6),
           SizedBox(
             width: _totalWidth - (_imageRadius) - (Utilities.padding * 2) - 56,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(height: 2),
-                Row(
-                  children: <Widget>[
-                    Flexible(
-                      child: Text(
-                        UserLocalData.getDisplayName,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    InkWell(
-                      onTap: () {
-                        //TODO: Navigate to Edit profile
-                        showInfoDialog(
-                          context,
-                          title: 'Next Milestone',
-                          message: 'This is a part of next milestone',
-                        );
-                      },
-                      child: Text(
-                        '- Edit',
-                        style: TextStyle(color: Theme.of(context).primaryColor),
-                      ),
-                    ),
-                  ],
+                Text(
+                  user.displayName,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 CustomRatingStars(rating: UserLocalData.getRating),
                 SizedBox(
                   width: _totalWidth / 1.6,
-                  child: UserLocalData.getBio == ''
+                  child: user.bio == ''
                       ? const Text(
                           'No Bio',
                           maxLines: 3,

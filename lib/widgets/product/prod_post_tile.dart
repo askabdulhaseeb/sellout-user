@@ -1,5 +1,9 @@
 import 'package:extended_image/extended_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sellout/database/user_api.dart';
+import 'package:sellout/models/app_user.dart';
+import 'package:sellout/screens/others_profile/others_profile.dart';
 import '../../models/product.dart';
 import '../../utilities/utilities.dart';
 import '../custom_widgets/custom_elevated_button.dart';
@@ -17,7 +21,7 @@ class ProdPostTile extends StatelessWidget {
       width: double.infinity,
       child: Column(
         children: <Widget>[
-          _headerSection(context),
+          _Header(uid: product.uid),
           _imageSection(_width),
           SizedBox(
             width: _width - (Utilities.padding * 2),
@@ -160,33 +164,56 @@ class ProdPostTile extends StatelessWidget {
       ),
     );
   }
+}
 
-  Padding _headerSection(BuildContext context) {
+class _Header extends StatelessWidget {
+  const _Header({required this.uid, Key? key}) : super(key: key);
+  final String uid;
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          vertical: Utilities.padding / 2, horizontal: Utilities.padding),
-      child: Row(
-        children: <Widget>[
-          const CustomProfileImage(imageURL: ''),
-          const SizedBox(width: 10),
-          const Text(
-            'Username',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          const Spacer(),
-          IconButton(
-            onPressed: () {
-              // TODO: Notification Seller Button click
-              showInfoDialog(
-                context,
-                title: 'Next Milestone',
-                message: 'This is a part of next milestone',
-              );
-            },
-            icon: const Icon(Icons.more_vert_outlined),
-          )
-        ],
+        vertical: Utilities.padding / 2,
+        horizontal: Utilities.padding,
       ),
+      child: FutureBuilder<AppUser?>(
+          future: UserAPI().getInfo(uid: uid),
+          builder: (BuildContext context, AsyncSnapshot<AppUser?> snapshot) {
+            final AppUser? _user = snapshot.data;
+            return GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<OthersProfile>(
+                    builder: (BuildContext context) =>
+                        OthersProfile(user: _user!),
+                  ),
+                );
+              },
+              child: Row(
+                children: <Widget>[
+                  CustomProfileImage(imageURL: _user?.imageURL ?? ''),
+                  const SizedBox(width: 6),
+                  Text(
+                    _user?.displayName ?? 'Not Found',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {
+                      // TODO: Notification Seller Button click
+                      showInfoDialog(
+                        context,
+                        title: 'Next Milestone',
+                        message: 'This is a part of next milestone',
+                      );
+                    },
+                    icon: const Icon(Icons.more_vert_outlined),
+                  )
+                ],
+              ),
+            );
+          }),
     );
   }
 }

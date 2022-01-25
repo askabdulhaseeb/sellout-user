@@ -12,40 +12,33 @@ class CustomProfileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: radius,
-      width: radius,
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Container(
-        height: radius - 8,
-        width: radius - 8,
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: imageURL.isEmpty
-            ? const FittedBox(
-                child: Padding(
-                padding: EdgeInsets.all(10),
+    return imageURL.isEmpty
+        ? Container(
+            height: radius,
+            width: radius,
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const FittedBox(
                 child: Text(
-                  'No\nImage',
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white),
-                ),
-              ))
-            : ExtendedImage.network(
-                imageURL,
-                width: radius * 2,
-                height: radius * 2,
-                fit: BoxFit.cover,
-                cache: true,
-                shape: BoxShape.circle,
-              ),
-      ),
-    );
+              'No\nImage',
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white),
+            )),
+          )
+        : ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: ExtendedImage.network(
+              imageURL,
+              width: radius,
+              height: radius,
+              fit: BoxFit.cover,
+              cache: true,
+              timeLimit: const Duration(days: 1),
+            ),
+          );
   }
 }

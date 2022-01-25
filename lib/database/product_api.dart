@@ -17,7 +17,7 @@ class ProductAPI {
     return Product.fromDoc(doc!);
   }
 
-  Future<List<Product>> getPersonalProducts({required String uid}) async {
+  Future<List<Product>> getProductsByUID({required String uid}) async {
     List<Product> _products = <Product>[];
     final QuerySnapshot<Map<String, dynamic>> doc = await _instance
         .collection(_collection)
@@ -31,8 +31,10 @@ class ProductAPI {
 
   Future<List<Product>> getProducts() async {
     List<Product> _products = <Product>[];
-    final QuerySnapshot<Map<String, dynamic>> doc =
-        await _instance.collection(_collection).get();
+    final QuerySnapshot<Map<String, dynamic>> doc = await _instance
+        .collection(_collection)
+        .orderBy('timestamp', descending: true)
+        .get();
     for (DocumentSnapshot<Map<String, dynamic>> element in doc.docs) {
       _products.add(Product.fromDoc(element));
     }
