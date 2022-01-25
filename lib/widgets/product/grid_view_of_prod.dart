@@ -21,9 +21,27 @@ class GridViewOfProducts extends StatelessWidget {
           // _provider.onUpdatedigi(posts[index]);
           // Navigator.of(context).pushNamed(DigilogView.routeName);
         },
-        child: ExtendedImage.network(
-          posts[index].prodURL[0].url,
-          fit: BoxFit.cover,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: Center(
+                child: ExtendedImage.network(
+                  posts[index].prodURL[0].url,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+              child: Text(
+                ' ${posts[index].price} - ${posts[index].title}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            )
+          ],
         ),
       ),
     );
