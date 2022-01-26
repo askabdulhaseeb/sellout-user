@@ -1,9 +1,8 @@
 import 'package:extended_image/extended_image.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sellout/database/user_api.dart';
-import 'package:sellout/models/app_user.dart';
-import 'package:sellout/screens/others_profile/others_profile.dart';
+import '../../database/user_api.dart';
+import '../../models/app_user.dart';
+import '../../screens/others_profile/others_profile.dart';
 import '../../models/product.dart';
 import '../../utilities/utilities.dart';
 import '../custom_widgets/custom_elevated_button.dart';
@@ -21,7 +20,7 @@ class ProdPostTile extends StatelessWidget {
       width: double.infinity,
       child: Column(
         children: <Widget>[
-          _Header(uid: product.uid),
+          _Header(product: product),
           _imageSection(_width),
           SizedBox(
             width: _width - (Utilities.padding * 2),
@@ -158,6 +157,7 @@ class ProdPostTile extends StatelessWidget {
             width: width,
             child: ExtendedImage.network(
               product.prodURL[index].url,
+              timeLimit: const Duration(days: 2),
             ),
           );
         },
@@ -167,8 +167,8 @@ class ProdPostTile extends StatelessWidget {
 }
 
 class _Header extends StatelessWidget {
-  const _Header({required this.uid, Key? key}) : super(key: key);
-  final String uid;
+  const _Header({required this.product, Key? key}) : super(key: key);
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +178,7 @@ class _Header extends StatelessWidget {
         horizontal: Utilities.padding,
       ),
       child: FutureBuilder<AppUser?>(
-          future: UserAPI().getInfo(uid: uid),
+          future: UserAPI().getInfo(uid: product.uid),
           builder: (BuildContext context, AsyncSnapshot<AppUser?> snapshot) {
             final AppUser? _user = snapshot.data;
             return GestureDetector(
@@ -194,9 +194,21 @@ class _Header extends StatelessWidget {
                 children: <Widget>[
                   CustomProfileImage(imageURL: _user?.imageURL ?? ''),
                   const SizedBox(width: 6),
-                  Text(
-                    _user?.displayName ?? 'Not Found',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        _user?.displayName ?? 'Not Found',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        Utilities.time(product.timestamp ?? 0),
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
                   ),
                   const Spacer(),
                   IconButton(

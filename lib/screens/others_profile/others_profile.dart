@@ -1,8 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sellout/widgets/custom_widgets/custom_elevated_button.dart';
+import '../../widgets/custom_widgets/custom_elevated_button.dart';
+import '../../widgets/custom_widgets/show_info_dialog.dart';
 import '../../database/product_api.dart';
 import '../../models/app_user.dart';
 import '../../models/prod_category.dart';
@@ -117,6 +117,11 @@ class OthersProfile extends StatelessWidget {
             width: 80,
             onTap: () {
               //TODO: on bag click
+              showInfoDialog(
+                context,
+                title: 'Comimg Soon',
+                message: 'Will be in working soon',
+              );
             },
           ),
           const SizedBox(width: 8),
@@ -139,6 +144,11 @@ class OthersProfile extends StatelessWidget {
           IconButton(
             onPressed: () {
               // TODO: on cart click
+              showInfoDialog(
+                context,
+                title: 'Comimg Soon',
+                message: 'Will be in working soon',
+              );
             },
             padding: const EdgeInsets.all(0),
             splashRadius: 24,
@@ -163,6 +173,11 @@ class OthersProfile extends StatelessWidget {
             icon: Icons.wallet_membership,
             onTap: () {
               // TODO: on wallet click
+              showInfoDialog(
+                context,
+                title: 'Comimg Soon',
+                message: 'Will be in working soon',
+              );
             },
           ),
           CustomScoreButton(
@@ -172,6 +187,11 @@ class OthersProfile extends StatelessWidget {
             width: _boxWidth,
             onTap: () {
               // TODO: on Posts click
+              showInfoDialog(
+                context,
+                title: 'Comimg Soon',
+                message: 'Will be in working soon',
+              );
             },
           ),
           CustomScoreButton(
@@ -181,6 +201,11 @@ class OthersProfile extends StatelessWidget {
             width: _boxWidth,
             onTap: () {
               // TODO: on Supporting click
+              showInfoDialog(
+                context,
+                title: 'Comimg Soon',
+                message: 'Will be in working soon',
+              );
             },
           ),
           CustomScoreButton(
@@ -190,6 +215,11 @@ class OthersProfile extends StatelessWidget {
             width: _boxWidth,
             onTap: () {
               // TODO: on Supporters click
+              showInfoDialog(
+                context,
+                title: 'Comimg Soon',
+                message: 'Will be in working soon',
+              );
             },
           ),
         ],
@@ -272,7 +302,13 @@ class _SuppoertAndMessageButtonState extends State<_SuppoertAndMessageButton> {
           const SizedBox(width: 6),
           Flexible(
             child: InkWell(
-              onTap: () async {},
+              onTap: () async {
+                showInfoDialog(
+                  context,
+                  title: 'Comimg Soon',
+                  message: 'Will be in working soon',
+                );
+              },
               child: Container(
                 height: _height,
                 alignment: Alignment.center,
@@ -293,14 +329,28 @@ class _SuppoertAndMessageButtonState extends State<_SuppoertAndMessageButton> {
     return (widget.user.supporters?.contains(UserLocalData.getUID) ?? false)
         ? CustomElevatedButton(
             title: 'Supporting',
-            onTap: () {},
+            onTap: () {
+              // TODO: onTab Message
+              showInfoDialog(
+                context,
+                title: 'Comimg Soon',
+                message: 'Will be in working soon',
+              );
+            },
             bgColor: Colors.grey[300],
             borderRadius: _borderRadius,
           )
         : (widget.user.supporting?.contains(UserLocalData.getUID) ?? false)
             ? CustomElevatedButton(
                 title: 'Support Back',
-                onTap: () {},
+                onTap: () {
+                  // TODO: onTab Support Back
+                  showInfoDialog(
+                    context,
+                    title: 'Comimg Soon',
+                    message: 'Will be in working soon',
+                  );
+                },
                 margin: const EdgeInsets.all(0),
                 padding: const EdgeInsets.all(7.5),
                 textStyle: const TextStyle(color: Colors.white),
@@ -308,7 +358,14 @@ class _SuppoertAndMessageButtonState extends State<_SuppoertAndMessageButton> {
               )
             : CustomElevatedButton(
                 title: 'Support',
-                onTap: () {},
+                onTap: () {
+                  // TODO: onTab Support
+                  showInfoDialog(
+                    context,
+                    title: 'Comimg Soon',
+                    message: 'Will be in working soon',
+                  );
+                },
                 margin: const EdgeInsets.all(0),
                 padding: const EdgeInsets.all(7.5),
                 textStyle: const TextStyle(color: Colors.white),
