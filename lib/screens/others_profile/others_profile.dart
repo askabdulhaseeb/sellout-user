@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sellout/database/chat_api.dart';
+import 'package:sellout/screens/messages/personal/personal_chat_screen.dart';
 import '../../widgets/custom_widgets/custom_elevated_button.dart';
 import '../../widgets/custom_widgets/show_info_dialog.dart';
 import '../../database/product_api.dart';
@@ -301,10 +303,13 @@ class _SuppoertAndMessageButtonState extends State<_SuppoertAndMessageButton> {
           Flexible(
             child: InkWell(
               onTap: () async {
-                showInfoDialog(
-                  context,
-                  title: 'Comimg Soon',
-                  message: 'Will be in working soon',
+                final String _chatID =
+                    ChatAPI.getChatID(othersUID: widget.user.uid);
+                Navigator.of(context).push(
+                  MaterialPageRoute<PersonalChatScreen>(
+                    builder: (BuildContext context) => PersonalChatScreen(
+                        otherUser: widget.user, chatID: _chatID),
+                  ),
                 );
               },
               child: Container(

@@ -6,14 +6,14 @@ class Chat {
     required this.chatID,
     required this.persons,
     required this.lastMessage,
-    required this.time,
+    required this.timestamp,
     this.messages,
   });
 
   final String chatID;
   final List<String> persons;
   final String lastMessage;
-  final String time;
+  final int timestamp;
   final List<Message>? messages;
 
   Map<String, dynamic> toMap() {
@@ -21,7 +21,7 @@ class Chat {
       'chatID': chatID,
       'persons': persons,
       'lastMessage': lastMessage,
-      'time': time,
+      'timestamp': timestamp,
     };
   }
 
@@ -35,7 +35,7 @@ class Chat {
       chatID: doc.data()!['chatID'] ?? '',
       persons: List<String>.from(doc.data()!['persons']),
       lastMessage: doc.data()!['lastMessage'] ?? '',
-      time: doc.data()!['time'] ?? '',
+      timestamp: doc.data()!['timestamp'] ?? '',
       messages: _messages,
     );
   }

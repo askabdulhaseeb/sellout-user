@@ -14,7 +14,7 @@ class Message {
 
   final String messageID;
   final String message;
-  final String timestamp;
+  final int timestamp;
   final String sendBy;
   final MessageTypeEnum type;
 
