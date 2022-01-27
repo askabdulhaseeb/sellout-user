@@ -9,9 +9,9 @@ import 'user_api.dart';
 class AuthMethods {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<User?> getCurrentUser() async {
-    return _auth.currentUser;
-  }
+  static User? get getCurrentUser => _auth.currentUser;
+
+  static String get uid => _auth.currentUser?.uid ?? '';
 
   Future<bool> signinWithGoogle() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();

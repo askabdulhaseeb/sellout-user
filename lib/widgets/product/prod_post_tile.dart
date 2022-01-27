@@ -1,5 +1,8 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sellout/database/auth_methods.dart';
+import 'package:sellout/providers/main_bottom_nav_bar_provider.dart';
 import '../../database/user_api.dart';
 import '../../models/app_user.dart';
 import '../../screens/others_profile/others_profile.dart';
@@ -186,12 +189,16 @@ class _Header extends StatelessWidget {
             final AppUser? _user = snapshot.data;
             return GestureDetector(
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute<OthersProfile>(
-                    builder: (BuildContext context) =>
-                        OthersProfile(user: _user!),
-                  ),
-                );
+                _user!.uid == AuthMethods.uid
+                    ? Provider.of<MainBottomNavBarProvider>(context,
+                            listen: false)
+                        .onTabTapped(4)
+                    : Navigator.of(context).push(
+                        MaterialPageRoute<OthersProfile>(
+                          builder: (BuildContext context) =>
+                              OthersProfile(user: _user),
+                        ),
+                      );
               },
               child: Row(
                 children: <Widget>[
