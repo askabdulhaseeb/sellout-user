@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sellout/screens/messages/message_page.dart';
 import '../../services/custom_services.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
 import 'main_bottom_navigation_bar.dart';
@@ -25,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
     HomePage(),
     Center(child: Text('Cart')),
     AddPage(),
-    Center(child: Text('Chat')),
+    MessagePage(),
     MyProdilePage(),
   ];
   @override
