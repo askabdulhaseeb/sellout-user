@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:sellout/providers/main_bottom_nav_bar_provider.dart';
 import '../../../database/product_api.dart';
 import '../../../models/product.dart';
 import '../../../widgets/custom_widgets/custom_toast.dart';
@@ -191,6 +192,8 @@ class _AddPageState extends State<AddPage> {
         _isloading = false;
       });
       if (_uploaded) {
+        Provider.of<MainBottomNavBarProvider>(context, listen: false)
+            .onTabTapped(0);
         _reset();
         CustomToast.successToast(message: 'Uploaded Successfully');
       } else {

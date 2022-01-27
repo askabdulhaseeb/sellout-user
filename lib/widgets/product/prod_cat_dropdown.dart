@@ -41,6 +41,7 @@ class ProdCatDropdown extends StatelessWidget {
         dropdownSearchTextAlignVertical: TextAlignVertical.center,
         mode: Mode.MENU,
         selectedItem: selectedItem,
+        
         items: items,
         dropdownSearchBaseStyle: const TextStyle(color: Colors.white),
         itemAsString: (ProdCategory? item) => item!.title,

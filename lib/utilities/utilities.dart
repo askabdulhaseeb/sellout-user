@@ -60,7 +60,7 @@ class Utilities {
     int _inDays = diff.inDays.abs();
 
     if (_inSec <= 0 || _inSec > 0 && _inMints == 0) {
-      time = _inSec.toStringAsFixed(0).toString() + ' seconds ago';
+      time = 'few seconds ago';
       //
     } else if (_inMints > 0 && _inHour == 0) {
       //

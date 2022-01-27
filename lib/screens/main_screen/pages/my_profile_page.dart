@@ -105,7 +105,7 @@ class MyProdilePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           CustomIconButton(
-            icon: Icons.card_travel,
+            icon: Icons.festival_rounded,
             height: 50,
             width: 80,
             onTap: () {
@@ -116,7 +116,7 @@ class MyProdilePage extends StatelessWidget {
           Consumer<ProdCatProvider>(
             builder: (BuildContext context, ProdCatProvider cat, _) => Flexible(
               child: SizedBox(
-                height: 34,
+                height: 38,
                 child: ProdCatDropdown(
                   items: cat.category,
                   selectedItem: cat.selectedCategroy,
@@ -153,7 +153,7 @@ class MyProdilePage extends StatelessWidget {
           CustomIconButton(
             height: _boxWidth - 10,
             width: _boxWidth,
-            icon: Icons.wallet_membership,
+            icon: Icons.account_balance,
             onTap: () {
               // TODO: on wallet click
             },
@@ -192,7 +192,7 @@ class MyProdilePage extends StatelessWidget {
 
   Widget _headerSection(BuildContext context) {
     final double _totalWidth = MediaQuery.of(context).size.width;
-    const double _imageRadius = 50;
+    const double _imageRadius = 60;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Utilities.padding),
       child: Row(
@@ -203,7 +203,7 @@ class MyProdilePage extends StatelessWidget {
             imageURL: UserLocalData.getImageURL,
             radius: _imageRadius,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 6),
           SizedBox(
             width: _totalWidth - (_imageRadius) - (Utilities.padding * 2) - 56,
             child: Column(
