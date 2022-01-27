@@ -149,18 +149,21 @@ class ProdPostTile extends StatelessWidget {
   AspectRatio _imageSection(double width) {
     return AspectRatio(
       aspectRatio: 4 / 3,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: product.prodURL.length,
-        itemBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            width: width,
-            child: ExtendedImage.network(
-              product.prodURL[index].url,
-              timeLimit: const Duration(days: 2),
-            ),
-          );
-        },
+      child: Container(
+        color: Colors.white,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: product.prodURL.length,
+          itemBuilder: (BuildContext context, int index) {
+            return SizedBox(
+              width: width,
+              child: ExtendedImage.network(
+                product.prodURL[index].url,
+                timeLimit: const Duration(days: 2),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -197,9 +200,13 @@ class _Header extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        _user?.displayName ?? 'Not Found',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      Row(
+                        children: [
+                          Text(
+                            _user?.displayName ?? 'Not Found',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
                       Text(
                         Utilities.time(product.timestamp ?? 0),
