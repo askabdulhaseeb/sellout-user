@@ -216,7 +216,7 @@ class _Header extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        Utilities.time(product.timestamp ?? 0),
+                        Utilities.timeInWords(product.timestamp ?? 0),
                         style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 12,

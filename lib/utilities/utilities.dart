@@ -47,7 +47,7 @@ class Utilities {
     return false;
   }
 
-  static String time(int timestamp) {
+  static String timeInWords(int timestamp) {
     DateTime now = DateTime.now();
     // DateFormat format = DateFormat('HH:mm a');
     DateTime date = DateTime.fromMicrosecondsSinceEpoch(timestamp);
