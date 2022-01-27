@@ -48,6 +48,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'SellOut',
         theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            systemOverlayStyle: CustomService.systemUIOverlayStyle(),
+            centerTitle: false,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          ),
           primaryColor: _kPrimaryColor,
           colorScheme: const ColorScheme(
             primary: _kPrimaryColor,

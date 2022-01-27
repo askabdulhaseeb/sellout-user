@@ -279,9 +279,7 @@ class OthersProfile extends StatelessWidget {
 class _SuppoertAndMessageButton extends StatefulWidget {
   const _SuppoertAndMessageButton({required this.user, Key? key})
       : super(key: key);
-
   final AppUser user;
-
   @override
   State<_SuppoertAndMessageButton> createState() =>
       _SuppoertAndMessageButtonState();
