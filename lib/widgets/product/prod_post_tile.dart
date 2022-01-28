@@ -102,14 +102,14 @@ class ProdPostTile extends StatelessWidget {
                   ),
                   title: 'Message Seller',
                   onTap: () {
-                    if (user.displayName == null || user.displayName == '')
+                    if (user.displayName == null || user.displayName == '') {
                       return;
-                    int _time = DateTime.now().microsecondsSinceEpoch;
+                    }
                     Navigator.of(context)
                         .push(MaterialPageRoute<ProductChatScreen>(
                       builder: (BuildContext context) => ProductChatScreen(
                         otherUser: user,
-                        chatID: '${AuthMethods.uid}$_time',
+                        chatID: '${AuthMethods.uid}${product.pid}',
                         product: product,
                       ),
                     ));
