@@ -42,7 +42,7 @@ class ChatDashboardTile extends StatelessWidget {
                 dense: true,
                 leading: CustomProfileImage(imageURL: _user.imageURL ?? ''),
                 title: Text(
-                  _user.displayName,
+                  _user.displayName??'issue',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

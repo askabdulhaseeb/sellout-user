@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../../../enums/messages/message_tabbar_enum.dart';
 import '../../../../providers/message_page_provider.dart';
 import '../../../../widgets/messages/message_person_search.dart';
+import 'group/create_group_screen.dart';
 import 'group/group_chat_dashboard.dart';
 import 'personal/personal_chat_dashboard.dart';
 import 'stories/stories_dashboard.dart';
@@ -34,7 +35,10 @@ class MessagePage extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(CreateChatGroupScreen.routeName);
+                  },
                   splashRadius: 16,
                   padding: const EdgeInsets.all(0),
                   icon: const Icon(Icons.forum_rounded),
@@ -42,44 +46,57 @@ class MessagePage extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                TabBarIconButton(
-                  icon: Icons.perm_contact_cal,
-                  title: 'Chats',
-                  isSelected: _page.currentTab == MessageTabBarEnum.CHATS,
-                  onTab: () {
-                    _page.updateTab(MessageTabBarEnum.CHATS);
-                  },
-                ),
-                TabBarIconButton(
-                  icon: Icons.groups_rounded,
-                  title: 'Groups',
-                  isSelected: _page.currentTab == MessageTabBarEnum.GROUPS,
-                  onTab: () {
-                    _page.updateTab(MessageTabBarEnum.GROUPS);
-                  },
-                ),
-                TabBarIconButton(
-                  icon: Icons.blur_circular_sharp,
-                  title: 'Stories',
-                  isSelected: _page.currentTab == MessageTabBarEnum.STORIES,
-                  onTab: () {
-                    _page.updateTab(MessageTabBarEnum.STORIES);
-                  },
-                ),
-              ],
-            ),
-          ),
+          _TabBar(page: _page),
           Expanded(
             child: (_page.currentTab == MessageTabBarEnum.CHATS)
                 ? const PersonalChatDashboard()
                 : (_page.currentTab == MessageTabBarEnum.GROUPS)
                     ? const GroupChatDashboaed()
                     : const StoriesDashboard(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TabBar extends StatelessWidget {
+  const _TabBar({required MessagePageProvider page, Key? key})
+      : _page = page,
+        super(key: key);
+
+  final MessagePageProvider _page;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          TabBarIconButton(
+            icon: Icons.perm_contact_cal,
+            title: 'Chats',
+            isSelected: _page.currentTab == MessageTabBarEnum.CHATS,
+            onTab: () {
+              _page.updateTab(MessageTabBarEnum.CHATS);
+            },
+          ),
+          TabBarIconButton(
+            icon: Icons.groups_rounded,
+            title: 'Groups',
+            isSelected: _page.currentTab == MessageTabBarEnum.GROUPS,
+            onTab: () {
+              _page.updateTab(MessageTabBarEnum.GROUPS);
+            },
+          ),
+          TabBarIconButton(
+            icon: Icons.blur_circular_sharp,
+            title: 'Stories',
+            isSelected: _page.currentTab == MessageTabBarEnum.STORIES,
+            onTab: () {
+              _page.updateTab(MessageTabBarEnum.STORIES);
+            },
           ),
         ],
       ),

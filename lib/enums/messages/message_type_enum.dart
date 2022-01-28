@@ -1,5 +1,5 @@
 // ignore_for_file: constant_identifier_names
-enum MessageTypeEnum { TEXT, AUDIO, PHOTO, VIDEO, DOCUMENT }
+enum MessageTypeEnum { TEXT, AUDIO, PHOTO, VIDEO, DOCUMENT, ANNOUNCEMENT }
 
 class MessageTypeConverter {
   static String enumToString({required MessageTypeEnum type}) {
@@ -11,8 +11,10 @@ class MessageTypeConverter {
       return 'PHOTO';
     } else if (type == MessageTypeEnum.VIDEO) {
       return 'VIDEO';
-    } else {
+    } else if (type == MessageTypeEnum.DOCUMENT) {
       return 'DOCUMENT';
+    } else {
+      return 'ANNOUNCEMENT';
     }
   }
 
@@ -25,8 +27,10 @@ class MessageTypeConverter {
       return MessageTypeEnum.PHOTO;
     } else if (type == 'VIDEO') {
       return MessageTypeEnum.VIDEO;
-    } else {
+    } else if (type == 'DOCUMENT') {
       return MessageTypeEnum.DOCUMENT;
+    } else {
+      return MessageTypeEnum.ANNOUNCEMENT;
     }
   }
 }

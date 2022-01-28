@@ -4,13 +4,13 @@ import '../widgets/custom_widgets/gender_selection_button.dart';
 class AppUser {
   AppUser({
     required this.uid,
-    required this.displayName,
-    required this.username,
-    required this.gender,
-    required this.dob,
-    required this.countryCode,
-    required this.phoneNumber,
-    required this.email,
+    this.displayName = '-',
+    this.username = '-',
+    this.gender = GenderTypes.MALE,
+    this.dob = '-',
+    this.countryCode = '-',
+    this.phoneNumber = '-',
+    this.email = '-',
     this.isPublicProfile = true,
     this.imageURL = '',
     this.isBlock = false,
@@ -23,14 +23,14 @@ class AppUser {
   });
 
   final String uid;
-  final String displayName;
-  final String username;
+  final String? displayName;
+  final String? username;
   final String? imageURL;
-  final GenderTypes gender;
-  final String dob;
-  final String countryCode;
-  final String phoneNumber;
-  final String email;
+  final GenderTypes? gender;
+  final String? dob;
+  final String? countryCode;
+  final String? phoneNumber;
+  final String? email;
   final bool? isPublicProfile;
   final bool? isBlock;
   final bool? isVerified;
@@ -43,14 +43,14 @@ class AppUser {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'uid': uid,
-      'displayName': displayName,
-      'username': username,
+      'displayName': displayName ?? '',
+      'username': username ?? '',
       'imageURL': imageURL ?? '',
-      'gender': GenderConverter.genderToString(gender),
-      'dob': dob,
-      'countryCode': countryCode,
-      'phoneNumber': phoneNumber,
-      'email': email,
+      'gender': GenderConverter.genderToString(gender ?? GenderTypes.MALE),
+      'dob': dob ?? '',
+      'countryCode': countryCode ?? '',
+      'phoneNumber': phoneNumber ?? '',
+      'email': email ?? '',
       'isPublicProfile': isPublicProfile ?? true,
       'isBlock': isBlock ?? false,
       'isVerified': isVerified ?? false,
@@ -62,6 +62,21 @@ class AppUser {
     };
   }
 
+  // ignore: sort_constructors_first
+  factory AppUser.fromMap(Map<String, dynamic> map) {
+    return AppUser(
+      uid: map['uid'] ?? '',
+      displayName: map['displayName'] ?? '',
+      username: map['username'] ?? '',
+      imageURL: map['imageURL'],
+      email: map['email'] ?? '',
+      rating: double.parse(map['rating']),
+      countryCode: '',
+      dob: '',
+      gender: GenderConverter.stringToGender(map['gender']),
+      phoneNumber: '',
+    );
+  }
   // ignore: sort_constructors_first
   factory AppUser.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
     return AppUser(

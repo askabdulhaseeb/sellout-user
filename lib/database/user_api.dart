@@ -77,7 +77,7 @@ class UserAPI {
     List<DocumentSnapshot<Map<String, dynamic>>> docs = snapshot.docs;
     for (DocumentSnapshot<Map<String, dynamic>> doc in docs) {
       AppUser appUser = AppUser.fromDoc(doc);
-      if (appUser.displayName.contains(name)) {
+      if (appUser.displayName!.contains(name)) {
         users.add(appUser);
       }
     }

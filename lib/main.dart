@@ -11,6 +11,7 @@ import 'screens/auth/forget_password_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
 import 'screens/main_screen/main_screen.dart';
+import 'screens/main_screen/pages/messages/group/create_group_screen.dart';
 import 'services/custom_services.dart';
 import 'services/user_local_data.dart';
 
@@ -84,6 +85,7 @@ class MyApp extends StatelessWidget {
           ForgetPasswordScreen.routeName: (_) => const ForgetPasswordScreen(),
           RegisterScreen.routeName: (_) => const RegisterScreen(),
           MainScreen.rotueName: (_) => const MainScreen(),
+          CreateChatGroupScreen.routeName: (_) => const CreateChatGroupScreen(),
         },
       ),
     );

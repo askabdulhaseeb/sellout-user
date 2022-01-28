@@ -78,10 +78,10 @@ class UserLocalData {
 
   void storeAppUserData({required AppUser appUser}) {
     setUID(appUser.uid);
-    setDisplayName(appUser.displayName);
-    setUsername(appUser.username);
+    setDisplayName(appUser.displayName??'');
+    setUsername(appUser.username??'');
     setImageUrl(appUser.imageURL ?? '');
-    setEmail(appUser.email);
+    setEmail(appUser.email??'');
     setIsVerified(appUser.isVerified ?? false);
     setRating(appUser.rating ?? 0.0);
     setBio(appUser.bio ?? '');

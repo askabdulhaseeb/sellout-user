@@ -91,7 +91,7 @@ class _PersonalChatScreenState extends State<PersonalChatScreen> {
                                                       .sendBy ==
                                                   AuthMethods.uid)
                                               ? UserLocalData.getDisplayName
-                                              : widget.otherUser.displayName,
+                                              : widget.otherUser.displayName!,
                                         ),
                                       ),
                                     );
@@ -149,7 +149,7 @@ class _PersonalChatScreenState extends State<PersonalChatScreen> {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              widget.otherUser.displayName,
+              widget.otherUser.displayName ?? 'issue',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.headline6,

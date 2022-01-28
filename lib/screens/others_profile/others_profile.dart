@@ -31,7 +31,7 @@ class OthersProfile extends StatelessWidget {
       appBar: AppBar(
         systemOverlayStyle: CustomService.systemUIOverlayStyle(),
         title: Text(
-          user.username,
+          user.username??'issue',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Theme.of(context).primaryColor,
@@ -250,7 +250,7 @@ class OthersProfile extends StatelessWidget {
               children: <Widget>[
                 const SizedBox(height: 2),
                 Text(
-                  user.displayName,
+                  user.displayName??'issue',
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
