@@ -72,28 +72,37 @@ class Utilities {
     } else if (_inMints > 0 && _inHour == 0) {
       //
       if (_inMints < 1.5) {
-        time = _inMints.toStringAsFixed(0).toString() + ' minute ago';
+        time = _inMints.toStringAsFixed(0) + ' minute ago';
       } else {
-        time = _inMints.toStringAsFixed(0).toString() + ' minutes ago';
+        time = _inMints.toStringAsFixed(0) + ' minutes ago';
       }
       //
     } else if (_inHour > 0 && _inDays == 0) {
       //
       if (_inHour < 1.5) {
-        time = _inHour.toStringAsFixed(0).toString() + ' hour ago';
+        time = _inHour.toStringAsFixed(0) + ' hour ago';
       } else {
-        time = _inHour.toStringAsFixed(0).toString() + ' hours ago';
+        time = _inHour.toStringAsFixed(0) + ' hours ago';
       }
       //
-    } else if (_inDays > 0 && _inDays < 7 && _inDays < 31) {
+    } else if (_inDays > 0 && _inDays < 7) {
       //
       if (_inDays < 1.5) {
-        time = _inDays.toStringAsFixed(0).toString() + ' day ago';
+        time = _inDays.toStringAsFixed(0) + ' day ago';
       } else {
-        time = _inDays.toStringAsFixed(0).toString() + ' days ago';
+        time = _inDays.toStringAsFixed(0) + ' days ago';
       }
       //
-    } else if (diff.inDays.abs() > 30 && diff.inDays.abs() < 365) {
+    } else if (_inDays >= 7 && _inDays < 30) {
+      double _temp = (diff.inDays.abs() / 7);
+      //
+      if (_inDays < 14) {
+        time = _temp.toStringAsFixed(0) + ' week ago';
+      } else {
+        time = _temp.toStringAsFixed(0) + ' weeks ago';
+      }
+      //
+    } else if (diff.inDays.abs() >= 30 && diff.inDays.abs() < 365) {
       double _temp = (diff.inDays.abs() / 30);
       if (_temp < 1.5) {
         time = _temp.toStringAsFixed(0) + ' month ago';
