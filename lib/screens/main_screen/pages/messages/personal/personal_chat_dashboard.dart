@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../../../database/auth_methods.dart';
 import '../../../../../database/chat_api.dart';
@@ -10,9 +11,14 @@ class PersonalChatDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<Chat>>(
-      stream: ChatAPI().fetchChats(AuthMethods.uid).asStream(),
-      builder: (_, AsyncSnapshot<List<Chat>> snapshot) {
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: FirebaseFirestore.instance
+          .collection('chats')
+          .orderBy('timestamp', descending: true)
+          .where('persons', arrayContains: AuthMethods.uid)
+          .snapshots(),
+      builder:
+          (_, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
         if (snapshot.hasError) {
           return const _ErrorWidget();
         } else {
@@ -20,11 +26,15 @@ class PersonalChatDashboard extends StatelessWidget {
             return const ShowLoading();
           } else {
             if (snapshot.hasData) {
-              final List<Chat> chat = snapshot.data!;
+              List<Chat> _chat = <Chat>[];
+              for (QueryDocumentSnapshot<Map<String, dynamic>> doc
+                  in snapshot.data!.docs) {
+                _chat.add(Chat.fromDoc(doc));
+              }
               return ListView.builder(
-                itemCount: chat.length,
+                itemCount: _chat.length,
                 itemBuilder: (_, int index) =>
-                    ChatDashboardTile(chat: chat[index]),
+                    ChatDashboardTile(chat: _chat[index]),
               );
             } else {
               return const Text('Error Text');

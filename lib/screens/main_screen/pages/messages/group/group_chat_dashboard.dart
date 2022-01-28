@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sellout/database/auth_methods.dart';
+import 'package:sellout/screens/main_screen/pages/messages/group/group_chat_screen.dart';
 import 'package:sellout/utilities/utilities.dart';
 import '../../../../../database/group_chat_api.dart';
 import '../../../../../models/group_chat.dart';
@@ -9,9 +12,14 @@ class GroupChatDashboaed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<GroupChat>>(
-      stream: GroupChatAPI().getGroups().asStream(),
-      builder: (_, AsyncSnapshot<List<GroupChat>> snapshot) {
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: FirebaseFirestore.instance
+          .collection('chat_groups')
+          .orderBy('timestamp', descending: true)
+          .where('participants', arrayContains: AuthMethods.uid)
+          .snapshots(),
+      builder:
+          (_, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
         if (snapshot.hasError) {
           return const _ErrorWidget();
         } else {
@@ -19,12 +27,20 @@ class GroupChatDashboaed extends StatelessWidget {
             return const ShowLoading();
           } else {
             if (snapshot.hasData) {
-              final List<GroupChat> _group = snapshot.data!;
-              return ListView.builder(
-                itemCount: _group.length,
-                itemBuilder: (_, int index) =>
-                    GroupChatDashboardTile(group: _group[index]),
-              );
+              final List<GroupChat> _group = <GroupChat>[];
+              for (QueryDocumentSnapshot<Map<String, dynamic>> doc
+                  in snapshot.data!.docs) {
+                _group.add(GroupChat.fromDoc(doc));
+              }
+              return _group.isEmpty
+                  ? const Center(
+                      child: Text('You are not a part of any group'),
+                    )
+                  : ListView.builder(
+                      itemCount: _group.length,
+                      itemBuilder: (_, int index) =>
+                          GroupChatDashboardTile(group: _group[index]),
+                    );
             } else {
               return const Text('Error Text');
             }
@@ -46,7 +62,13 @@ class GroupChatDashboardTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<GroupChatScreen>(
+            builder: (_) => GroupChatScreen(group: group),
+          ),
+        );
+      },
       dense: false,
       title: Text(group.name ?? 'Issue'),
       subtitle: Text(group.lastMessage ?? ''),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../../../database/auth_methods.dart';
 import '../../../../../database/group_chat_api.dart';
@@ -28,11 +29,16 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: StreamBuilder<List<Message>>(
-                stream: GroupChatAPI()
-                    .getMessages(groupID: widget.group.groupID!)
-                    .asStream(),
-                builder: (_, AsyncSnapshot<List<Message>> snapshot) {
+              child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: FirebaseFirestore.instance
+                    .collection('chat_groups')
+                    .doc(widget.group.groupID)
+                    .collection('messages')
+                    .orderBy('timestamp', descending: true)
+                    .snapshots(),
+                builder: (_,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                        snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
                       return const Center(
@@ -40,7 +46,11 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
                       );
                     default:
                       if (snapshot.hasData) {
-                        List<Message> _messages = snapshot.data ?? <Message>[];
+                        List<Message> _messages = <Message>[];
+                        for (QueryDocumentSnapshot<Map<String, dynamic>> doc
+                            in snapshot.data!.docs) {
+                          _messages.add(Message.fromDoc(doc));
+                        }
                         return (_messages.isEmpty)
                             ? SizedBox(
                                 width: double.infinity,
