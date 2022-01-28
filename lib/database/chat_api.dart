@@ -38,6 +38,22 @@ class ChatAPI {
     return _chat;
   }
 
+  Future<List<Chat>> fetchChats(String uid) async {
+    final Stream<QuerySnapshot<Map<String, dynamic>>> docs = _instance
+        .collection(_colloction)
+        .orderBy('timestamp', descending: true)
+        .where('persons', arrayContains: uid)
+        .snapshots();
+    List<Chat> _chat = <Chat>[];
+    // print(docs.docs);
+    docs.forEach((QuerySnapshot<Map<String, dynamic>> snap) {
+      for (DocumentSnapshot<Map<String, dynamic>> element in snap.docs) {
+        _chat.add(Chat.fromDoc(element));
+      }
+    });
+    return _chat;
+  }
+
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>> fetchMessages(
       String chatID) async {
     return _instance

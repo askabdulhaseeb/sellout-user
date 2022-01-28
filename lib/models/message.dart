@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../enums/chat/message_type_enum.dart';
+import '../enums/messages/message_type_enum.dart';
 
 class Message {
   Message({

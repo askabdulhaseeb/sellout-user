@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/auth_state_provider.dart';
 import 'providers/main_bottom_nav_bar_provider.dart';
+import 'providers/message_page_provider.dart';
 import 'providers/prod_provider.dart';
 import 'providers/product_category_provider.dart';
 import 'screens/auth/auth_type_screen.dart';
@@ -10,8 +11,8 @@ import 'screens/auth/forget_password_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
 import 'screens/main_screen/main_screen.dart';
-import 'services/user_local_data.dart';
 import 'services/custom_services.dart';
+import 'services/user_local_data.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<ProdCatProvider>(
           create: (BuildContext context) => ProdCatProvider(),
+        ),
+        ChangeNotifierProvider<MessagePageProvider>(
+          create: (BuildContext context) => MessagePageProvider(),
         ),
       ],
       child: MaterialApp(
