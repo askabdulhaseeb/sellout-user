@@ -1,0 +1,155 @@
+import 'package:flutter/material.dart';
+import '../../../../../database/auth_methods.dart';
+import '../../../../../database/group_chat_api.dart';
+import '../../../../../models/group_chat.dart';
+import '../../../../../models/message.dart';
+import '../../../../../services/user_local_data.dart';
+import '../../../../../utilities/utilities.dart';
+import '../../../../../widgets/custom_widgets/custom_profile_image.dart';
+import '../../../../../widgets/messages/chat_textformfield.dart';
+import '../../../../../widgets/messages/personal_message_tile.dart';
+
+class GroupChatScreen extends StatefulWidget {
+  const GroupChatScreen({required this.group, Key? key}) : super(key: key);
+  final GroupChat group;
+  @override
+  State<GroupChatScreen> createState() => _GroupChatScreenState();
+}
+
+class _GroupChatScreenState extends State<GroupChatScreen> {
+  final TextEditingController _text = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    final Size _size = MediaQuery.of(context).size;
+    return Scaffold(
+      appBar: _appBar(),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: Utilities.padding),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: StreamBuilder<List<Message>>(
+                stream: GroupChatAPI()
+                    .getMessages(groupID: widget.group.groupID!)
+                    .asStream(),
+                builder: (_, AsyncSnapshot<List<Message>> snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      );
+                    default:
+                      if (snapshot.hasData) {
+                        List<Message> _messages = snapshot.data ?? <Message>[];
+                        return (_messages.isEmpty)
+                            ? SizedBox(
+                                width: double.infinity,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const <Widget>[
+                                    Text(
+                                      'Say Hi!',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      'and start conversation',
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                reverse: true,
+                                itemCount: _messages.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Material(
+                                    child: SizedBox(
+                                      child: PersonalMessageTile(
+                                        boxWidth: _size.width * 0.65,
+                                        message: _messages[index],
+                                        displayName: (_messages[index].sendBy ==
+                                                AuthMethods.uid)
+                                            ? UserLocalData.getDisplayName
+                                            : 'Sender Name',
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                      } else {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: const <Widget>[
+                            Icon(Icons.report, color: Colors.grey),
+                            Text(
+                              'Some issue found',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ],
+                        );
+                      }
+                  }
+                },
+              ),
+            ),
+            ChatTestFormField(
+                controller: _text,
+                onSendPressed: () async {
+                  int _time = DateTime.now().microsecondsSinceEpoch;
+                  widget.group.lastMessage = _text.text;
+                  widget.group.timestamp = _time;
+                  await GroupChatAPI().sendMessage(
+                    group: widget.group,
+                    messages: Message(
+                      messageID: _time.toString(),
+                      message: _text.text.trim(),
+                      timestamp: _time,
+                    ),
+                  );
+                  _text.clear();
+                }),
+            SizedBox(height: Utilities.padding),
+          ],
+        ),
+      ),
+    );
+  }
+
+  AppBar _appBar() {
+    return AppBar(
+      titleSpacing: 0,
+      title: Row(
+        children: <Widget>[
+          CustomProfileImage(imageURL: widget.group.imageURL ?? ''),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              widget.group.name ?? 'issue',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        IconButton(
+          splashRadius: 16,
+          padding: const EdgeInsets.all(0),
+          icon: const Icon(Icons.video_call),
+          onPressed: () {},
+        ),
+        IconButton(
+          splashRadius: 16,
+          padding: const EdgeInsets.all(0),
+          icon: const Icon(Icons.call),
+          onPressed: () {},
+        ),
+      ],
+    );
+  }
+}

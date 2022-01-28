@@ -35,23 +35,23 @@ class ChatDashboardTile extends StatelessWidget {
                     ),
                   );
                 },
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 0,
-                  horizontal: 16,
-                ),
                 dense: true,
                 leading: CustomProfileImage(imageURL: _user.imageURL ?? ''),
                 title: Text(
-                  _user.displayName??'issue',
+                  _user.displayName ?? 'issue',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 subtitle: Text(
                   chat.lastMessage,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                trailing: Text(Utilities.timeInDigits(chat.timestamp)),
+                trailing: Text(
+                  Utilities.timeInDigits(chat.timestamp),
+                  style: const TextStyle(fontSize: 12),
+                ),
               );
             }
           }

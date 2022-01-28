@@ -20,15 +20,19 @@ class ChatAPI {
 
   Future<void> sendMessage(Chat chat, Message messages) async {
     // ignore: always_specify_types
-    Future.wait([
-      _instance
-          .collection(_colloction)
-          .doc(chat.chatID)
-          .collection(_subColloction)
-          .doc(messages.messageID)
-          .set(messages.toMap()),
-      _instance.collection(_colloction).doc(chat.chatID).set(chat.toMap()),
-    ]);
+    try {
+      Future.wait([
+        _instance
+            .collection(_colloction)
+            .doc(chat.chatID)
+            .collection(_subColloction)
+            .doc(messages.messageID)
+            .set(messages.toMap()),
+        _instance.collection(_colloction).doc(chat.chatID).set(chat.toMap()),
+      ]);
+    } catch (e) {
+      CustomToast.errorToast(message: e.toString());
+    }
   }
 
   Future<Chat?> fetchChat(String chatID) async {

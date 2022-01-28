@@ -31,9 +31,9 @@ class GroupChat {
   final String? website;
   final List<String>? participants;
   final List<GroupChatParticipant>? participantsDetail;
-  final String? lastMessage;
-  final int? timestamp;
-  final MessageTypeEnum? type;
+  String? lastMessage;
+  int? timestamp;
+  MessageTypeEnum? type;
 
   Map<String, dynamic> createGroup() {
     int _time = DateTime.now().microsecondsSinceEpoch;
