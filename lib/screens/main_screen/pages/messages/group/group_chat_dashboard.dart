@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sellout/database/auth_methods.dart';
 import 'package:sellout/screens/main_screen/pages/messages/group/group_chat_screen.dart';
 import 'package:sellout/utilities/utilities.dart';
+import 'package:sellout/widgets/custom_widgets/custom_profile_image.dart';
 import '../../../../../database/group_chat_api.dart';
 import '../../../../../models/group_chat.dart';
 import '../../../../../widgets/custom_widgets/show_loading.dart';
@@ -69,11 +70,16 @@ class GroupChatDashboardTile extends StatelessWidget {
           ),
         );
       },
-      dense: false,
-      title: Text(group.name ?? 'Issue'),
+      dense: true,
+      leading: CustomProfileImage(imageURL: group.imageURL ?? ''),
+      title: Text(
+        group.name ?? 'Issue',
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      ),
       subtitle: Text(group.lastMessage ?? ''),
       trailing: Text(
         Utilities.timeInDigits(group.timestamp!),
+        style: const TextStyle(fontSize: 12),
       ),
     );
   }

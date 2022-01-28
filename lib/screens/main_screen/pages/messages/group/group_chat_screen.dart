@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../../../database/auth_methods.dart';
 import '../../../../../database/group_chat_api.dart';
+import '../../../../../enums/messages/message_type_enum.dart';
 import '../../../../../models/group_chat.dart';
 import '../../../../../models/message.dart';
 import '../../../../../services/user_local_data.dart';
@@ -9,6 +10,7 @@ import '../../../../../utilities/utilities.dart';
 import '../../../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../../../widgets/messages/chat_textformfield.dart';
 import '../../../../../widgets/messages/personal_message_tile.dart';
+import 'group_info_screen.dart';
 
 class GroupChatScreen extends StatefulWidget {
   const GroupChatScreen({required this.group, Key? key}) : super(key: key);
@@ -113,6 +115,7 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
                   int _time = DateTime.now().microsecondsSinceEpoch;
                   widget.group.lastMessage = _text.text;
                   widget.group.timestamp = _time;
+                  widget.group.type = MessageTypeEnum.TEXT;
                   await GroupChatAPI().sendMessage(
                     group: widget.group,
                     messages: Message(
@@ -133,18 +136,38 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
   AppBar _appBar() {
     return AppBar(
       titleSpacing: 0,
-      title: Row(
-        children: <Widget>[
-          CustomProfileImage(imageURL: widget.group.imageURL ?? ''),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              widget.group.name ?? 'issue',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+      title: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute<GroupInfoScreen>(
+            builder: (_) => GroupInfoScreen(group: widget.group),
+          ));
+        },
+        child: Row(
+          children: <Widget>[
+            CustomProfileImage(imageURL: widget.group.imageURL ?? ''),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    widget.group.name ?? 'issue',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const Text(
+                    'Tab here for group info',
+                    style: TextStyle(fontSize: 11, color: Colors.grey),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       actions: <Widget>[
         IconButton(

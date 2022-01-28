@@ -157,11 +157,23 @@ class _PersonalChatScreenState extends State<PersonalChatScreen> {
             CustomProfileImage(imageURL: widget.otherUser.imageURL ?? ''),
             const SizedBox(width: 8),
             Expanded(
-              child: Text(
-                widget.otherUser.displayName ?? 'issue',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.headline6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    widget.otherUser.displayName ?? 'issue',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const Text(
+                    'Tap here to open profile',
+                    style: TextStyle(fontSize: 11, color: Colors.grey),
+                  )
+                ],
               ),
             ),
           ],
