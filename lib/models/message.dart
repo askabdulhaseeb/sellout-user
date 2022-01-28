@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sellout/enums/chat/message_type_enum.dart';
+import '../enums/chat/message_type_enum.dart';
 
 class Message {
   Message({

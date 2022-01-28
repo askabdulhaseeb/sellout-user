@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sellout/database/chat_api.dart';
-import 'package:sellout/screens/messages/personal/personal_chat_screen.dart';
-import '../../widgets/custom_widgets/custom_elevated_button.dart';
-import '../../widgets/custom_widgets/show_info_dialog.dart';
+import '../../database/chat_api.dart';
 import '../../database/product_api.dart';
 import '../../models/app_user.dart';
 import '../../models/prod_category.dart';
@@ -13,13 +10,16 @@ import '../../providers/product_category_provider.dart';
 import '../../services/custom_services.dart';
 import '../../services/user_local_data.dart';
 import '../../utilities/utilities.dart';
+import '../../widgets/custom_widgets/custom_elevated_button.dart';
 import '../../widgets/custom_widgets/custom_icon_button.dart';
 import '../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../widgets/custom_widgets/custom_rating_stars.dart';
 import '../../widgets/custom_widgets/custom_score_button.dart';
+import '../../widgets/custom_widgets/show_info_dialog.dart';
 import '../../widgets/private_account_widhet.dart';
 import '../../widgets/product/grid_view_of_prod.dart';
 import '../../widgets/product/prod_cat_dropdown.dart';
+import '../main_screen/pages/messages/personal/personal_chat_screen.dart';
 
 class OthersProfile extends StatelessWidget {
   const OthersProfile({required this.user, Key? key}) : super(key: key);

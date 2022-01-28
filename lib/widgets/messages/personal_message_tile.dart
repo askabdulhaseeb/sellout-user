@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:sellout/database/auth_methods.dart';
-import 'package:sellout/models/message.dart';
-import 'package:sellout/utilities/utilities.dart';
+import '../../database/auth_methods.dart';
+import '../../models/message.dart';
+import '../../utilities/utilities.dart';
 
 class PersonalMessageTile extends StatelessWidget {
   const PersonalMessageTile({
-    Key? key,
     required this.message,
     required this.displayName,
     required this.boxWidth,
+    Key? key,
   }) : super(key: key);
   final Message message;
   final String displayName;

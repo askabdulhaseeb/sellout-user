@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sellout/screens/messages/message_page.dart';
 import '../../services/custom_services.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
 import 'main_bottom_navigation_bar.dart';
 import 'pages/add_page.dart';
+import 'pages/messages/message_page.dart';
 import 'pages/my_profile_page.dart';
 import 'pages/home_page.dart';
 

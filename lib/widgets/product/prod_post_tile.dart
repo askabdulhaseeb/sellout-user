@@ -1,12 +1,13 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sellout/database/auth_methods.dart';
-import 'package:sellout/providers/main_bottom_nav_bar_provider.dart';
+
+import '../../database/auth_methods.dart';
 import '../../database/user_api.dart';
 import '../../models/app_user.dart';
-import '../../screens/others_profile/others_profile.dart';
 import '../../models/product.dart';
+import '../../providers/main_bottom_nav_bar_provider.dart';
+import '../../screens/others_profile/others_profile.dart';
 import '../../utilities/utilities.dart';
 import '../custom_widgets/custom_elevated_button.dart';
 import '../custom_widgets/custom_profile_image.dart';
@@ -207,13 +208,9 @@ class _Header extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                        children: [
-                          Text(
-                            _user?.displayName ?? 'Not Found',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                      Text(
+                        _user?.displayName ?? 'Not Found',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
                         Utilities.timeInWords(product.timestamp ?? 0),

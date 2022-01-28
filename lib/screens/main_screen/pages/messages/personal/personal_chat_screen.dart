@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sellout/database/auth_methods.dart';
-import 'package:sellout/database/chat_api.dart';
-import 'package:sellout/models/app_user.dart';
-import 'package:sellout/models/chat.dart';
-import 'package:sellout/models/message.dart';
-import 'package:sellout/services/user_local_data.dart';
-import 'package:sellout/utilities/utilities.dart';
-import 'package:sellout/widgets/custom_widgets/custom_profile_image.dart';
-import 'package:sellout/widgets/messages/chat_textformfield.dart';
-import 'package:sellout/widgets/messages/personal_message_tile.dart';
+import '../../../../../database/auth_methods.dart';
+import '../../../../../database/chat_api.dart';
+import '../../../../../models/app_user.dart';
+import '../../../../../models/chat.dart';
+import '../../../../../models/message.dart';
+import '../../../../../services/user_local_data.dart';
+import '../../../../../utilities/utilities.dart';
+import '../../../../../widgets/custom_widgets/custom_profile_image.dart';
+import '../../../../../widgets/messages/chat_textformfield.dart';
+import '../../../../../widgets/messages/personal_message_tile.dart';
 
 class PersonalChatScreen extends StatefulWidget {
   const PersonalChatScreen(
