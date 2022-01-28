@@ -26,12 +26,15 @@ class CustomFileImageBox extends StatelessWidget {
               width: size,
               color: Theme.of(context).primaryColor,
               child: file == null
-                  ? const FittedBox(
-                      child: Text(
-                        'No\nImage',
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
+                  ? const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: FittedBox(
+                        child: Text(
+                          'No\nImage',
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     )
                   : SizedBox(
