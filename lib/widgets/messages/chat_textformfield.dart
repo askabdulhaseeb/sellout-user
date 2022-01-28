@@ -57,10 +57,10 @@ class _ChatTestFormFieldState extends State<ChatTestFormField> {
                 ),
               ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(Utilities.borderRadius),
+          borderRadius: BorderRadius.circular(Utilities.borderRadius / 2),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(Utilities.borderRadius),
+          borderRadius: BorderRadius.circular(Utilities.borderRadius / 2),
         ),
       ),
     );

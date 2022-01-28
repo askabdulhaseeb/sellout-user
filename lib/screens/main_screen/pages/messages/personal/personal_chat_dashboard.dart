@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sellout/widgets/messages/product_chat_dashboard_tile.dart';
 import '../../../../../database/auth_methods.dart';
 import '../../../../../database/chat_api.dart';
 import '../../../../../models/chat.dart';
@@ -33,8 +34,11 @@ class PersonalChatDashboard extends StatelessWidget {
               }
               return ListView.builder(
                 itemCount: _chat.length,
-                itemBuilder: (_, int index) =>
-                    ChatDashboardTile(chat: _chat[index]),
+                itemBuilder: (_, int index) {
+                  return _chat[index].pid == null
+                      ? ChatDashboardTile(chat: _chat[index])
+                      : ProductChatDashboardTile(chat: _chat[index]);
+                },
               );
             } else {
               return const Text('Error Text');

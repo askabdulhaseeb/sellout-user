@@ -15,47 +15,48 @@ class ChatDashboardTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<AppUser?>(
-        future: UserAPI().getInfo(
-            uid: chat.persons[chat.persons
-                .indexWhere((String element) => element != AuthMethods.uid)]),
-        builder: (_, AsyncSnapshot<AppUser?> snapshot) {
-          if (snapshot.hasError) {
-            return const _ErrorWidget();
+      future: UserAPI().getInfo(
+          uid: chat.persons[chat.persons
+              .indexWhere((String element) => element != AuthMethods.uid)]),
+      builder: (_, AsyncSnapshot<AppUser?> snapshot) {
+        if (snapshot.hasError) {
+          return const _ErrorWidget();
+        } else {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const ShowLoading();
           } else {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const ShowLoading();
-            } else {
-              final AppUser _user = snapshot.data!;
-              return ListTile(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute<PersonalChatScreen>(
-                      builder: (_) => PersonalChatScreen(
-                          otherUser: _user, chatID: chat.chatID),
-                    ),
-                  );
-                },
-                dense: true,
-                leading: CustomProfileImage(imageURL: _user.imageURL ?? ''),
-                title: Text(
-                  _user.displayName ?? 'issue',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: Text(
-                  chat.lastMessage,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                trailing: Text(
-                  Utilities.timeInDigits(chat.timestamp),
-                  style: const TextStyle(fontSize: 12),
-                ),
-              );
-            }
+            final AppUser _user = snapshot.data!;
+            return ListTile(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<PersonalChatScreen>(
+                    builder: (_) => PersonalChatScreen(
+                        otherUser: _user, chatID: chat.chatID),
+                  ),
+                );
+              },
+              dense: true,
+              leading: CustomProfileImage(imageURL: _user.imageURL ?? ''),
+              title: Text(
+                _user.displayName ?? 'issue',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                chat.lastMessage,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              trailing: Text(
+                Utilities.timeInDigits(chat.timestamp),
+                style: const TextStyle(fontSize: 12),
+              ),
+            );
           }
-        });
+        }
+      },
+    );
   }
 }
 
