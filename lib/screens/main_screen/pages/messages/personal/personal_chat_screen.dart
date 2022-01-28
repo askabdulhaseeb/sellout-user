@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sellout/screens/others_profile/others_profile.dart';
 import '../../../../../database/auth_methods.dart';
 import '../../../../../database/chat_api.dart';
 import '../../../../../models/app_user.dart';
@@ -143,19 +144,28 @@ class _PersonalChatScreenState extends State<PersonalChatScreen> {
   AppBar _appBar({required AppUser otherUser}) {
     return AppBar(
       titleSpacing: 0,
-      title: Row(
-        children: <Widget>[
-          CustomProfileImage(imageURL: widget.otherUser.imageURL ?? ''),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              widget.otherUser.displayName ?? 'issue',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.headline6,
+      title: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute<OthersProfile>(
+              builder: (_) => OthersProfile(user: otherUser),
             ),
-          ),
-        ],
+          );
+        },
+        child: Row(
+          children: <Widget>[
+            CustomProfileImage(imageURL: widget.otherUser.imageURL ?? ''),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                widget.otherUser.displayName ?? 'issue',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ),
+          ],
+        ),
       ),
       actions: <Widget>[
         IconButton(
