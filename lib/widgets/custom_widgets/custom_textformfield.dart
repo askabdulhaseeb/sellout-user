@@ -76,6 +76,7 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
         maxLines: (widget._controller.text.isEmpty) ? 1 : widget.maxLines,
         validator: (String? value) => widget.validator!(value),
         cursorColor: Theme.of(context).colorScheme.secondary,
+        
         decoration: InputDecoration(
           contentPadding: widget.contentPadding ??
               const EdgeInsets.symmetric(horizontal: 12),

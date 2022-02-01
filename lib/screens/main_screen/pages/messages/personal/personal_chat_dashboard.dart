@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sellout/widgets/messages/product_chat_dashboard_tile.dart';
 import '../../../../../database/auth_methods.dart';
-import '../../../../../database/chat_api.dart';
 import '../../../../../models/chat.dart';
-import '../../../../../widgets/custom_widgets/show_loading.dart';
 import '../../../../../widgets/messages/chat_dashboard_tile.dart';
+import '../../../../../widgets/messages/product_chat_dashboard_tile.dart';
 
 class PersonalChatDashboard extends StatelessWidget {
   const PersonalChatDashboard({Key? key}) : super(key: key);
@@ -24,7 +22,8 @@ class PersonalChatDashboard extends StatelessWidget {
           return const _ErrorWidget();
         } else {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const ShowLoading();
+            // return const ShowLoading();
+            return const SizedBox();
           } else {
             if (snapshot.hasData) {
               List<Chat> _chat = <Chat>[];
@@ -32,8 +31,12 @@ class PersonalChatDashboard extends StatelessWidget {
                   in snapshot.data!.docs) {
                 _chat.add(Chat.fromDoc(doc));
               }
-              return ListView.builder(
+              return ListView.separated(
                 itemCount: _chat.length,
+                separatorBuilder: (_, __) => const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Divider(height: 1),
+                ),
                 itemBuilder: (_, int index) {
                   return _chat[index].pid == null
                       ? ChatDashboardTile(chat: _chat[index])

@@ -1,20 +1,18 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sellout/models/chat.dart';
-import 'package:sellout/screens/main_screen/pages/messages/personal/product_chat_screen.dart';
-import 'package:sellout/widgets/custom_widgets/show_loading.dart';
-
 import '../../database/auth_methods.dart';
 import '../../database/user_api.dart';
 import '../../models/app_user.dart';
 import '../../models/product.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
+import '../../screens/main_screen/pages/messages/personal/product_chat_screen.dart';
 import '../../screens/others_profile/others_profile.dart';
 import '../../utilities/utilities.dart';
 import '../custom_widgets/custom_elevated_button.dart';
 import '../custom_widgets/custom_profile_image.dart';
 import '../custom_widgets/show_info_dialog.dart';
+import '../custom_widgets/show_loading.dart';
 
 class ProdPostTile extends StatelessWidget {
   const ProdPostTile({required this.product, Key? key}) : super(key: key);
@@ -22,7 +20,6 @@ class ProdPostTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double _width = MediaQuery.of(context).size.width;
     return FutureBuilder<AppUser?>(
       future: UserAPI().getInfo(uid: product.uid),
       builder: (BuildContext context, AsyncSnapshot<AppUser?> snapshot) {
@@ -34,12 +31,9 @@ class ProdPostTile extends StatelessWidget {
             return Column(
               children: <Widget>[
                 _Header(product: product, user: _user!),
-                _imageSection(_width),
-                SizedBox(
-                  width: _width - (Utilities.padding * 2),
-                  child: _infoCard(),
-                ),
-                _buttonSection(context, _user),
+                _ImageSection(urls: product.prodURL),
+                _InfoCard(product: product),
+                _ButtonSection(user: _user, product: product),
                 const SizedBox(height: 10),
               ],
             );
@@ -50,11 +44,106 @@ class ProdPostTile extends StatelessWidget {
       },
     );
   }
+}
 
-  Widget _buttonSection(BuildContext context, AppUser user) {
-    const EdgeInsetsGeometry _padding = EdgeInsets.symmetric(vertical: 8);
-    const EdgeInsetsGeometry _margin = EdgeInsets.symmetric(vertical: 3);
-    const TextStyle _textStyle = TextStyle(color: Colors.white, fontSize: 16);
+class _InfoCard extends StatelessWidget {
+  const _InfoCard({required this.product, Key? key}) : super(key: key);
+  final Product product;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+      child: Card(
+        child: Padding(
+          padding: EdgeInsets.all(Utilities.padding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      product.title,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Text(
+                    product.price.toString(),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Row(
+                children: const <Widget>[
+                  Icon(
+                    Icons.location_on,
+                    color: Colors.grey,
+                    size: 12,
+                  ),
+                  SizedBox(width: 4),
+                  Text(
+                    'Location here',
+                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                  )
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                product.description,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ImageSection extends StatelessWidget {
+  const _ImageSection({required this.urls, Key? key}) : super(key: key);
+  final List<ProductURL> urls;
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 4 / 3,
+      child: Container(
+        color: Colors.white,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: urls.length,
+          itemBuilder: (BuildContext context, int index) {
+            return SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: ExtendedImage.network(
+                urls[index].url,
+                timeLimit: const Duration(days: 2),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _ButtonSection extends StatelessWidget {
+  const _ButtonSection({required this.user, required this.product, Key? key})
+      : super(key: key);
+  final AppUser user;
+  final Product product;
+  static const EdgeInsetsGeometry _padding = EdgeInsets.symmetric(vertical: 8);
+  static const EdgeInsetsGeometry _margin = EdgeInsets.symmetric(vertical: 3);
+  static const TextStyle _textStyle =
+      TextStyle(color: Colors.white, fontSize: 16);
+  @override
+  Widget build(BuildContext context) {
     return user.uid == AuthMethods.uid
         ? const SizedBox()
         : Padding(
@@ -118,79 +207,6 @@ class ProdPostTile extends StatelessWidget {
               ],
             ),
           );
-  }
-
-  Card _infoCard() {
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.all(Utilities.padding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Text(
-                    product.title,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Text(
-                  product.price.toString(),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(height: 4),
-            Row(
-              children: const <Widget>[
-                Icon(
-                  Icons.location_on,
-                  color: Colors.grey,
-                  size: 12,
-                ),
-                SizedBox(width: 4),
-                Text(
-                  'Location here',
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
-                )
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              product.description,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  AspectRatio _imageSection(double width) {
-    return AspectRatio(
-      aspectRatio: 4 / 3,
-      child: Container(
-        color: Colors.white,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: product.prodURL.length,
-          itemBuilder: (BuildContext context, int index) {
-            return SizedBox(
-              width: width,
-              child: ExtendedImage.network(
-                product.prodURL[index].url,
-                timeLimit: const Duration(days: 2),
-              ),
-            );
-          },
-        ),
-      ),
-    );
   }
 }
 

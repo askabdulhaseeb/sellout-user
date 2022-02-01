@@ -37,8 +37,12 @@ class GroupChatDashboaed extends StatelessWidget {
                   ? const Center(
                       child: Text('You are not a part of any group'),
                     )
-                  : ListView.builder(
+                  : ListView.separated(
                       itemCount: _group.length,
+                      separatorBuilder: (_, __) => const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Divider(height: 1),
+                      ),
                       itemBuilder: (_, int index) =>
                           GroupChatDashboardTile(group: _group[index]),
                     );

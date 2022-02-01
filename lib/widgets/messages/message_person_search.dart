@@ -25,7 +25,7 @@ class _MessagesPersonSearchState extends State<MessagesPersonSearch> {
           hintText: widget.hint,
           prefixIcon: const Icon(CupertinoIcons.search),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
       ),

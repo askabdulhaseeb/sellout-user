@@ -17,7 +17,7 @@ class MessagePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Messages',
+          'Messenger',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Theme.of(context).primaryColor,
@@ -70,9 +70,9 @@ class _TabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 32),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           TabBarIconButton(
             icon: Icons.perm_contact_cal,

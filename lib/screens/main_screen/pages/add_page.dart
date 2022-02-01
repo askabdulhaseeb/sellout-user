@@ -262,7 +262,7 @@ class _AddPageState extends State<AddPage> {
           controller: _price,
           hint: 'Select Price',
           validator: (String? value) => CustomValidator.isEmpty(value),
-          keyboardType: TextInputType.number,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
           textInputAction: TextInputAction.next,
         ),
         _titleText('Quantity'.toUpperCase()),
@@ -309,7 +309,8 @@ class _AddPageState extends State<AddPage> {
                 contentPadding: const EdgeInsets.only(left: 40),
                 validator: (String? value) => CustomValidator.isEmpty(value),
                 readOnly: _delivery == DeliveryTypeEnum.COLLOCATION,
-                keyboardType: TextInputType.number,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 textAlign: TextAlign.center,
                 color: Colors.transparent,
               ),
@@ -380,7 +381,7 @@ class _AddPageState extends State<AddPage> {
             contentPadding: const EdgeInsets.only(left: 40),
             showPrefixIcon: false,
             validator: (String? value) => CustomValidator.isEmpty(value),
-            keyboardType: TextInputType.number,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             textInputAction: TextInputAction.next,
             textAlign: TextAlign.center,
           ),
@@ -422,7 +423,7 @@ class _AddPageState extends State<AddPage> {
       children: <Widget>[
         CustomProfileImage(
           imageURL: UserLocalData.getImageURL,
-          radius: 24,
+          radius: 44,
         ),
         const SizedBox(width: 6),
         Flexible(
