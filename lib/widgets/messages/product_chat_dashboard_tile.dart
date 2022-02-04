@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:sellout/database/auth_methods.dart';
-import 'package:sellout/database/product_api.dart';
-import 'package:sellout/database/user_api.dart';
-import 'package:sellout/models/app_user.dart';
-import 'package:sellout/models/chat.dart';
-import 'package:sellout/models/product.dart';
-import 'package:sellout/screens/main_screen/pages/messages/personal/personal_chat_screen.dart';
-import 'package:sellout/screens/main_screen/pages/messages/personal/product_chat_screen.dart';
-import 'package:sellout/utilities/utilities.dart';
-import 'package:sellout/widgets/custom_widgets/custom_profile_image.dart';
-import 'package:sellout/widgets/custom_widgets/show_loading.dart';
+import '../../database/auth_methods.dart';
+import '../../database/product_api.dart';
+import '../../database/user_api.dart';
+import '../../models/app_user.dart';
+import '../../models/chat.dart';
+import '../../models/product.dart';
+import '../../screens/main_screen/pages/messages/personal/product_chat_screen.dart';
+import '../../utilities/utilities.dart';
+import '../custom_widgets/custom_profile_image.dart';
+import '../custom_widgets/show_loading.dart';
 
 class ProductChatDashboardTile extends StatelessWidget {
   const ProductChatDashboardTile({required this.chat, Key? key})

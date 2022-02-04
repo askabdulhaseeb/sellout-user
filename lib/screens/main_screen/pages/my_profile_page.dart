@@ -1,22 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../database/product_api.dart';
 import '../../../database/auth_methods.dart';
+import '../../../database/product_api.dart';
 import '../../../models/prod_category.dart';
 import '../../../models/product.dart';
 import '../../../providers/product_category_provider.dart';
 import '../../../services/custom_services.dart';
 import '../../../services/user_local_data.dart';
 import '../../../utilities/utilities.dart';
-import '../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../widgets/custom_widgets/custom_icon_button.dart';
+import '../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../widgets/custom_widgets/custom_rating_stars.dart';
 import '../../../widgets/custom_widgets/custom_score_button.dart';
-import '../../../widgets/custom_widgets/show_info_dialog.dart';
 import '../../../widgets/product/grid_view_of_prod.dart';
 import '../../../widgets/product/prod_cat_dropdown.dart';
 import '../../auth/login_screen.dart';
+import '../../edit_profile/edit_profile_screen.dart';
 
 class MyProdilePage extends StatelessWidget {
   const MyProdilePage({Key? key}) : super(key: key);
@@ -59,7 +59,7 @@ class MyProdilePage extends StatelessWidget {
   Widget _footer() {
     return Expanded(
       child: FutureBuilder<List<Product>>(
-        future: ProductAPI().getProductsByUID(uid: UserLocalData.getUID),
+        future: ProductAPI().getProductsByUID(uid: AuthMethods.uid),
         builder: (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -222,12 +222,8 @@ class MyProdilePage extends StatelessWidget {
                     const SizedBox(width: 4),
                     InkWell(
                       onTap: () {
-                        //TODO: Navigate to Edit profile
-                        showInfoDialog(
-                          context,
-                          title: 'Next Milestone',
-                          message: 'This is a part of next milestone',
-                        );
+                        Navigator.of(context)
+                            .pushNamed(EditProfileScreen.routeName);
                       },
                       child: Text(
                         '- Edit',

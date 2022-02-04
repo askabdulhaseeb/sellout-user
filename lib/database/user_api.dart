@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -17,54 +18,38 @@ class UserAPI {
   }
 
   Future<bool> addUser(AppUser appUser) async {
-    await _instance
-        .collection(_collection)
-        .doc(appUser.uid)
-        .set(appUser.toMap())
-        .catchError((Object e) {
+    try {
+      await _instance
+          .collection(_collection)
+          .doc(appUser.uid)
+          .set(appUser.toMap());
+      return true;
+    } catch (e) {
       CustomToast.errorToast(message: e.toString());
-      // ignore: invalid_return_type_for_catch_error
       return false;
-    });
-    return true;
+    }
   }
 
-  Future<void> followOrUnfollow(AppUser otherUser) async {
-    // List<String> otherFollowers = otherUser.followers!;
-    // List<String> currentUserFollowings = UserLocalData.getFollowings;
-    // if (otherUser.followers!.contains(UserLocalData.getUID)) {
-    //   // unfollow
-    //   otherFollowers.remove(UserLocalData.getUID);
-    //   currentUserFollowings.remove(otherUser.uid);
-    //   List<String> _temp = UserLocalData.getFollowings;
-    //   _temp.remove(otherUser.uid);
-    //   UserLocalData.setFollowings(_temp);
-    // } else {
-    //   // follow
-    //   otherFollowers.add(UserLocalData.getUID);
-    //   currentUserFollowings.add(otherUser.uid);
-    //   List<String> _temp = UserLocalData.getFollowings;
-    //   _temp.add(otherUser.uid);
-    //   UserLocalData.setFollowings(_temp);
-    // }
-    // // ignore: always_specify_types
-    // Future.wait([
-    //   _instance
-    //       .collection(_collection)
-    //       .doc(otherUser.uid)
-    //       .update(<String, dynamic>{'followers': otherFollowers}),
-    //   _instance
-    //       .collection(_collection)
-    //       .doc(UserLocalData.getUID)
-    //       .update(<String, dynamic>{'followings': currentUserFollowings}),
-    // ]);
+  Future<bool> updateProfile(AppUser appUser) async {
+    try {
+      await _instance
+          .collection(_collection)
+          .doc(appUser.uid)
+          .update(appUser.updateProfile());
+      UserLocalData.setBio(appUser.bio!);
+      UserLocalData.setDisplayName(appUser.displayName!);
+      UserLocalData.setUsername(appUser.username!);
+      UserLocalData.setImageUrl(appUser.imageURL!);
+      return true;
+    } catch (e) {
+      CustomToast.errorToast(message: e.toString());
+      return false;
+    }
   }
 
-  Future<String> uploadImage(Uint8List? imageBytes, String uid) async {
-    TaskSnapshot snapshot = await FirebaseStorage.instance
-        .ref()
-        .child('profile_images/$uid')
-        .putData(imageBytes!);
+  Future<String> uploadImage(File file, String uid) async {
+    TaskSnapshot snapshot =
+        await FirebaseStorage.instance.ref('profile_images/$uid').putFile(file);
     String url = (await snapshot.ref.getDownloadURL()).toString();
     return url;
   }

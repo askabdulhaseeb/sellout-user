@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sellout/widgets/custom_widgets/custom_toast.dart';
+import '../widgets/custom_widgets/custom_toast.dart';
 import '../models/chat.dart';
 import '../models/message.dart';
 import '../services/user_local_data.dart';
@@ -21,6 +21,7 @@ class ChatAPI {
   Future<void> sendMessage(Chat chat, Message messages) async {
     // ignore: always_specify_types
     try {
+      // ignore: always_specify_types
       Future.wait([
         _instance
             .collection(_colloction)

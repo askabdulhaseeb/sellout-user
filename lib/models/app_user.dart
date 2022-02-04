@@ -62,6 +62,18 @@ class AppUser {
     };
   }
 
+  Map<String, dynamic> updateProfile() {
+    return <String, dynamic>{
+      'displayName': displayName ?? '',
+      'username': username ?? '',
+      'imageURL': imageURL ?? '',
+      // 'countryCode': countryCode ?? '',
+      // 'phoneNumber': phoneNumber ?? '',
+      'isPublicProfile': isPublicProfile ?? true,
+      'bio': bio ?? '',
+    };
+  }
+
   // ignore: sort_constructors_first
   factory AppUser.fromMap(Map<String, dynamic> map) {
     return AppUser(

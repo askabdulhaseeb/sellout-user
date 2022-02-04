@@ -1,6 +1,5 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:sellout/utilities/app_images.dart';
 import '../../../../../models/group_chat.dart';
 
 class GroupInfoScreen extends StatelessWidget {
@@ -76,7 +75,7 @@ class GroupInfoScreen extends StatelessWidget {
             ConstrainedBox(
               constraints: const BoxConstraints.tightFor(height: 300),
               child: ListView.builder(
-                itemBuilder: (_, int index) => Text('data'),
+                itemBuilder: (_, int index) => const Text('data'),
               ),
             ),
           ],

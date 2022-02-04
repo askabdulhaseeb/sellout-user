@@ -10,6 +10,7 @@ import 'screens/auth/auth_type_screen.dart';
 import 'screens/auth/forget_password_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
+import 'screens/edit_profile/edit_profile_screen.dart';
 import 'screens/main_screen/main_screen.dart';
 import 'screens/main_screen/pages/messages/group/create_group_screen.dart';
 import 'services/custom_services.dart';
@@ -62,9 +63,7 @@ class MyApp extends StatelessWidget {
           primaryColor: _kPrimaryColor,
           colorScheme: const ColorScheme(
             primary: _kPrimaryColor,
-            primaryVariant: Colors.red,
             secondary: _kSecondaryColor,
-            secondaryVariant: Colors.deepPurple,
             surface: Colors.white,
             background: Colors.white,
             error: Colors.red,
@@ -86,6 +85,7 @@ class MyApp extends StatelessWidget {
           RegisterScreen.routeName: (_) => const RegisterScreen(),
           MainScreen.rotueName: (_) => const MainScreen(),
           CreateChatGroupScreen.routeName: (_) => const CreateChatGroupScreen(),
+          EditProfileScreen.routeName: (_) => const EditProfileScreen(),
         },
       ),
     );

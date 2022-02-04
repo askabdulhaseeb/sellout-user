@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sellout/database/auth_methods.dart';
+import '../database/auth_methods.dart';
 import '../enums/messages/message_type_enum.dart';
 
 class Message {

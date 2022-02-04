@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sellout/models/product.dart';
-import 'package:sellout/screens/others_profile/others_profile.dart';
 import '../../../../../database/auth_methods.dart';
 import '../../../../../database/chat_api.dart';
 import '../../../../../models/app_user.dart';
 import '../../../../../models/chat.dart';
 import '../../../../../models/message.dart';
+import '../../../../../models/product.dart';
 import '../../../../../services/user_local_data.dart';
 import '../../../../../utilities/utilities.dart';
 import '../../../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../../../widgets/messages/chat_textformfield.dart';
 import '../../../../../widgets/messages/personal_message_tile.dart';
+import '../../../../others_profile/others_profile.dart';
 
 class ProductChatScreen extends StatefulWidget {
   const ProductChatScreen({
@@ -245,7 +245,7 @@ class _ProductTile extends StatelessWidget {
                         style: TextStyle(color: Theme.of(context).primaryColor),
                       ),
                       const SizedBox(height: 6),
-                      Text('Category here'), //TODO: update category
+                      const Text('Category here'), //TODO: update category
                       const SizedBox(height: 4),
                       Text(
                         product.price.toString(),

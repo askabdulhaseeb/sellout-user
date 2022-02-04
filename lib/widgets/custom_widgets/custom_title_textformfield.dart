@@ -2,46 +2,45 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../utilities/utilities.dart';
 
-class CustomTextFormField extends StatefulWidget {
-  const CustomTextFormField({
+class CustomTitleTextFormField extends StatefulWidget {
+  const CustomTitleTextFormField({
     required TextEditingController controller,
+    required this.title,
     this.keyboardType,
     this.textInputAction,
     this.onChanged,
     this.validator,
     this.initialValue,
-    this.hint = '',
     this.color,
     this.contentPadding,
     this.minLines = 1,
     this.maxLines = 1,
-    this.showPrefixIcon = true,
+    this.maxLength,
     this.readOnly = false,
     this.autoFocus = false,
-    this.textAlign = TextAlign.start,
     Key? key,
   })  : _controller = controller,
         super(key: key);
   final TextEditingController _controller;
+  final String title;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final void Function(String)? onChanged;
-  final bool showPrefixIcon;
   final String? Function(String? value)? validator;
   final EdgeInsetsGeometry? contentPadding;
   final int? minLines;
   final int? maxLines;
   final Color? color;
+  final int? maxLength;
   final String? initialValue;
-  final String? hint;
   final bool readOnly;
   final bool autoFocus;
-  final TextAlign textAlign;
   @override
-  CustomTextFormFieldState createState() => CustomTextFormFieldState();
+  CustomTitleTextFormFieldState createState() =>
+      CustomTitleTextFormFieldState();
 }
 
-class CustomTextFormFieldState extends State<CustomTextFormField> {
+class CustomTitleTextFormFieldState extends State<CustomTitleTextFormField> {
   void _onListen() => setState(() {});
   @override
   void initState() {
@@ -57,13 +56,14 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 6),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(14),
-        color: widget.color ?? Colors.grey[300],
+    return CupertinoFormRow(
+      prefix: Text(
+        widget.title,
+        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
       ),
-      child: TextFormField(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+      child: CupertinoTextFormFieldRow(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         initialValue: widget.initialValue,
         controller: widget._controller,
         readOnly: widget.readOnly,
@@ -74,35 +74,12 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
             ? TextInputAction.newline
             : widget.textInputAction ?? TextInputAction.next,
         autofocus: widget.autoFocus,
-        textAlign: widget.textAlign,
         onChanged: widget.onChanged,
+        maxLength: widget.maxLength,
         minLines: widget.minLines,
         maxLines: (widget._controller.text.isEmpty) ? 1 : widget.maxLines,
         validator: (String? value) => widget.validator!(value),
-        cursorColor: Theme.of(context).colorScheme.secondary,
-        decoration: InputDecoration(
-          contentPadding: widget.contentPadding ??
-              const EdgeInsets.symmetric(horizontal: 12),
-          hintText: widget.hint,
-          hintStyle: widget.hint!.length > 15
-              ? const TextStyle(fontSize: 14)
-              : const TextStyle(fontSize: 15),
-          suffixIcon: (widget._controller.text.isEmpty)
-              ? const SizedBox(width: 0, height: 0)
-              : (widget.showPrefixIcon == false)
-                  ? const SizedBox(width: 0, height: 0)
-                  : IconButton(
-                      splashRadius: Utilities.padding,
-                      onPressed: () => setState(() {
-                        widget._controller.clear();
-                      }),
-                      icon: const Icon(CupertinoIcons.clear, size: 18),
-                    ),
-          focusColor: Theme.of(context).primaryColor,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
-          ),
-        ),
+        cursorColor: Theme.of(context).colorScheme.primary,
       ),
     );
   }

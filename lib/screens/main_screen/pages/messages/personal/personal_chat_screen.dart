@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sellout/screens/others_profile/others_profile.dart';
 import '../../../../../database/auth_methods.dart';
 import '../../../../../database/chat_api.dart';
 import '../../../../../models/app_user.dart';
@@ -11,6 +10,7 @@ import '../../../../../utilities/utilities.dart';
 import '../../../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../../../widgets/messages/chat_textformfield.dart';
 import '../../../../../widgets/messages/personal_message_tile.dart';
+import '../../../../others_profile/others_profile.dart';
 
 class PersonalChatScreen extends StatefulWidget {
   const PersonalChatScreen(

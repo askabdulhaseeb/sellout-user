@@ -1,17 +1,14 @@
-import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
-class CustomFileImageBox extends StatelessWidget {
-  const CustomFileImageBox({
+class CustomNetworkChangeImageBox extends StatelessWidget {
+  const CustomNetworkChangeImageBox({
     required this.onTap,
+    this.url,
     this.title = 'Upload Image',
     this.size = 80,
-    this.file,
     Key? key,
   }) : super(key: key);
-  final PlatformFile? file;
+  final String? url;
   final String title;
   final VoidCallback onTap;
   final double size;
@@ -27,7 +24,7 @@ class CustomFileImageBox extends StatelessWidget {
               height: size,
               width: size,
               color: Theme.of(context).primaryColor,
-              child: file == null
+              child: url == null || url == ''
                   ? const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: FittedBox(
@@ -42,10 +39,7 @@ class CustomFileImageBox extends StatelessWidget {
                   : SizedBox(
                       height: double.infinity,
                       width: double.infinity,
-                      child: Image.file(
-                        File(file!.path!),
-                        fit: BoxFit.cover,
-                      ),
+                      child: Image.network(url!, fit: BoxFit.cover),
                     ),
             ),
           ),

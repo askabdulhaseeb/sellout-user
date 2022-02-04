@@ -28,7 +28,7 @@ class GroupChatAPI {
   Future<List<GroupChat>> getGroups() async {
     List<GroupChat> _groups = <GroupChat>[];
     try {
-      final  docs = _instance
+      final  Stream<QuerySnapshot<Map<String, dynamic>>> docs = _instance
           .collection(_colloction)
           .orderBy('timestamp', descending: true)
           .where('participants', arrayContains: AuthMethods.uid)

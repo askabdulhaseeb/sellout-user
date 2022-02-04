@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sellout/database/auth_methods.dart';
-import 'package:sellout/screens/main_screen/pages/messages/group/group_chat_screen.dart';
-import 'package:sellout/utilities/utilities.dart';
-import 'package:sellout/widgets/custom_widgets/custom_profile_image.dart';
-import '../../../../../database/group_chat_api.dart';
+import '../../../../../database/auth_methods.dart';
 import '../../../../../models/group_chat.dart';
+import '../../../../../utilities/utilities.dart';
+import '../../../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../../../widgets/custom_widgets/show_loading.dart';
+import 'group_chat_screen.dart';
 
 class GroupChatDashboaed extends StatelessWidget {
   const GroupChatDashboaed({Key? key}) : super(key: key);
