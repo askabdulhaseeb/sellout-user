@@ -116,10 +116,13 @@ class _Product_Info extends StatelessWidget {
             height: _imageSize,
             child: Hero(
               tag: product.pid,
-              child: CustomSlidableURLsTile(
-                urls: product.prodURL,
-                width: _imageSize,
-                height: _imageSize,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: CustomSlidableURLsTile(
+                  urls: product.prodURL,
+                  width: _imageSize,
+                  height: _imageSize,
+                ),
               ),
             ),
           ),
@@ -129,10 +132,9 @@ class _Product_Info extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
+                  SelectableText(
                     product.title,
                     maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
