@@ -38,7 +38,7 @@ class ProdPostTile extends StatelessWidget {
               ],
             );
           } else {
-            return const Expanded(child: ShowLoading());
+            return const ShowLoading();
           }
         }
       },
@@ -123,6 +123,7 @@ class _ImageSection extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: ExtendedImage.network(
                 urls[index].url,
+                fit: BoxFit.cover,
                 timeLimit: const Duration(days: 2),
               ),
             );

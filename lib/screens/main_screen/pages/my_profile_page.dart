@@ -236,11 +236,7 @@ class MyProdilePage extends StatelessWidget {
                 SizedBox(
                   width: _totalWidth / 1.6,
                   child: UserLocalData.getBio == ''
-                      ? const Text(
-                          'No Bio',
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        )
+                      ? const Text('No Bio')
                       : Text(
                           UserLocalData.getBio,
                           maxLines: 3,

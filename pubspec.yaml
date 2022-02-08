@@ -10,27 +10,27 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cloud_firestore: ^3.1.5
-  firebase_auth: ^3.3.4
-  firebase_core: ^1.10.6
-  firebase_storage: ^10.2.4
+  cloud_firestore: ^3.1.7
+  firebase_auth: ^3.3.6
+  firebase_core: ^1.12.0
+  firebase_storage: ^10.2.6
 
-  google_sign_in: ^5.2.1
+  google_sign_in: ^5.2.3
 
-  shared_preferences: ^2.0.11
+  shared_preferences: ^2.0.13
   provider: ^6.0.2
 
   cupertino_icons: ^1.0.4
   extended_image: ^6.0.1
-  file_picker: ^4.3.2 #info.plist
+  file_picker: ^4.3.3
   font_awesome_flutter: ^9.2.0
-  video_player: ^2.2.13
+  video_player: ^2.2.18
   intl: ^0.17.0
 
   fluttertoast: ^8.0.8
 
   dropdown_search: ^2.0.1
-  intl_phone_field: ^2.1.0
+  intl_phone_field: ^3.0.1
 
 dev_dependencies:
   flutter_test:

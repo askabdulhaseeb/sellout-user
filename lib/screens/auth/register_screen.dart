@@ -179,8 +179,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           username: _username.text.trim(),
           gender: _gender,
           dob: _dob.dob,
-          countryCode: _number!.countryCode!,
-          phoneNumber: _number!.number!,
+          countryCode: _number!.countryCode,
+          phoneNumber: _number!.number,
           email: _email.text.trim(),
         );
         final bool _okay = await UserAPI().addUser(_appUser);

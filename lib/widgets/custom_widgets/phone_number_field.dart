@@ -20,6 +20,7 @@ class _PhoneNumberFieldState extends State<PhoneNumberField> {
         color: Colors.grey[300],
       ),
       child: IntlPhoneField(
+        
         textInputAction: TextInputAction.done,
         showCountryFlag: true,
         decoration: InputDecoration(
@@ -35,7 +36,6 @@ class _PhoneNumberFieldState extends State<PhoneNumberField> {
           ),
         ),
         initialCountryCode: 'UK',
-        autoValidate: true,
         keyboardType: TextInputType.number,
         onChanged: (PhoneNumber phone) => widget.onChange!(phone),
       ),

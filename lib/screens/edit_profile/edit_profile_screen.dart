@@ -5,7 +5,6 @@ import '../../database/auth_methods.dart';
 import '../../database/user_api.dart';
 import '../../models/app_user.dart';
 import '../../services/user_local_data.dart';
-import '../../utilities/app_images.dart';
 import '../../utilities/custom_validators.dart';
 import '../../widgets/custom_widgets/custom_elevated_button.dart';
 import '../../widgets/custom_widgets/custom_file_image_box.dart';

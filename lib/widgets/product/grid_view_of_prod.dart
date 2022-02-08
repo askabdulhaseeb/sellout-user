@@ -26,7 +26,8 @@ class GridViewOfProducts extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
-              child: Center(
+              child: AspectRatio(
+                aspectRatio: 4 / 3,
                 child: ExtendedImage.network(
                   posts[index].prodURL[0].url,
                   fit: BoxFit.cover,
