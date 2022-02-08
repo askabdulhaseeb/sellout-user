@@ -8,10 +8,12 @@ import '../../../../../models/message.dart';
 import '../../../../../models/product.dart';
 import '../../../../../services/user_local_data.dart';
 import '../../../../../utilities/utilities.dart';
+import '../../../../../widgets/custom_slideable_image.dart';
 import '../../../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../../../widgets/messages/chat_textformfield.dart';
 import '../../../../../widgets/messages/personal_message_tile.dart';
 import '../../../../others_profile/others_profile.dart';
+import '../../../../product_detail_screen/product_detail_screen.dart';
 
 class ProductChatScreen extends StatefulWidget {
   const ProductChatScreen({
@@ -120,7 +122,7 @@ class _ProductChatScreenState extends State<ProductChatScreen> {
                   }),
             ),
             const SizedBox(height: 8),
-            _ProductTile(product: widget.product),
+            _ProductTile(product: widget.product, user: widget.otherUser),
             const SizedBox(height: 8),
             ChatTestFormField(
                 controller: _text,
@@ -207,13 +209,24 @@ class _ProductChatScreenState extends State<ProductChatScreen> {
 }
 
 class _ProductTile extends StatelessWidget {
-  const _ProductTile({required this.product, Key? key}) : super(key: key);
+  const _ProductTile({required this.product, required this.user, Key? key})
+      : super(key: key);
   final Product product;
+  final AppUser user;
 
   @override
   Widget build(BuildContext context) {
+    const double _imageSize = 100;
+
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute<ProductChatScreen>(
+          builder: (BuildContext context) => ProductDetailScreen(
+            product: product,
+            user: user,
+          ),
+        ));
+      },
       borderRadius: BorderRadius.circular(12),
       child: Container(
         padding: const EdgeInsets.all(16),
@@ -226,12 +239,14 @@ class _ProductTile extends StatelessWidget {
           children: <Widget>[
             Row(
               children: <Widget>[
-                CustomProfileImage(
-                  radius: 100,
-                  imageURL: product
-                      .prodURL[product.prodURL.indexWhere(
-                          (ProductURL element) => element.isVideo == false)]
-                      .url,
+                SizedBox(
+                  height: _imageSize,
+                  width: _imageSize,
+                  child: CustomSlidableURLsTile(
+                    urls: product.prodURL,
+                    width: _imageSize,
+                    height: _imageSize,
+                  ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -245,7 +260,7 @@ class _ProductTile extends StatelessWidget {
                         style: TextStyle(color: Theme.of(context).primaryColor),
                       ),
                       const SizedBox(height: 6),
-                      const Text('Category here'), //TODO: update category
+                      Text(product.categories[0]),
                       const SizedBox(height: 4),
                       Text(
                         product.price.toString(),
