@@ -25,7 +25,8 @@ class GridViewOfProducts extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Expanded(
+            Hero(
+              tag: posts[index].pid,
               child: AspectRatio(
                 aspectRatio: 4 / 3,
                 child: ExtendedImage.network(

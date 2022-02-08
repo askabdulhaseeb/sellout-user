@@ -85,6 +85,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 maxLength: 160,
               ),
               const Divider(height: 4),
+              // TODO: Need to update this
               CustomTitleTextFormField(
                 controller: _category,
                 title: 'Category',
@@ -92,6 +93,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 validator: (String? value) => CustomValidator.retaunNull(value),
               ),
               const Divider(height: 4),
+              // TODO: Need to update this
               CustomTitleTextFormField(
                 controller: _phone,
                 title: 'Phone Number',

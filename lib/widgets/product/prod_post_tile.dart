@@ -8,7 +8,9 @@ import '../../models/product.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
 import '../../screens/main_screen/pages/messages/personal/product_chat_screen.dart';
 import '../../screens/others_profile/others_profile.dart';
+import '../../screens/product_detail_screen/product_detail_screen.dart';
 import '../../utilities/utilities.dart';
+import '../custom_slideable_image.dart';
 import '../custom_widgets/custom_elevated_button.dart';
 import '../custom_widgets/custom_profile_image.dart';
 import '../custom_widgets/show_info_dialog.dart';
@@ -31,8 +33,25 @@ class ProdPostTile extends StatelessWidget {
             return Column(
               children: <Widget>[
                 _Header(product: product, user: _user!),
-                _ImageSection(urls: product.prodURL),
-                _InfoCard(product: product),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<ProductDetailScreen>(
+                        builder: (_) =>
+                            ProductDetailScreen(product: product, user: _user),
+                      ),
+                    );
+                  },
+                  child: Column(
+                    children: <Widget>[
+                      Hero(
+                        tag: product.pid,
+                        child: CustomSlidableURLsTile(urls: product.prodURL),
+                      ),
+                      _InfoCard(product: product),
+                    ],
+                  ),
+                ),
                 _ButtonSection(user: _user, product: product),
                 const SizedBox(height: 10),
               ],
@@ -100,34 +119,6 @@ class _InfoCard extends StatelessWidget {
               )
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ImageSection extends StatelessWidget {
-  const _ImageSection({required this.urls, Key? key}) : super(key: key);
-  final List<ProductURL> urls;
-  @override
-  Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 4 / 3,
-      child: Container(
-        color: Colors.white,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: urls.length,
-          itemBuilder: (BuildContext context, int index) {
-            return SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: ExtendedImage.network(
-                urls[index].url,
-                fit: BoxFit.cover,
-                timeLimit: const Duration(days: 2),
-              ),
-            );
-          },
         ),
       ),
     );

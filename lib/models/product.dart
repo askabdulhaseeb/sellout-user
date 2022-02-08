@@ -44,6 +44,7 @@ class Product {
     required this.categories,
     required this.subCategories,
     required this.price,
+    this.location,
     this.quantity = 1,
     this.acceptOffers = true,
     this.privacy = ProdPrivacyTypeEnum.PUBLIC,
@@ -63,6 +64,7 @@ class Product {
   late List<String> categories;
   late List<String> subCategories;
   late double price;
+  late String? location;
   late int quantity;
   late bool acceptOffers;
   late ProdPrivacyTypeEnum privacy;
@@ -112,6 +114,7 @@ class Product {
       categories: List<String>.from(doc.data()!['categories']),
       subCategories: List<String>.from(doc.data()!['sub_categories']),
       price: doc.data()!['price']?.toDouble() ?? 0.0,
+      location: doc.data()!['location'] ?? 'location not found',
       quantity: doc.data()!['quantity']?.toInt() ?? 0,
       acceptOffers: doc.data()!['accept_offers'] ?? false,
       privacy: ProdPrivacyTypeEnumConvertor.stringToEnum(
