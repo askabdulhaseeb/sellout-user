@@ -1,10 +1,14 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import '../../models/app_user.dart';
 import '../../models/product.dart';
+import '../../screens/product_detail_screen/product_detail_screen.dart';
 
 class GridViewOfProducts extends StatelessWidget {
-  const GridViewOfProducts({required this.posts, Key? key}) : super(key: key);
+  const GridViewOfProducts({required this.posts, required this.user, Key? key})
+      : super(key: key);
   final List<Product> posts;
+  final AppUser user;
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +22,14 @@ class GridViewOfProducts extends StatelessWidget {
       itemCount: posts.length,
       itemBuilder: (BuildContext context, int index) => InkWell(
         onTap: () {
-          // _provider.onUpdatedigi(posts[index]);
-          // Navigator.of(context).pushNamed(DigilogView.routeName);
+          Navigator.of(context).push(
+            MaterialPageRoute<ProductDetailScreen>(
+              builder: (_) => ProductDetailScreen(
+                product: posts[index],
+                user: user,
+              ),
+            ),
+          );
         },
         child: Column(
           mainAxisSize: MainAxisSize.min,

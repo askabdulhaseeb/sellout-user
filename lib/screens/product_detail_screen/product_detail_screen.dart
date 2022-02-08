@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../database/auth_methods.dart';
 import '../../enums/delivery_type.dart';
 import '../../enums/product_condition.dart';
 import '../../models/app_user.dart';
 import '../../models/product.dart';
+import '../../providers/main_bottom_nav_bar_provider.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/custom_slideable_image.dart';
 import '../../widgets/custom_widgets/custom_elevated_button.dart';
 import '../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../widgets/custom_widgets/custom_rating_stars.dart';
 import '../main_screen/pages/messages/personal/product_chat_screen.dart';
+import '../others_profile/others_profile.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({
@@ -25,6 +28,7 @@ class ProductDetailScreen extends StatelessWidget {
     const TextStyle _boldTextStyle = TextStyle(fontWeight: FontWeight.bold);
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 0,
         title: const Text('Product Detail'),
       ),
       body: SingleChildScrollView(
@@ -62,29 +66,46 @@ class ProductDetailScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Row(
-                      children: <Widget>[
-                        CustomProfileImage(imageURL: user.imageURL ?? ''),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                user.displayName ?? 'null',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: _boldTextStyle,
-                              ),
-                              CustomRatingStars(rating: user.rating ?? 0),
-                            ],
+                    child: GestureDetector(
+                      onTap: () {
+                        if (user.uid == AuthMethods.uid) {
+                          Navigator.of(context).pop();
+                          Provider.of<MainBottomNavBarProvider>(
+                            context,
+                            listen: false,
+                          ).onTabTapped(4);
+                          return;
+                        }
+                        Navigator.of(context).push(
+                          MaterialPageRoute<OthersProfile>(
+                            builder: (_) => OthersProfile(user: user),
                           ),
-                        ),
-                        Text(
-                          Utilities.timeInWords(product.timestamp ?? 0),
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                      ],
+                        );
+                      },
+                      child: Row(
+                        children: <Widget>[
+                          CustomProfileImage(imageURL: user.imageURL ?? ''),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  user.displayName ?? 'null',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: _boldTextStyle,
+                                ),
+                                CustomRatingStars(rating: user.rating ?? 0),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            Utilities.timeInWords(product.timestamp ?? 0),
+                            style: const TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Row(

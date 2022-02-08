@@ -31,7 +31,7 @@ class OthersProfile extends StatelessWidget {
       appBar: AppBar(
         systemOverlayStyle: CustomService.systemUIOverlayStyle(),
         title: Text(
-          user.username??'issue',
+          user.username ?? 'issue',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Theme.of(context).primaryColor,
@@ -83,7 +83,10 @@ class OthersProfile extends StatelessWidget {
               } else {
                 if (snapshot.hasData) {
                   if (snapshot.data!.isNotEmpty) {
-                    return GridViewOfProducts(posts: snapshot.data!);
+                    return GridViewOfProducts(
+                      posts: snapshot.data!,
+                      user: user,
+                    );
                   } else {
                     return const Center(
                       child: Text(
@@ -250,7 +253,7 @@ class OthersProfile extends StatelessWidget {
               children: <Widget>[
                 const SizedBox(height: 2),
                 Text(
-                  user.displayName??'issue',
+                  user.displayName ?? 'issue',
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),

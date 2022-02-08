@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../database/auth_methods.dart';
 import '../../../database/product_api.dart';
+import '../../../models/app_user.dart';
 import '../../../models/prod_category.dart';
 import '../../../models/product.dart';
 import '../../../providers/product_category_provider.dart';
@@ -74,7 +75,10 @@ class MyProdilePage extends StatelessWidget {
               } else {
                 if (snapshot.hasData) {
                   if (snapshot.data!.isNotEmpty) {
-                    return GridViewOfProducts(posts: snapshot.data!);
+                    return GridViewOfProducts(
+                      posts: snapshot.data!,
+                      user: UserLocalData().user,
+                    );
                   } else {
                     return const Center(
                       child: Text(

@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import '../database/auth_methods.dart';
 import '../models/app_user.dart';
 
 class UserLocalData {
@@ -78,15 +79,30 @@ class UserLocalData {
 
   void storeAppUserData({required AppUser appUser}) {
     setUID(appUser.uid);
-    setDisplayName(appUser.displayName??'');
-    setUsername(appUser.username??'');
+    setDisplayName(appUser.displayName ?? '');
+    setUsername(appUser.username ?? '');
     setImageUrl(appUser.imageURL ?? '');
-    setEmail(appUser.email??'');
+    setEmail(appUser.email ?? '');
     setIsVerified(appUser.isVerified ?? false);
     setRating(appUser.rating ?? 0.0);
     setBio(appUser.bio ?? '');
     setPosts(appUser.posts ?? <String>[]);
     setSupporters(appUser.supporters ?? <String>[]);
     setSupporting(appUser.supporting ?? <String>[]);
+  }
+
+  AppUser get user {
+    return AppUser(
+      uid: AuthMethods.uid,
+      displayName: getDisplayName,
+      username: getUsername,
+      imageURL: getImageURL,
+      email: getEmail,
+      isVerified: getIsVarified,
+      rating: getRating,
+      posts: getPost,
+      supporters: getSupporters,
+      supporting: getSupporting,
+    );
   }
 }
