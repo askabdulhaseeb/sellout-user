@@ -12,6 +12,7 @@ import '../../widgets/custom_widgets/custom_network_change_img_box.dart';
 import '../../widgets/custom_widgets/custom_title_textformfield.dart';
 import '../../widgets/custom_widgets/show_loading.dart';
 import '../../widgets/profile_display_type.dart';
+import '../main_screen/main_screen.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
@@ -133,8 +134,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               isPublicProfile: _profileDisplay,
                               imageURL: _url,
                             );
-                            await UserAPI().updateProfile(appUser);
-                            Navigator.of(context).pop();
+                            final bool _updated =
+                                await UserAPI().updateProfile(appUser);
+                            if (_updated) {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  MainScreen.rotueName, (_) => false);
+                            } else {
+                              setState(() {
+                                _isloading = false;
+                              });
+                            }
                           }
                         },
                       ),
