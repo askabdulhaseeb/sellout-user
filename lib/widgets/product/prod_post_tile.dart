@@ -6,6 +6,7 @@ import '../../database/user_api.dart';
 import '../../models/app_user.dart';
 import '../../models/product.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
+import '../../screens/buy_now_screen/buy_now_screen.dart';
 import '../../screens/main_screen/pages/messages/personal/product_chat_screen.dart';
 import '../../screens/others_profile/others_profile.dart';
 import '../../screens/product_detail_screen/product_detail_screen.dart';
@@ -148,12 +149,15 @@ class _ButtonSection extends StatelessWidget {
                   textStyle: _textStyle,
                   title: 'Buy Now',
                   onTap: () {
-                    // TODO: Buy Now Button click
-                    showInfoDialog(
-                      context,
-                      title: 'Next Milestone',
-                      message: 'This is a part of next milestone',
-                    );
+                    if (user.displayName == null || user.displayName == '') {
+                      return;
+                    }
+                    Navigator.of(context)
+                        .push(MaterialPageRoute<ProductChatScreen>(
+                      builder: (BuildContext context) => BuyNowScreen(
+                        product: product,
+                      ),
+                    ));
                   },
                 ),
                 product.acceptOffers
