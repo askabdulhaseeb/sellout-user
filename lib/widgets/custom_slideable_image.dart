@@ -6,17 +6,22 @@ class CustomSlidableURLsTile extends StatelessWidget {
   const CustomSlidableURLsTile({
     required this.urls,
     this.aspectRatio = 4 / 3,
+    this.width,
+    this.height,
     Key? key,
   }) : super(key: key);
   final List<ProductURL> urls;
   final double aspectRatio;
+  final double? width;
+  final double? height;
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: aspectRatio,
       child: Scaffold(
-        body: Container(
-          color: Colors.white,
+        body: SizedBox(
+          width: width ?? MediaQuery.of(context).size.width,
+          height: height ?? double.infinity,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: urls.length,
@@ -25,8 +30,8 @@ class CustomSlidableURLsTile extends StatelessWidget {
                 alignment: Alignment.topRight,
                 children: <Widget>[
                   SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: double.infinity,
+                    width: width ?? MediaQuery.of(context).size.width,
+                    height: height ?? double.infinity,
                     child: InteractiveViewer(
                       child: ExtendedImage.network(
                         urls[index].url,
