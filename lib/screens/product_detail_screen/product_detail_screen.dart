@@ -11,6 +11,7 @@ import '../../widgets/custom_slideable_image.dart';
 import '../../widgets/custom_widgets/custom_elevated_button.dart';
 import '../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../widgets/custom_widgets/custom_rating_stars.dart';
+import '../buy_now_screen/buy_now_screen.dart';
 import '../main_screen/pages/messages/personal/product_chat_screen.dart';
 import '../others_profile/others_profile.dart';
 
@@ -161,10 +162,20 @@ class ProductDetailScreen extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            const SizedBox(width: 16),
             CustomElevatedButton(
-              title: 'Make Offer',
-              onTap: () {},
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              title: 'Buy Now',
+              onTap: () {
+                if (user.displayName == null || user.displayName == '') {
+                  return;
+                }
+                Navigator.of(context).push(MaterialPageRoute<ProductChatScreen>(
+                  builder: (BuildContext context) => BuyNowScreen(
+                    product: product,
+                  ),
+                ));
+              },
+              padding: const EdgeInsets.symmetric(horizontal: 28),
             ),
             FloatingActionButton(
               onPressed: () {
@@ -181,7 +192,7 @@ class ProductDetailScreen extends StatelessWidget {
               child: const Icon(Icons.message_outlined, color: Colors.white),
             ),
             CustomElevatedButton(
-              title: 'Buy Now',
+              title: 'Make Offer',
               onTap: () {},
               padding: const EdgeInsets.symmetric(horizontal: 16),
             ),
