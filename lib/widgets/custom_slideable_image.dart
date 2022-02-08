@@ -26,9 +26,8 @@ class CustomSlidableURLsTile extends StatelessWidget {
                 children: <Widget>[
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
+                    height: double.infinity,
                     child: InteractiveViewer(
-                      onInteractionEnd: (details) =>
-                          print(details.pointerCount),
                       child: ExtendedImage.network(
                         urls[index].url,
                         fit: BoxFit.cover,
