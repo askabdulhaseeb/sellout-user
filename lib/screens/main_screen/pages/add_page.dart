@@ -429,7 +429,7 @@ class _AddPageState extends State<AddPage> {
         Flexible(
           child: CustomTextFormField(
             controller: _title,
-            hint: 'what are you selling ...?',
+            hint: 'What are you selling ...?',
             validator: (String? value) => CustomValidator.isEmpty(value),
           ),
         )

@@ -14,7 +14,6 @@ class GroupChat {
     this.name,
     this.imageURL,
     this.description,
-    this.website,
     this.participants,
     this.participantsDetail,
     this.lastMessage,
@@ -28,7 +27,6 @@ class GroupChat {
   final String? name;
   final String? imageURL;
   final String? description;
-  final String? website;
   final List<String>? participants;
   final List<GroupChatParticipant>? participantsDetail;
   String? lastMessage;
@@ -44,7 +42,6 @@ class GroupChat {
       'name': name!.trim(),
       'imageURL': imageURL,
       'description': description!.trim(),
-      'website': website!.trim(),
       'participants': <String>[AuthMethods.uid],
       // ignore: always_specify_types
       'participants_details': [
@@ -91,7 +88,6 @@ class GroupChat {
       name: map['name'] ?? '',
       imageURL: map['imageURL'],
       description: map['description'] ?? '',
-      website: map['website'] ?? '',
       participants: List<String>.from(map['participants']),
       participantsDetail: _participants,
       lastMessage: map['last_message'] ?? '',
@@ -110,7 +106,6 @@ class GroupChat {
       name: doc.data()?['name'] ?? '',
       imageURL: doc.data()?['imageURL'],
       description: doc.data()?['description'] ?? '',
-      website: doc.data()?['website'] ?? '',
       participants: List<String>.from(doc.data()?['participants']),
       // participantsDetail: GroupChatParticipant.fromMap(
       //     doc.data()?['participants_details'] as Map<String, dynamic>),

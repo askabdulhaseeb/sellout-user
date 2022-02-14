@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
         elevation: 0,
         centerTitle: false,
         title: Text(
-          'Sellout',
+          'SellOut',
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             wordSpacing: 1,

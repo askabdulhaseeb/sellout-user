@@ -52,11 +52,6 @@ class GroupInfoScreen extends StatelessWidget {
               onTap: () {},
               placeholder: 'Add a decription here',
             ),
-            _TabableTextBox(
-              title: group.website ?? '-',
-              onTap: () {},
-              placeholder: 'www.shellout.com',
-            ),
             Row(
               children: <Widget>[
                 const SizedBox(width: 16),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../database/auth_methods.dart';
 import '../../../database/product_api.dart';
-import '../../../models/app_user.dart';
 import '../../../models/prod_category.dart';
 import '../../../models/product.dart';
 import '../../../providers/product_category_provider.dart';
@@ -126,6 +125,7 @@ class MyProdilePage extends StatelessWidget {
                   selectedItem: cat.selectedCategroy,
                   padding: const EdgeInsets.only(bottom: 14, left: 8, right: 8),
                   margin: const EdgeInsets.symmetric(vertical: 0),
+                  borderRadius: BorderRadius.circular(10),
                   onChanged: (ProdCategory? update) =>
                       cat.updateCatSelection(update!),
                 ),

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import '../../database/auth_methods.dart';
 import '../../models/app_user.dart';

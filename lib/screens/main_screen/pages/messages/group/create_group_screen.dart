@@ -21,7 +21,6 @@ class CreateChatGroupScreen extends StatefulWidget {
 class _CreateChatGroupScreenState extends State<CreateChatGroupScreen> {
   final TextEditingController _name = TextEditingController();
   final TextEditingController _description = TextEditingController();
-  final TextEditingController _website = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   PlatformFile? _pickedImage;
   bool _isLoading = false;
@@ -64,14 +63,6 @@ class _CreateChatGroupScreenState extends State<CreateChatGroupScreen> {
                 maxLines: 4,
                 validator: (String? value) => CustomValidator.retaunNull(value),
               ),
-              const SizedBox(height: 6),
-              _titleText('Website URL'),
-              CustomTextFormField(
-                controller: _website,
-                readOnly: _isLoading,
-                hint: 'www.shellout.com',
-                validator: (String? value) => CustomValidator.retaunNull(value),
-              ),
               const SizedBox(height: 10),
               _isLoading
                   ? const ShowLoading()
@@ -93,7 +84,6 @@ class _CreateChatGroupScreenState extends State<CreateChatGroupScreen> {
                           GroupChat _group = GroupChat(
                             name: _name.text,
                             description: _description.text,
-                            website: _website.text,
                             imageURL: _url,
                           );
                           final bool _uploaded =

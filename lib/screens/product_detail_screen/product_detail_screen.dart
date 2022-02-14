@@ -13,6 +13,7 @@ import '../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../widgets/custom_widgets/custom_rating_stars.dart';
 import '../buy_now_screen/buy_now_screen.dart';
 import '../main_screen/pages/messages/personal/product_chat_screen.dart';
+import '../make_offer_screen/make_offer_screen.dart';
 import '../others_profile/others_profile.dart';
 
 class ProductDetailScreen extends StatelessWidget {
@@ -157,48 +158,63 @@ class ProductDetailScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: SizedBox(
-        height: 48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const SizedBox(width: 16),
-            CustomElevatedButton(
-              title: 'Buy Now',
-              onTap: () {
-                if (user.displayName == null || user.displayName == '') {
-                  return;
-                }
-                Navigator.of(context).push(MaterialPageRoute<ProductChatScreen>(
-                  builder: (BuildContext context) => BuyNowScreen(
-                    product: product,
+      floatingActionButton: (product.uid == AuthMethods.uid)
+          ? const SizedBox()
+          : SizedBox(
+              height: 48,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const SizedBox(width: 16),
+                  CustomElevatedButton(
+                    title: 'Buy Now',
+                    onTap: () {
+                      if (user.displayName == null || user.displayName == '') {
+                        return;
+                      }
+                      Navigator.of(context)
+                          .push(MaterialPageRoute<ProductChatScreen>(
+                        builder: (BuildContext context) => BuyNowScreen(
+                          product: product,
+                        ),
+                      ));
+                    },
+                    padding: const EdgeInsets.symmetric(horizontal: 28),
                   ),
-                ));
-              },
-              padding: const EdgeInsets.symmetric(horizontal: 28),
-            ),
-            FloatingActionButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute<ProductChatScreen>(
-                    builder: (BuildContext context) => ProductChatScreen(
-                      otherUser: user,
-                      chatID: '${AuthMethods.uid}${product.pid}',
-                      product: product,
-                    ),
+                  FloatingActionButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute<ProductChatScreen>(
+                          builder: (BuildContext context) => ProductChatScreen(
+                            otherUser: user,
+                            chatID: '${AuthMethods.uid}${product.pid}',
+                            product: product,
+                          ),
+                        ),
+                      );
+                    },
+                    child:
+                        const Icon(Icons.message_outlined, color: Colors.white),
                   ),
-                );
-              },
-              child: const Icon(Icons.message_outlined, color: Colors.white),
+                  (product.acceptOffers)
+                      ? CustomElevatedButton(
+                          title: 'Make Offer',
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute<ProductChatScreen>(
+                              builder: (BuildContext context) =>
+                                  MakeOfferScreen(
+                                product: product,
+                                user: user,
+                              ),
+                            ));
+                          },
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                        )
+                      : const SizedBox(width: 0),
+                ],
+              ),
             ),
-            CustomElevatedButton(
-              title: 'Make Offer',
-              onTap: () {},
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
