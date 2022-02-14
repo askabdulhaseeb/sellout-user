@@ -8,6 +8,7 @@ import '../../models/product.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
 import '../../screens/buy_now_screen/buy_now_screen.dart';
 import '../../screens/main_screen/pages/messages/personal/product_chat_screen.dart';
+import '../../screens/make_offer_screen/make_offer_screen.dart';
 import '../../screens/others_profile/others_profile.dart';
 import '../../screens/product_detail_screen/product_detail_screen.dart';
 import '../../utilities/utilities.dart';
@@ -167,12 +168,13 @@ class _ButtonSection extends StatelessWidget {
                         textStyle: _textStyle,
                         title: 'Make Offer',
                         onTap: () {
-                          // TODO: Make Offer Button click
-                          showInfoDialog(
-                            context,
-                            title: 'Next Milestone',
-                            message: 'This is a part of next milestone',
-                          );
+                          Navigator.of(context)
+                              .push(MaterialPageRoute<ProductChatScreen>(
+                            builder: (BuildContext context) => MakeOfferScreen(
+                              product: product,
+                              user: user,
+                            ),
+                          ));
                         },
                       )
                     : const SizedBox(),
