@@ -5,6 +5,7 @@ import '../../models/product.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/custom_slideable_image.dart';
+import '../payment_success_screen/payment_success_screen.dart';
 
 class BuyNowScreen extends StatelessWidget {
   const BuyNowScreen({required this.product, Key? key}) : super(key: key);
@@ -36,17 +37,35 @@ class BuyNowScreen extends StatelessWidget {
                 _ImageIconButton(
                   imagePath: AppImages.paypal,
                   title: 'PayPal',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<PaymentSuccessScreen>(
+                        builder: (_) => const PaymentSuccessScreen(),
+                      ),
+                    );
+                  },
                 ),
                 _ImageIconButton(
                   imagePath: AppImages.strip,
                   title: 'Strip',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<PaymentSuccessScreen>(
+                        builder: (_) => const PaymentSuccessScreen(),
+                      ),
+                    );
+                  },
                 ),
                 _ImageIconButton(
                   imagePath: AppImages.applePay,
                   title: 'Apple Pay',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<PaymentSuccessScreen>(
+                        builder: (_) => const PaymentSuccessScreen(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
