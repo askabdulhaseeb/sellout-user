@@ -32,6 +32,8 @@ dependencies:
   dropdown_search: ^2.0.1
   intl_phone_field: ^3.0.1
 
+  # story_view: ^0.13.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

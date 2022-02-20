@@ -2,14 +2,14 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/app_user.dart';
-import '../../../models/stories.dart';
+import '../../../models/story.dart';
 import '../../../utilities/utilities.dart';
 import '../../../widgets/custom_widgets/custom_profile_image.dart';
 
 class StoriesViewScreen extends StatelessWidget {
   const StoriesViewScreen({required this.stories, required this.user, Key? key})
       : super(key: key);
-  final List<Stories> stories;
+  final List<Story> stories;
   final AppUser user;
 
   @override

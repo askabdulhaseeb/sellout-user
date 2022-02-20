@@ -1,14 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../database/auth_methods.dart';
+import '../enums/messages/story_media_type_enum.dart';
 
-class Stories {
-  Stories({
+class Story {
+  Story({
     required this.sid,
     required this.url,
     required this.timestamp,
     this.views,
-    this.isVideo = false,
+    this.type,
     this.title = '',
     this.uid,
     this.isExpaired = false,
@@ -18,7 +19,7 @@ class Stories {
   final String url;
   final int timestamp;
   final List<String>? views;
-  bool? isVideo;
+  StoryMediaTypeEnum? type;
   String? title;
   String? uid;
   bool? isExpaired;
@@ -29,7 +30,7 @@ class Stories {
       'url': url,
       'timestamp': timestamp,
       'views': views,
-      'is_video': isVideo ?? false,
+      'type': type ?? StoryMediaTypeEnum.TEXT,
       'title': title ?? '',
       'uid': uid ?? AuthMethods.uid,
       'is_expaired': isExpaired ?? false,
@@ -37,11 +38,11 @@ class Stories {
   }
 
   // ignore: sort_constructors_first
-  factory Stories.fromMap(Map<String, dynamic> map) {
-    return Stories(
+  factory Story.fromMap(Map<String, dynamic> map) {
+    return Story(
       sid: map['sid'] ?? '',
       url: map['url'] ?? '',
-      isVideo: map['is_video'] ?? false,
+      type: map['type'] ?? StoryMediaTypeEnum.TEXT,
       views: List<String>.from(map['views']),
       timestamp: map['timestamp'] ?? DateTime.now().microsecondsSinceEpoch,
       title: map['title'] ?? '',
@@ -50,11 +51,11 @@ class Stories {
     );
   }
   // ignore: sort_constructors_first
-  factory Stories.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
-    return Stories(
+  factory Story.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
+    return Story(
       sid: doc.data()?['sid'] ?? '',
       url: doc.data()?['url'] ?? '',
-      isVideo: doc.data()?['is_video'] ?? false,
+      type: doc.data()?['type'] ?? StoryMediaTypeEnum.TEXT,
       views: List<String>.from(doc.data()?['views'] ?? <String>[]),
       timestamp:
           doc.data()?['timestamp'] ?? DateTime.now().microsecondsSinceEpoch,

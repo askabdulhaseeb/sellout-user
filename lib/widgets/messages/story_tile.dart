@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/app_user.dart';
-import '../../models/stories.dart';
+import '../../models/story.dart';
 import '../../providers/app_provider.dart';
 import '../../screens/message_screens/stories/stories_view_screen.dart';
 import '../../utilities/utilities.dart';
@@ -10,7 +10,7 @@ import '../custom_widgets/custom_profile_image.dart';
 
 class StoryTile extends StatelessWidget {
   const StoryTile({required this.stories, Key? key}) : super(key: key);
-  final List<Stories> stories;
+  final List<Story> stories;
 
   @override
   Widget build(BuildContext context) {

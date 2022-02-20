@@ -3,13 +3,13 @@ import 'package:extended_image/extended_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import '../../../../../database/auth_methods.dart';
-import '../../../../../database/stories_api.dart';
-import '../../../../../models/stories.dart';
+import '../../../../../models/story.dart';
 import '../../../../../services/user_local_data.dart';
 import '../../../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../../../widgets/custom_widgets/custom_toast.dart';
 import '../../../../../widgets/custom_widgets/show_loading.dart';
 import '../../../../../widgets/messages/story_tile.dart';
+import '../../../database/stories_api.dart';
 
 class StoriesDashboard extends StatelessWidget {
   const StoriesDashboard({Key? key}) : super(key: key);
@@ -25,22 +25,22 @@ class StoriesDashboard extends StatelessWidget {
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>?> snapshot,
           ) {
             if (snapshot.hasData) {
-              final List<Stories> _allStories = <Stories>[];
+              final List<Story> _allStories = <Story>[];
               for (QueryDocumentSnapshot<Map<String, dynamic>> element
                   in snapshot.data!.docs) {
-                _allStories.add(Stories.fromDoc(element));
+                _allStories.add(Story.fromDoc(element));
               }
-              List<List<Stories>> _othersStories = <List<Stories>>[];
-              List<Stories> _myStoires = <Stories>[];
+              List<List<Story>> _othersStories = <List<Story>>[];
+              List<Story> _myStoires = <Story>[];
               _myStoires = _allStories
-                  .where((Stories element) => element.uid == AuthMethods.uid)
-                  .cast<Stories>()
+                  .where((Story element) => element.uid == AuthMethods.uid)
+                  .cast<Story>()
                   .toList();
               _othersStories.add(_myStoires);
               for (String uid in UserLocalData.getSupporting) {
                 _othersStories.add(_allStories
-                    .where((Stories element) => element.uid == uid)
-                    .cast<Stories>()
+                    .where((Story element) => element.uid == uid)
+                    .cast<Story>()
                     .toList());
               }
               return Column(
@@ -81,7 +81,7 @@ class StoriesDashboard extends StatelessWidget {
 
 class _MyStoryTile extends StatefulWidget {
   const _MyStoryTile({required this.stories, Key? key}) : super(key: key);
-  final List<Stories> stories;
+  final List<Story> stories;
   @override
   State<_MyStoryTile> createState() => _MyStoryTileState();
 }
@@ -137,13 +137,12 @@ class _MyStoryTileState extends State<_MyStoryTile> {
                     return;
                   }
                   final int _time = DateTime.now().microsecondsSinceEpoch;
-                  final Stories _story = Stories(
+                  final Story _story = Story(
                     sid: _time.toString(),
                     url: _url,
-                    isVideo: false,
                     timestamp: _time,
                     title:
-                        'Title of this stories. Search for Uk Writing Services on GigaPromo. Compare and save now! Large Selection. Always Sale. Cheap Prices. Full Offer. Save Online. Compare Online. Simple Search. The Best Price. Compare Simply. Services: Compare, Search, Find Products, Many Offers.',
+                        'Title of this Story. Search for Uk Writing Services on GigaPromo. Compare and save now! Large Selection. Always Sale. Cheap Prices. Full Offer. Save Online. Compare Online. Simple Search. The Best Price. Compare Simply. Services: Compare, Search, Find Products, Many Offers.',
                     uid: AuthMethods.uid,
                   );
                   final bool _uploaded =

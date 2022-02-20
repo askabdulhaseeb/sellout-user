@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import '../models/stories.dart';
+import '../models/story.dart';
 import '../services/user_local_data.dart';
 import '../widgets/custom_widgets/custom_toast.dart';
 import 'auth_methods.dart';
@@ -10,7 +10,7 @@ class StoriesAPI {
   static const String _collection = 'stories';
   static final FirebaseFirestore _instance = FirebaseFirestore.instance;
 
-  Future<bool> addStory({required Stories story}) async {
+  Future<bool> addStory({required Story story}) async {
     try {
       await _instance.collection(_collection).doc(story.sid).set(story.toMap());
       return true;
