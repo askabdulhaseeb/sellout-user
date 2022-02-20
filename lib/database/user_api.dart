@@ -9,6 +9,18 @@ class UserAPI {
   static const String _collection = 'users';
   static final FirebaseFirestore _instance = FirebaseFirestore.instance;
   // functions
+  Future<List<AppUser>> getAllUsers() async {
+    final List<AppUser> appUser = <AppUser>[];
+    final QuerySnapshot<Map<String, dynamic>> doc =
+        await _instance.collection(_collection).get();
+
+    for (DocumentSnapshot<Map<String, dynamic>> element in doc.docs) {
+      appUser.add(AppUser.fromDoc(element));
+    }
+    return appUser;
+  }
+
+  // functions
   Future<AppUser?>? getInfo({required String uid}) async {
     final DocumentSnapshot<Map<String, dynamic>>? doc =
         await _instance.collection(_collection).doc(uid).get();
