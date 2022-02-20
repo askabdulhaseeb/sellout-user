@@ -204,7 +204,7 @@ class _DigitalKeyboard extends StatelessWidget {
         height: 50,
         width: (MediaQuery.of(context).size.width / 3) - 3,
         child: const Center(
-          child: Icon(Icons.cancel),
+          child: Icon(Icons.backspace_outlined),
         ),
       ),
     );
