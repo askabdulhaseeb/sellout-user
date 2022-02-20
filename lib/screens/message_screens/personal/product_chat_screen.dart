@@ -12,8 +12,8 @@ import '../../../../../widgets/custom_slideable_image.dart';
 import '../../../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../../../widgets/messages/chat_textformfield.dart';
 import '../../../../../widgets/messages/personal_message_tile.dart';
-import '../../../../others_profile/others_profile.dart';
-import '../../../../product_detail_screen/product_detail_screen.dart';
+import '../../others_profile/others_profile.dart';
+import '../../product_detail_screen/product_detail_screen.dart';
 
 class ProductChatScreen extends StatefulWidget {
   const ProductChatScreen({

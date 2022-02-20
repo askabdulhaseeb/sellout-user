@@ -5,7 +5,7 @@ import '../../database/user_api.dart';
 import '../../models/app_user.dart';
 import '../../models/chat.dart';
 import '../../models/product.dart';
-import '../../screens/main_screen/pages/messages/personal/product_chat_screen.dart';
+import '../../screens/message_screens/personal/product_chat_screen.dart';
 import '../../utilities/utilities.dart';
 import '../custom_widgets/custom_profile_image.dart';
 import '../custom_widgets/show_loading.dart';

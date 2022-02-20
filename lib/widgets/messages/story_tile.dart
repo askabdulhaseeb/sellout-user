@@ -33,16 +33,9 @@ class StoryTile extends StatelessWidget {
                 .displayName ??
             'Name fetching issue',
       ),
-      // subtitle: Text(
-      //   Utilities.timeInWords(
-      //     Stories.
-      //   ),
-      // ),
-      // trailing: IconButton(
-      //   splashRadius: 20,
-      //   onPressed: () {},
-      //   icon: const Icon(Icons.more_vert_outlined),
-      // ),
+      subtitle: Text(
+        Utilities.timeInWords(stories[stories.length - 1].timestamp),
+      ),
     );
   }
 }

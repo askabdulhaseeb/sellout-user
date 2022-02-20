@@ -10,7 +10,7 @@ import '../../../../../utilities/utilities.dart';
 import '../../../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../../../widgets/messages/chat_textformfield.dart';
 import '../../../../../widgets/messages/personal_message_tile.dart';
-import '../../../../others_profile/others_profile.dart';
+import '../../others_profile/others_profile.dart';
 
 class PersonalChatScreen extends StatefulWidget {
   const PersonalChatScreen(

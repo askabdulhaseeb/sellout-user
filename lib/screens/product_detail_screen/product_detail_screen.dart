@@ -12,8 +12,8 @@ import '../../widgets/custom_widgets/custom_elevated_button.dart';
 import '../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../widgets/custom_widgets/custom_rating_stars.dart';
 import '../buy_now_screen/buy_now_screen.dart';
-import '../main_screen/pages/messages/personal/product_chat_screen.dart';
 import '../make_offer_screen/make_offer_screen.dart';
+import '../message_screens/personal/product_chat_screen.dart';
 import '../others_profile/others_profile.dart';
 
 class ProductDetailScreen extends StatelessWidget {

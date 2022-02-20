@@ -3,7 +3,7 @@ import '../../database/auth_methods.dart';
 import '../../models/app_user.dart';
 import '../../models/product.dart';
 import '../../widgets/custom_widgets/custom_elevated_button.dart';
-import '../main_screen/pages/messages/personal/product_chat_screen.dart';
+import '../message_screens/personal/product_chat_screen.dart';
 
 class MakeOfferScreen extends StatelessWidget {
   const MakeOfferScreen({required this.product, required this.user, Key? key})

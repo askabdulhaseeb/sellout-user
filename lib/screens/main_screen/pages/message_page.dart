@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../enums/messages/message_tabbar_enum.dart';
-import '../../../../providers/message_page_provider.dart';
-import '../../../../widgets/messages/message_person_search.dart';
-import 'group/create_group_screen.dart';
-import 'group/group_chat_dashboard.dart';
-import 'personal/personal_chat_dashboard.dart';
-import 'stories/stories_dashboard.dart';
+import '../../../enums/messages/message_tabbar_enum.dart';
+import '../../../providers/message_page_provider.dart';
+import '../../../widgets/messages/message_person_search.dart';
+import '../../message_screens/group/create_group_screen.dart';
+import '../../message_screens/group/group_chat_dashboard.dart';
+import '../../message_screens/personal/personal_chat_dashboard.dart';
+import '../../message_screens/stories/stories_dashboard.dart';
 
 class MessagePage extends StatelessWidget {
   const MessagePage({Key? key}) : super(key: key);

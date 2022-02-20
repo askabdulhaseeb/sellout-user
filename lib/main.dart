@@ -13,7 +13,7 @@ import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
 import 'screens/edit_profile/edit_profile_screen.dart';
 import 'screens/main_screen/main_screen.dart';
-import 'screens/main_screen/pages/messages/group/create_group_screen.dart';
+import 'screens/message_screens/group/create_group_screen.dart';
 import 'services/custom_services.dart';
 import 'services/user_local_data.dart';
 

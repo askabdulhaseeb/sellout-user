@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/group_chat.dart';
-import '../../screens/main_screen/pages/messages/group/group_chat_screen.dart';
+import '../../screens/message_screens/group/group_chat_screen.dart';
 import '../../utilities/utilities.dart';
 import '../custom_widgets/custom_profile_image.dart';
 

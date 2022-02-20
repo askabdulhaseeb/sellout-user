@@ -19,7 +19,7 @@ import '../../widgets/custom_widgets/show_info_dialog.dart';
 import '../../widgets/private_account_widhet.dart';
 import '../../widgets/product/grid_view_of_prod.dart';
 import '../../widgets/product/prod_cat_dropdown.dart';
-import '../main_screen/pages/messages/personal/personal_chat_screen.dart';
+import '../message_screens/personal/personal_chat_screen.dart';
 
 class OthersProfile extends StatelessWidget {
   const OthersProfile({required this.user, Key? key}) : super(key: key);
