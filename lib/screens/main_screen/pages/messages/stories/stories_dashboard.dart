@@ -11,6 +11,7 @@ import '../../../../../utilities/utilities.dart';
 import '../../../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../../../widgets/custom_widgets/custom_toast.dart';
 import '../../../../../widgets/custom_widgets/show_loading.dart';
+import '../../../../../widgets/messages/story_tile.dart';
 
 class StoriesDashboard extends StatelessWidget {
   const StoriesDashboard({Key? key}) : super(key: key);
@@ -37,6 +38,7 @@ class StoriesDashboard extends StatelessWidget {
                   .where((Stories element) => element.uid == AuthMethods.uid)
                   .cast<Stories>()
                   .toList();
+              _othersStories.add(_myStoires);
               for (String uid in UserLocalData.getSupporting) {
                 _othersStories.add(_allStories
                     .where((Stories element) => element.uid == uid)
@@ -59,34 +61,11 @@ class StoriesDashboard extends StatelessWidget {
                   const SizedBox(height: 6),
                   Expanded(
                     child: ListView.separated(
-                      itemBuilder: (_, int index) => ListTile(
-                        onTap: () {},
-                        contentPadding: const EdgeInsets.all(0),
-                        horizontalTitleGap: 10,
-                        leading: Container(
-                          padding: const EdgeInsets.all(1.5),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const CustomProfileImage(imageURL: ''),
-                        ),
-                        title: const Text('Name of user'),
-                        subtitle: Text(
-                          Utilities.timeInWords(
-                              DateTime.now().microsecondsSinceEpoch),
-                        ),
-                        trailing: IconButton(
-                          splashRadius: 20,
-                          onPressed: () {},
-                          icon: const Icon(Icons.more_vert_outlined),
-                        ),
-                      ),
-                      separatorBuilder: (_, __) => const Divider(height: 1),
-                      itemCount: _othersStories.length,
-                    ),
+                        itemCount: _othersStories.length,
+                        separatorBuilder: (_, __) => const Divider(height: 1),
+                        itemBuilder: (_, int index) {
+                          return StoryTile(stories: _othersStories[index]);
+                        }),
                   ),
                 ],
               );
@@ -119,7 +98,10 @@ class _MyStoryTileState extends State<_MyStoryTile> {
         Container(
           padding: const EdgeInsets.all(1.5),
           decoration: BoxDecoration(
-            border: Border.all(color: Theme.of(context).primaryColor),
+            border: Border.all(
+                color: (widget.stories.isEmpty)
+                    ? Colors.grey
+                    : Theme.of(context).primaryColor),
             borderRadius: BorderRadius.circular(12),
           ),
           child: CustomProfileImage(imageURL: UserLocalData.getImageURL),
