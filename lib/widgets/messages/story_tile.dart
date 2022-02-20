@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../models/app_user.dart';
 import '../../models/stories.dart';
 import '../../providers/app_provider.dart';
+import '../../screens/message_screens/stories/stories_view_screen.dart';
 import '../../utilities/utilities.dart';
 import '../custom_widgets/custom_profile_image.dart';
 
@@ -13,8 +14,16 @@ class StoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppUser _user =
+        Provider.of<AppProvider>(context).user(uid: stories[0].uid ?? '');
     return ListTile(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<StoriesViewScreen>(
+            builder: (_) => StoriesViewScreen(stories: stories, user: _user),
+          ),
+        );
+      },
       contentPadding: const EdgeInsets.all(0),
       horizontalTitleGap: 10,
       leading: Container(
@@ -28,10 +37,7 @@ class StoryTile extends StatelessWidget {
         child: CustomProfileImage(imageURL: stories[0].url),
       ),
       title: Text(
-        Provider.of<AppProvider>(context)
-                .user(uid: stories[0].uid ?? '')
-                .displayName ??
-            'Name fetching issue',
+        _user.displayName ?? 'Name fetching issue',
       ),
       subtitle: Text(
         Utilities.timeInWords(stories[stories.length - 1].timestamp),
