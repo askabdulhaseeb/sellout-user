@@ -141,7 +141,7 @@ class _MyStoryTileState extends State<_MyStoryTile> {
                     sid: _time.toString(),
                     url: _url,
                     timestamp: _time,
-                    title:
+                    caption:
                         'Title of this Story. Search for Uk Writing Services on GigaPromo. Compare and save now! Large Selection. Always Sale. Cheap Prices. Full Offer. Save Online. Compare Online. Simple Search. The Best Price. Compare Simply. Services: Compare, Search, Find Products, Many Offers.',
                     uid: AuthMethods.uid,
                   );

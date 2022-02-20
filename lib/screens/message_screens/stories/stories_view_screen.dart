@@ -70,7 +70,7 @@ class StoriesViewScreen extends StatelessWidget {
             right: 16,
             bottom: 16,
             child: Text(
-              stories[0].title ?? '',
+              stories[0].caption ?? '',
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(color: Colors.white),
