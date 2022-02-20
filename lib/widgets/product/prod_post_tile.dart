@@ -4,6 +4,7 @@ import '../../database/auth_methods.dart';
 import '../../database/user_api.dart';
 import '../../models/app_user.dart';
 import '../../models/product.dart';
+import '../../providers/app_provider.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
 import '../../screens/buy_now_screen/buy_now_screen.dart';
 import '../../screens/make_offer_screen/make_offer_screen.dart';
@@ -23,45 +24,33 @@ class ProdPostTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<AppUser?>(
-      future: UserAPI().getInfo(uid: product.uid),
-      builder: (BuildContext context, AsyncSnapshot<AppUser?> snapshot) {
-        if (snapshot.hasError) {
-          return const Center(child: Text('Error'));
-        } else {
-          if (snapshot.hasData) {
-            final AppUser? _user = snapshot.data;
-            return Column(
-              children: <Widget>[
-                _Header(product: product, user: _user!),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute<ProductDetailScreen>(
-                        builder: (_) =>
-                            ProductDetailScreen(product: product, user: _user),
-                      ),
-                    );
-                  },
-                  child: Column(
-                    children: <Widget>[
-                      Hero(
-                        tag: product.pid,
-                        child: CustomSlidableURLsTile(urls: product.prodURL),
-                      ),
-                      _InfoCard(product: product),
-                    ],
-                  ),
-                ),
-                _ButtonSection(user: _user, product: product),
-                const SizedBox(height: 10),
-              ],
+    final AppUser _user =
+        Provider.of<AppProvider>(context).user(uid: product.uid);
+    return Column(
+      children: <Widget>[
+        _Header(product: product, user: _user),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute<ProductDetailScreen>(
+                builder: (_) =>
+                    ProductDetailScreen(product: product, user: _user),
+              ),
             );
-          } else {
-            return const ShowLoading();
-          }
-        }
-      },
+          },
+          child: Column(
+            children: <Widget>[
+              Hero(
+                tag: product.pid,
+                child: CustomSlidableURLsTile(urls: product.prodURL),
+              ),
+              _InfoCard(product: product),
+            ],
+          ),
+        ),
+        _ButtonSection(user: _user, product: product),
+        const SizedBox(height: 10),
+      ],
     );
   }
 }
