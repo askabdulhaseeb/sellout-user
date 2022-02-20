@@ -74,6 +74,13 @@ class AppUser {
     };
   }
 
+  Map<String, dynamic> updateSupport() {
+    return <String, dynamic>{
+      'supporting': supporting ?? <String>[],
+      'supporters': supporters ?? <String>[],
+    };
+  }
+
   // ignore: sort_constructors_first
   factory AppUser.fromMap(Map<String, dynamic> map) {
     return AppUser(

@@ -14,6 +14,7 @@ import 'screens/auth/register_screen.dart';
 import 'screens/edit_profile/edit_profile_screen.dart';
 import 'screens/main_screen/main_screen.dart';
 import 'screens/message_screens/group/create_group_screen.dart';
+import 'screens/message_screens/stories/add_media_story_screen.dart';
 import 'services/custom_services.dart';
 import 'services/user_local_data.dart';
 
@@ -90,6 +91,7 @@ class MyApp extends StatelessWidget {
           MainScreen.rotueName: (_) => const MainScreen(),
           CreateChatGroupScreen.routeName: (_) => const CreateChatGroupScreen(),
           EditProfileScreen.routeName: (_) => const EditProfileScreen(),
+          AddMediaStoryScreen.routeName: (_) => const AddMediaStoryScreen(),
         },
       ),
     );

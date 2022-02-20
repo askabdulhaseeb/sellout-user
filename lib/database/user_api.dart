@@ -41,6 +41,26 @@ class UserAPI {
     }
   }
 
+  Future<void> updateSupporting({
+    required AppUser me,
+    required AppUser other,
+  }) async {
+    try {
+      Future.wait([
+        _instance
+            .collection(_collection)
+            .doc(me.uid)
+            .update(me.updateSupport()),
+        _instance
+            .collection(_collection)
+            .doc(other.uid)
+            .update(other.updateSupport()),
+      ]);
+    } catch (e) {
+      CustomToast.errorToast(message: e.toString());
+    }
+  }
+
   Future<bool> updateProfile(AppUser appUser) async {
     try {
       await _instance

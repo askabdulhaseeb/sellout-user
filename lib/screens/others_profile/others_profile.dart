@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../database/auth_methods.dart';
 import '../../database/chat_api.dart';
 import '../../database/product_api.dart';
+import '../../database/user_api.dart';
 import '../../models/app_user.dart';
 import '../../models/prod_category.dart';
 import '../../models/product.dart';
@@ -332,46 +334,66 @@ class _SuppoertAndMessageButtonState extends State<_SuppoertAndMessageButton> {
   }
 
   Widget _supportButton() {
-    return (widget.user.supporters?.contains(UserLocalData.getUID) ?? false)
+    return (widget.user.supporters?.contains(AuthMethods.uid) ?? false)
         ? CustomElevatedButton(
-            title: 'Supporting',
-            onTap: () {
-              // TODO: onTab Message
-              showInfoDialog(
-                context,
-                title: 'Comimg Soon',
-                message: 'Will be in working soon',
+            onTap: () async {
+              widget.user.supporters!.remove(AuthMethods.uid);
+              List<String> _temp = UserLocalData.getSupporting;
+              _temp.remove(widget.user.uid);
+              setState(() {});
+              await UserAPI().updateSupporting(
+                me: UserLocalData().user,
+                other: widget.user,
               );
             },
-            bgColor: Colors.grey[300],
+            title: 'Supporting',
+            margin: const EdgeInsets.all(0),
+            padding: const EdgeInsets.all(6),
             borderRadius: _borderRadius,
+            bgColor: Colors.transparent,
+            textStyle: TextStyle(color: Theme.of(context).primaryColor),
+            border: Border.all(color: Theme.of(context).primaryColor),
           )
-        : (widget.user.supporting?.contains(UserLocalData.getUID) ?? false)
+        : (widget.user.supporting?.contains(AuthMethods.uid) ?? false)
             ? CustomElevatedButton(
-                title: 'Support Back',
-                onTap: () {
-                  // TODO: onTab Support Back
-                  showInfoDialog(
-                    context,
-                    title: 'Comimg Soon',
-                    message: 'Will be in working soon',
+                onTap: () async {
+                  if (!widget.user.supporters!.contains(AuthMethods.uid)) {
+                    widget.user.supporters!.add(AuthMethods.uid);
+                  }
+                  List<String> _temp = UserLocalData.getSupporting;
+                  if (!_temp.contains(widget.user.uid)) {
+                    _temp.add(widget.user.uid);
+                    UserLocalData.setSupporting(_temp);
+                  }
+                  setState(() {});
+                  await UserAPI().updateSupporting(
+                    me: UserLocalData().user,
+                    other: widget.user,
                   );
                 },
+                title: 'Support Back',
                 margin: const EdgeInsets.all(0),
                 padding: const EdgeInsets.all(7.5),
                 textStyle: const TextStyle(color: Colors.white),
                 borderRadius: _borderRadius,
               )
             : CustomElevatedButton(
-                title: 'Support',
-                onTap: () {
-                  // TODO: onTab Support
-                  showInfoDialog(
-                    context,
-                    title: 'Comimg Soon',
-                    message: 'Will be in working soon',
+                onTap: () async {
+                  if (!widget.user.supporters!.contains(AuthMethods.uid)) {
+                    widget.user.supporters!.add(AuthMethods.uid);
+                  }
+                  List<String> _temp = UserLocalData.getSupporting;
+                  if (!_temp.contains(widget.user.uid)) {
+                    _temp.add(widget.user.uid);
+                    UserLocalData.setSupporting(_temp);
+                  }
+                  setState(() {});
+                  await UserAPI().updateSupporting(
+                    me: UserLocalData().user,
+                    other: widget.user,
                   );
                 },
+                title: 'Support',
                 margin: const EdgeInsets.all(0),
                 padding: const EdgeInsets.all(7.5),
                 textStyle: const TextStyle(color: Colors.white),

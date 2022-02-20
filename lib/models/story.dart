@@ -29,7 +29,7 @@ class Story {
       'sid': sid,
       'url': url,
       'timestamp': timestamp,
-      'views': views,
+      'views': views ?? <String>[],
       'type': StoryMediaTypeConverter.formEnum(type ?? StoryMediaTypeEnum.TEXT),
       'caption': caption ?? '',
       'uid': uid ?? AuthMethods.uid,
