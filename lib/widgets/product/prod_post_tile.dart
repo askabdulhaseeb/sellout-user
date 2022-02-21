@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../database/auth_methods.dart';
-import '../../database/user_api.dart';
 import '../../models/app_user.dart';
 import '../../models/product.dart';
 import '../../providers/app_provider.dart';
@@ -16,7 +15,6 @@ import '../custom_slideable_image.dart';
 import '../custom_widgets/custom_elevated_button.dart';
 import '../custom_widgets/custom_profile_image.dart';
 import '../custom_widgets/show_info_dialog.dart';
-import '../custom_widgets/show_loading.dart';
 
 class ProdPostTile extends StatelessWidget {
   const ProdPostTile({required this.product, Key? key}) : super(key: key);

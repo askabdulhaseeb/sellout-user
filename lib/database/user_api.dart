@@ -46,6 +46,7 @@ class UserAPI {
     required AppUser other,
   }) async {
     try {
+      // ignore: always_specify_types
       Future.wait([
         _instance
             .collection(_collection)
