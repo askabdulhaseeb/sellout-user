@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../../database/auth_methods.dart';
 import '../../../../../models/story.dart';
 import '../../../../../services/user_local_data.dart';
@@ -7,6 +8,7 @@ import '../../../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../../../widgets/custom_widgets/show_loading.dart';
 import '../../../../../widgets/messages/story_tile.dart';
 import '../../../database/stories_api.dart';
+import '../../../providers/app_provider.dart';
 import 'add_media_story_screen.dart';
 
 class StoriesDashboard extends StatelessWidget {
@@ -59,13 +61,21 @@ class StoriesDashboard extends StatelessWidget {
                         ? const Center(
                             child: Text('No story available yet'),
                           )
-                        : ListView.separated(
-                            itemCount: _othersStories.length,
-                            separatorBuilder: (_, __) =>
-                                const Divider(height: 1),
-                            itemBuilder: (_, int index) {
-                              return StoryTile(stories: _othersStories[index]);
-                            }),
+                        : Consumer<AppProvider>(
+                            builder: (_, AppProvider value, __) =>
+                                ListView.separated(
+                              itemCount: _othersStories.length,
+                              separatorBuilder: (_, __) =>
+                                  const Divider(height: 1),
+                              itemBuilder: (_, int index) {
+                                return StoryTile(
+                                  user: value.user(
+                                      uid: _othersStories[index][0].uid ?? ''),
+                                  stories: _othersStories[index],
+                                );
+                              },
+                            ),
+                          ),
                   ),
                 ],
               );
