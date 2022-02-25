@@ -57,7 +57,7 @@ class _ProfileDisplayTypeWidgetState extends State<ProfileDisplayTypeWidget> {
                   widget.onChanged!(true);
                 },
               ),
-              const Text('PUBLIC'),
+              const Text('PUBLIC', style: TextStyle(fontSize: 12)),
             ],
           ),
         ),
@@ -83,7 +83,7 @@ class _ProfileDisplayTypeWidgetState extends State<ProfileDisplayTypeWidget> {
                   widget.onChanged!(false);
                 },
               ),
-              const Text('PRIVATE'),
+              const Text('PRIVATE', style: TextStyle(fontSize: 12)),
             ],
           ),
         ),
