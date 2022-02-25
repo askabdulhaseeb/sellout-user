@@ -72,7 +72,7 @@ class ProductDetailScreen extends StatelessWidget {
                       onTap: () {
                         if (user.uid == AuthMethods.uid) {
                           Navigator.of(context).pop();
-                          Provider.of<MainBottomNavBarProvider>(
+                          Provider.of<AppProvider>(
                             context,
                             listen: false,
                           ).onTabTapped(4);

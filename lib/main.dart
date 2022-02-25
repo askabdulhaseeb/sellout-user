@@ -42,8 +42,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<UserProvider>(
           create: (BuildContext context) => UserProvider(),
         ),
-        ChangeNotifierProvider<MainBottomNavBarProvider>(
-          create: (BuildContext context) => MainBottomNavBarProvider(),
+        ChangeNotifierProvider<AppProvider>(
+          create: (BuildContext context) => AppProvider(),
         ),
         ChangeNotifierProvider<ProdProvider>(
           create: (BuildContext context) => ProdProvider(),

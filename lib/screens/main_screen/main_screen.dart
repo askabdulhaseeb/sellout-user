@@ -33,7 +33,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     int _currentIndex =
-        Provider.of<MainBottomNavBarProvider>(context).currentTap;
+        Provider.of<AppProvider>(context).currentTap;
     Provider.of<UserProvider>(context).init();
     return Scaffold(
         body: _pages[_currentIndex],

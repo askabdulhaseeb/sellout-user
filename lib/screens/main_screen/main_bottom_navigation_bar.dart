@@ -7,8 +7,8 @@ class MainBottomNavigationBar extends StatelessWidget {
   const MainBottomNavigationBar({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    MainBottomNavBarProvider _navBar =
-        Provider.of<MainBottomNavBarProvider>(context);
+    AppProvider _navBar =
+        Provider.of<AppProvider>(context);
     return BottomNavigationBar(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       selectedLabelStyle: TextStyle(color: Theme.of(context).primaryColor),

@@ -195,7 +195,7 @@ class _AddPageState extends State<AddPage> {
         _isloading = false;
       });
       if (_uploaded) {
-        Provider.of<MainBottomNavBarProvider>(context, listen: false)
+        Provider.of<AppProvider>(context, listen: false)
             .onTabTapped(0);
         _reset();
         CustomToast.successToast(message: 'Uploaded Successfully');

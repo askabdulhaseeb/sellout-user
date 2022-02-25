@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Provider.of<AuthStateProvider>(context, listen: false)
           .updateState(ScreenStateEnum.DONE);
       if (_user != null) {
-        Provider.of<MainBottomNavBarProvider>(context, listen: false)
+        Provider.of<AppProvider>(context, listen: false)
             .onTabTapped(0);
         Navigator.of(context).pushNamedAndRemoveUntil(
             MainScreen.rotueName, (Route<dynamic> route) => false);

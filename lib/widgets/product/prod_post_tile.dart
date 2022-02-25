@@ -210,7 +210,7 @@ class _Header extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           user.uid == AuthMethods.uid
-              ? Provider.of<MainBottomNavBarProvider>(context, listen: false)
+              ? Provider.of<AppProvider>(context, listen: false)
                   .onTabTapped(4)
               : Navigator.of(context).push(
                   MaterialPageRoute<OthersProfile>(

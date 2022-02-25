@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MainBottomNavBarProvider extends ChangeNotifier {
+class AppProvider extends ChangeNotifier {
   int _currentIndex = 0;
   void onTabTapped(int index) {
     _currentIndex = index;

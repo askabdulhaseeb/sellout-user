@@ -66,7 +66,7 @@ class PaymentSuccessScreen extends StatelessWidget {
               child: CustomElevatedButton(
                 title: 'Go To Home',
                 onTap: () {
-                  Provider.of<MainBottomNavBarProvider>(context, listen: false)
+                  Provider.of<AppProvider>(context, listen: false)
                       .onTabTapped(0);
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       MainScreen.rotueName, (_) => false);
