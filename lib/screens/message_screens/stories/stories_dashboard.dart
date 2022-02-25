@@ -10,6 +10,7 @@ import '../../../../../widgets/messages/story_tile.dart';
 import '../../../database/stories_api.dart';
 import '../../../providers/user_provider.dart';
 import 'add_media_story_screen.dart';
+import 'stories_view_screen.dart';
 
 class StoriesDashboard extends StatelessWidget {
   const StoriesDashboard({Key? key}) : super(key: key);
@@ -46,13 +47,12 @@ class StoriesDashboard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   _MyStoryTile(stories: _myStoires),
-                  const SizedBox(height: 6),
+                  const Divider(),
                   Text(
                     'Recent Updates',
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -101,19 +101,33 @@ class _MyStoryTile extends StatefulWidget {
 class _MyStoryTileState extends State<_MyStoryTile> {
   @override
   Widget build(BuildContext context) {
-    print(widget.stories.length);
     return Row(
       children: <Widget>[
-        Container(
-          padding: const EdgeInsets.all(1.5),
-          decoration: BoxDecoration(
-            border: Border.all(
+        GestureDetector(
+          onTap: () {
+            (widget.stories.isEmpty)
+                ? Navigator.of(context).pushNamed(AddMediaStoryScreen.routeName)
+                : Navigator.of(context).push(
+                    MaterialPageRoute<StoriesViewScreen>(
+                      builder: (_) => StoriesViewScreen(
+                        stories: widget.stories,
+                        user: UserLocalData().user,
+                      ),
+                    ),
+                  );
+          },
+          child: Container(
+            padding: const EdgeInsets.all(1.5),
+            decoration: BoxDecoration(
+              border: Border.all(
                 color: (widget.stories.isEmpty)
                     ? Colors.grey
-                    : Theme.of(context).primaryColor),
-            borderRadius: BorderRadius.circular(12),
+                    : Theme.of(context).primaryColor,
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: CustomProfileImage(imageURL: UserLocalData.getImageURL),
           ),
-          child: CustomProfileImage(imageURL: UserLocalData.getImageURL),
         ),
         const SizedBox(width: 10),
         Column(
