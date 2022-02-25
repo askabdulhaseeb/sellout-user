@@ -78,17 +78,13 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
                                 reverse: true,
                                 itemCount: _messages.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  return Material(
-                                    child: SizedBox(
-                                      child: PersonalMessageTile(
-                                        boxWidth: _size.width * 0.65,
-                                        message: _messages[index],
-                                        displayName: (_messages[index].sendBy ==
-                                                AuthMethods.uid)
-                                            ? UserLocalData.getDisplayName
-                                            : 'Sender Name',
-                                      ),
-                                    ),
+                                  return PersonalMessageTile(
+                                    boxWidth: _size.width * 0.65,
+                                    message: _messages[index],
+                                    displayName: (_messages[index].sendBy ==
+                                            AuthMethods.uid)
+                                        ? UserLocalData.getDisplayName
+                                        : 'Sender Name',
                                   );
                                 },
                               );
