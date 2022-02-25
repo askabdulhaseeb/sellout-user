@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:provider/provider.dart';
 import '../models/product.dart';
+import '../providers/main_bottom_nav_bar_provider.dart';
 import 'video_widget.dart';
 
 class CustomSlidableURLsTile extends StatelessWidget {
@@ -34,7 +36,13 @@ class CustomSlidableURLsTile extends StatelessWidget {
                     width: width ?? MediaQuery.of(context).size.width,
                     height: height ?? double.infinity,
                     child: urls[index].isVideo
-                        ? VideoWidget(videoUrl: urls[index].url)
+                        ? Consumer<AppProvider>(
+                            builder: (_, AppProvider prvider, __) =>
+                                VideoWidget(
+                              videoUrl: urls[index].url,
+                              isMute: prvider.isMute,
+                            ),
+                          )
                         : InteractiveViewer(
                             child: ExtendedImage.network(
                               urls[index].url,
