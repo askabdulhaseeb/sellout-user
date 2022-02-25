@@ -25,28 +25,19 @@ class _VideoAppState extends State<VideoWidget> {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: Alignment.bottomRight,
       children: <Widget>[
         VideoPlayer(_controller!),
-        Center(
-          child: IconButton(
-            onPressed: () {
-              setState(() {
-                if (_controller!.value.isPlaying) {
-                  _controller?.pause();
-                } else {
-                  _controller?.play();
-                }
-              });
-            },
-            iconSize: 45,
-            icon: Icon(
-              (_controller?.value.isPlaying == true)
-                  ? Icons.pause
-                  : Icons.play_arrow,
-              color: Colors.white,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+            onTap: () {},
+            child: const CircleAvatar(
+              backgroundColor: Colors.white24,
+              child: Icon(Icons.volume_off_sharp),
             ),
           ),
-        )
+        ),
       ],
     );
   }

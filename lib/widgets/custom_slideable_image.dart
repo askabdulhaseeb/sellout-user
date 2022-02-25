@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:extended_image/extended_image.dart';
 import '../models/product.dart';
+import 'video_widget.dart';
 
 class CustomSlidableURLsTile extends StatelessWidget {
   const CustomSlidableURLsTile({
@@ -32,13 +33,15 @@ class CustomSlidableURLsTile extends StatelessWidget {
                   SizedBox(
                     width: width ?? MediaQuery.of(context).size.width,
                     height: height ?? double.infinity,
-                    child: InteractiveViewer(
-                      child: ExtendedImage.network(
-                        urls[index].url,
-                        fit: BoxFit.cover,
-                        timeLimit: const Duration(days: 2),
-                      ),
-                    ),
+                    child: urls[index].isVideo
+                        ? VideoWidget(videoUrl: urls[index].url)
+                        : InteractiveViewer(
+                            child: ExtendedImage.network(
+                              urls[index].url,
+                              fit: BoxFit.cover,
+                              timeLimit: const Duration(days: 2),
+                            ),
+                          ),
                   ),
                   if (urls.length > 1)
                     Container(

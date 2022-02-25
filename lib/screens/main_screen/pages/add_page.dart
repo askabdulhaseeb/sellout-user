@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../database/product_api.dart';
 import '../../../enums/delivery_type.dart';
@@ -16,6 +17,7 @@ import '../../../services/custom_services.dart';
 import '../../../services/user_local_data.dart';
 import '../../../utilities/custom_validators.dart';
 import '../../../utilities/utilities.dart';
+import '../../../widgets/assets_video_widget.dart';
 import '../../../widgets/custom_widgets/custom_elevated_button.dart';
 import '../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../widgets/custom_widgets/custom_textformfield.dart';
@@ -549,7 +551,9 @@ class _ImageBox extends StatelessWidget {
           : SizedBox(
               height: double.infinity,
               width: double.infinity,
-              child: Image.file(File(file!.path!)),
+              child: (Utilities.isVideo(extension: file!.extension!))
+                  ? AssetsVideoWidget(videoPath: file!.path!)
+                  : Image.file(File(file!.path!)),
             ),
     );
   }
