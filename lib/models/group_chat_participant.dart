@@ -3,13 +3,13 @@ import 'app_user.dart';
 
 class GroupChatParticipant {
   GroupChatParticipant({
-    required this.user,
+    required this.uid,
     required this.role,
     this.addedBy = '',
     this.isMute = false,
     this.invitationAccepted = true,
   });
-  final AppUser user;
+  final String uid;
   final GroupParticipantRoleTypeEnum role;
   final String addedBy;
   final bool isMute;
@@ -17,7 +17,7 @@ class GroupChatParticipant {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'user': user.uid,
+      'user': uid,
       'role': GroupParticipantRoleTypeConverter.formEnum(role),
       'isMute': isMute,
       'invitation_accepted': invitationAccepted,
@@ -28,7 +28,7 @@ class GroupChatParticipant {
   // ignore: sort_constructors_first
   factory GroupChatParticipant.fromMap(Map<String, dynamic> map) {
     return GroupChatParticipant(
-      user: AppUser.fromMap(map['user']),
+      uid: map['uid'],
       role: GroupParticipantRoleTypeConverter.fromString(map['role']),
       isMute: map['isMute'],
       invitationAccepted: map['invitation_accepted'],

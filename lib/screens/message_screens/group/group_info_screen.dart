@@ -1,6 +1,13 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../../models/group_chat.dart';
+import '../../../enums/messages/role_in_chat_group.dart';
+import '../../../models/app_user.dart';
+import '../../../models/group_chat_participant.dart';
+import '../../../providers/user_provider.dart';
+import '../../../widgets/custom_widgets/custom_profile_image.dart';
+import '../../others_profile/others_profile.dart';
 
 class GroupInfoScreen extends StatelessWidget {
   const GroupInfoScreen({required this.group, Key? key}) : super(key: key);
@@ -67,10 +74,36 @@ class GroupInfoScreen extends StatelessWidget {
                 ),
               ],
             ),
-            ConstrainedBox(
-              constraints: const BoxConstraints.tightFor(height: 300),
-              child: ListView.builder(
-                itemBuilder: (_, int index) => const Text('data'),
+            Consumer<UserProvider>(
+              builder: (_, UserProvider provider, __) => ConstrainedBox(
+                constraints: const BoxConstraints.tightFor(height: 300),
+                child: ListView.builder(
+                  itemCount: group.participantsDetail?.length ?? 0,
+                  itemBuilder: (_, int index) {
+                    final GroupChatParticipant _perticipant =
+                        group.participantsDetail![index];
+                    final AppUser _user = provider.user(uid: _perticipant.uid);
+                    return ListTile(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute<OthersProfile>(
+                            builder: (_) => OthersProfile(user: _user),
+                          ),
+                        );
+                      },
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 16),
+                      leading:
+                          CustomProfileImage(imageURL: _user.imageURL ?? ''),
+                      title: Text(_user.displayName ?? 'issue in name'),
+                      trailing: Text(
+                        GroupParticipantRoleTypeConverter.formEnum(
+                                _perticipant.role)
+                            .toLowerCase(),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ],
