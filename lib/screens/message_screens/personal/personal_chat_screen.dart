@@ -83,18 +83,13 @@ class _PersonalChatScreenState extends State<PersonalChatScreen> {
                                   itemCount: _messages.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return Material(
-                                      child: SizedBox(
-                                        child: PersonalMessageTile(
-                                          boxWidth: _size.width * 0.65,
-                                          message: _messages[index],
-                                          displayName: (_messages[index]
-                                                      .sendBy ==
-                                                  AuthMethods.uid)
-                                              ? UserLocalData.getDisplayName
-                                              : widget.otherUser.displayName!,
-                                        ),
-                                      ),
+                                    return PersonalMessageTile(
+                                      boxWidth: _size.width * 0.65,
+                                      message: _messages[index],
+                                      displayName: (_messages[index].sendBy ==
+                                              AuthMethods.uid)
+                                          ? UserLocalData.getDisplayName
+                                          : widget.otherUser.displayName!,
                                     );
                                   },
                                 );
