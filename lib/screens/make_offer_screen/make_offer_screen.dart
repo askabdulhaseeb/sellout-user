@@ -5,12 +5,23 @@ import '../../models/product.dart';
 import '../../widgets/custom_widgets/custom_elevated_button.dart';
 import '../message_screens/personal/product_chat_screen.dart';
 
-class MakeOfferScreen extends StatelessWidget {
+class MakeOfferScreen extends StatefulWidget {
   const MakeOfferScreen({required this.product, required this.user, Key? key})
       : super(key: key);
   static const String routeName = '/MakeOfferScreen';
   final Product product;
   final AppUser user;
+  @override
+  State<MakeOfferScreen> createState() => _MakeOfferScreenState();
+}
+
+class _MakeOfferScreenState extends State<MakeOfferScreen> {
+  String _offer = '0';
+  void updateOffer(String newOffer) {
+    print(newOffer);
+    _offer = newOffer;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,22 +38,27 @@ class MakeOfferScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          _Header(product: product),
+          _Header(product: widget.product),
           Column(
-            children: const <Widget>[
-              Text(
+            children: <Widget>[
+              const Text(
                 'Your offer',
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               SizedBox(
                 height: 50,
-                child: FittedBox(child: Text('0')),
+                child: FittedBox(child: Text(_offer)),
               ),
             ],
           ),
           Column(
             children: <Widget>[
-              _DigitalKeyboard(product: product, user: user),
+              _DigitalKeyboard(
+                product: widget.product,
+                user: widget.user,
+                offer: _offer,
+                updateOffer: (String? newoffer) => updateOffer(newoffer ?? '0'),
+              ),
             ],
           )
         ],
@@ -52,10 +68,17 @@ class MakeOfferScreen extends StatelessWidget {
 }
 
 class _DigitalKeyboard extends StatelessWidget {
-  const _DigitalKeyboard({required this.product, required this.user, Key? key})
-      : super(key: key);
+  const _DigitalKeyboard({
+    required this.product,
+    required this.user,
+    required this.offer,
+    required this.updateOffer,
+    Key? key,
+  }) : super(key: key);
   final Product product;
   final AppUser user;
+  final String offer;
+  final void Function(String) updateOffer;
 
   @override
   Widget build(BuildContext context) {
@@ -87,64 +110,51 @@ class _DigitalKeyboard extends StatelessWidget {
         const Divider(height: 0),
         Row(
           children: <Widget>[
-            _button(context, number: '1', onTap: () {
-              print('1');
-            }),
+            _button(context, number: '1', onTap: () => _addNumber('1')),
             _divider(),
-            _button(context, number: '2', onTap: () {
-              print('2');
-            }),
+            _button(context, number: '2', onTap: () => _addNumber('2')),
             _divider(),
-            _button(context, number: '3', onTap: () {
-              print('3');
-            }),
+            _button(context, number: '3', onTap: () => _addNumber('3')),
           ],
         ),
         const Divider(height: 0),
         Row(
           children: <Widget>[
-            _button(context, number: '4', onTap: () {
-              print('4');
-            }),
+            _button(context, number: '4', onTap: () => _addNumber('4')),
             _divider(),
-            _button(context, number: '5', onTap: () {
-              print('5');
-            }),
+            _button(context, number: '5', onTap: () => _addNumber('5')),
             _divider(),
-            _button(context, number: '6', onTap: () {
-              print('6');
-            }),
+            _button(context, number: '6', onTap: () => _addNumber('6')),
           ],
         ),
         const Divider(height: 0),
         Row(
           children: <Widget>[
-            _button(context, number: '7', onTap: () {
-              print('7');
-            }),
+            _button(context, number: '7', onTap: () => _addNumber('7')),
             _divider(),
-            _button(context, number: '8', onTap: () {
-              print('8');
-            }),
+            _button(context, number: '8', onTap: () => _addNumber('8')),
             _divider(),
-            _button(context, number: '9', onTap: () {
-              print('9');
-            }),
+            _button(context, number: '9', onTap: () => _addNumber('9')),
           ],
         ),
         const Divider(height: 0),
         Row(
           children: <Widget>[
-            _button(context, number: '.', onTap: () {
-              print('.');
-            }),
+            _button(
+              context,
+              number: '.',
+              onTap: () => updateOffer((offer + '.')),
+            ),
             _divider(),
-            _button(context, number: '0', onTap: () {
-              print('0');
-            }),
+            _button(context, number: '0', onTap: () => _addNumber('0')),
             _divider(),
             _remove(context, onTap: () {
-              print('cancel');
+              if (offer.length == 1) {
+                updateOffer('0');
+              } else if (offer.isNotEmpty) {
+                final String result = offer.substring(0, offer.length - 1);
+                updateOffer(result);
+              }
             }),
           ],
         ),
@@ -165,6 +175,16 @@ class _DigitalKeyboard extends StatelessWidget {
         )
       ],
     );
+  }
+
+  void _addNumber(String num) {
+    String _temp = offer;
+    if (_temp == '0') {
+      _temp = num;
+    } else {
+      _temp += num;
+    }
+    updateOffer(_temp);
   }
 
   Container _divider() {
