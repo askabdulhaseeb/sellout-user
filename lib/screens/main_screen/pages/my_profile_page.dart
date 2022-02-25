@@ -5,7 +5,7 @@ import '../../../database/auth_methods.dart';
 import '../../../database/product_api.dart';
 import '../../../models/prod_category.dart';
 import '../../../models/product.dart';
-import '../../../providers/app_provider.dart';
+import '../../../providers/user_provider.dart';
 import '../../../providers/product_category_provider.dart';
 import '../../../services/custom_services.dart';
 import '../../../services/user_local_data.dart';
@@ -33,7 +33,7 @@ class MyProdilePage extends StatelessWidget {
           IconButton(
             onPressed: () async {
               await AuthMethods().signOut();
-              Provider.of<AppProvider>(context, listen: false).reset();
+              Provider.of<UserProvider>(context, listen: false).reset();
               Navigator.of(context).pushNamedAndRemoveUntil(
                 LoginScreen.routeName,
                 (Route<dynamic> route) => false,

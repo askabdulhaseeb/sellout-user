@@ -8,7 +8,7 @@ import '../../../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../../../widgets/custom_widgets/show_loading.dart';
 import '../../../../../widgets/messages/story_tile.dart';
 import '../../../database/stories_api.dart';
-import '../../../providers/app_provider.dart';
+import '../../../providers/user_provider.dart';
 import 'add_media_story_screen.dart';
 
 class StoriesDashboard extends StatelessWidget {
@@ -61,8 +61,8 @@ class StoriesDashboard extends StatelessWidget {
                         ? const Center(
                             child: Text('No story available yet'),
                           )
-                        : Consumer<AppProvider>(
-                            builder: (_, AppProvider value, __) =>
+                        : Consumer<UserProvider>(
+                            builder: (_, UserProvider value, __) =>
                                 ListView.separated(
                               itemCount: _othersStories.length,
                               separatorBuilder: (_, __) =>

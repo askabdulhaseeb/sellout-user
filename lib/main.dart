@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'providers/app_provider.dart';
+import 'providers/user_provider.dart';
 import 'providers/auth_state_provider.dart';
 import 'providers/main_bottom_nav_bar_provider.dart';
 import 'providers/message_page_provider.dart';
@@ -39,8 +39,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AuthStateProvider>(
           create: (BuildContext context) => AuthStateProvider(),
         ),
-        ChangeNotifierProvider<AppProvider>(
-          create: (BuildContext context) => AppProvider(),
+        ChangeNotifierProvider<UserProvider>(
+          create: (BuildContext context) => UserProvider(),
         ),
         ChangeNotifierProvider<MainBottomNavBarProvider>(
           create: (BuildContext context) => MainBottomNavBarProvider(),

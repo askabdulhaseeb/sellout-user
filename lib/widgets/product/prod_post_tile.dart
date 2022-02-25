@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../../database/auth_methods.dart';
 import '../../models/app_user.dart';
 import '../../models/product.dart';
-import '../../providers/app_provider.dart';
+import '../../providers/user_provider.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
 import '../../screens/buy_now_screen/buy_now_screen.dart';
 import '../../screens/make_offer_screen/make_offer_screen.dart';
@@ -23,7 +23,7 @@ class ProdPostTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppUser _user =
-        Provider.of<AppProvider>(context).user(uid: product.uid);
+        Provider.of<UserProvider>(context).user(uid: product.uid);
     return Column(
       children: <Widget>[
         _Header(product: product, user: _user),
