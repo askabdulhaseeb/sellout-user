@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../database/auth_methods.dart';
 import '../enums/messages/message_type_enum.dart';
 import '../enums/messages/role_in_chat_group.dart';
-import 'app_user.dart';
 import 'group_chat_participant.dart';
 
 class GroupChat {

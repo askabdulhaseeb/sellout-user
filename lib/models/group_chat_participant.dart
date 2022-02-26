@@ -1,6 +1,4 @@
 import '../enums/messages/role_in_chat_group.dart';
-import 'app_user.dart';
-
 class GroupChatParticipant {
   GroupChatParticipant({
     required this.uid,

@@ -244,9 +244,9 @@ class _Header extends StatelessWidget {
           'Bye it now price: ${product.price}',
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        Text(
+        const Text(
           '10 offers left',
-          style: const TextStyle(color: Colors.grey),
+          style: TextStyle(color: Colors.grey),
         ),
       ],
     );

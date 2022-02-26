@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import '../../models/app_user.dart';
 import '../../models/story.dart';
-import '../../providers/user_provider.dart';
 import '../../screens/message_screens/stories/stories_view_screen.dart';
 import '../../utilities/utilities.dart';
 import '../custom_widgets/custom_profile_image.dart';
