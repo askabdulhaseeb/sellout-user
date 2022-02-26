@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../database/auth_methods.dart';
+import '../../database/chat_api.dart';
+import '../../enums/messages/message_tabbar_enum.dart';
+import '../../enums/messages/message_type_enum.dart';
 import '../../models/app_user.dart';
+import '../../models/chat.dart';
+import '../../models/message.dart';
 import '../../models/product.dart';
 import '../../widgets/custom_widgets/custom_elevated_button.dart';
+import '../../widgets/custom_widgets/show_loading.dart';
 import '../message_screens/personal/product_chat_screen.dart';
 
 class MakeOfferScreen extends StatefulWidget {
@@ -67,7 +73,7 @@ class _MakeOfferScreenState extends State<MakeOfferScreen> {
   }
 }
 
-class _DigitalKeyboard extends StatelessWidget {
+class _DigitalKeyboard extends StatefulWidget {
   const _DigitalKeyboard({
     required this.product,
     required this.user,
@@ -81,6 +87,12 @@ class _DigitalKeyboard extends StatelessWidget {
   final void Function(String) updateOffer;
 
   @override
+  State<_DigitalKeyboard> createState() => _DigitalKeyboardState();
+}
+
+class _DigitalKeyboardState extends State<_DigitalKeyboard> {
+  bool _isLoading = false;
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
@@ -90,15 +102,15 @@ class _DigitalKeyboard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text('Quantity: ${product.quantity}'),
+              Text('Quantity: ${widget.product.quantity}'),
               TextButton(
                 onPressed: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute<ProductChatScreen>(
                     builder: (BuildContext context) => ProductChatScreen(
-                      otherUser: user,
-                      chatID: '${AuthMethods.uid}${product.pid}',
-                      product: product,
+                      otherUser: widget.user,
+                      chatID: '${AuthMethods.uid}${widget.product.pid}',
+                      product: widget.product,
                     ),
                   ));
                 },
@@ -143,48 +155,73 @@ class _DigitalKeyboard extends StatelessWidget {
             _button(
               context,
               number: '.',
-              onTap: () => updateOffer((offer + '.')),
+              onTap: () => widget.updateOffer((widget.offer + '.')),
             ),
             _divider(),
             _button(context, number: '0', onTap: () => _addNumber('0')),
             _divider(),
             _remove(context, onTap: () {
-              if (offer.length == 1) {
-                updateOffer('0');
-              } else if (offer.isNotEmpty) {
-                final String result = offer.substring(0, offer.length - 1);
-                updateOffer(result);
+              if (widget.offer.length == 1) {
+                widget.updateOffer('0');
+              } else if (widget.offer.isNotEmpty) {
+                final String result =
+                    widget.offer.substring(0, widget.offer.length - 1);
+                widget.updateOffer(result);
               }
             }),
           ],
         ),
         Padding(
           padding: const EdgeInsets.all(16),
-          child: CustomElevatedButton(
-            title: 'Send offer message',
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute<ProductChatScreen>(
-                builder: (BuildContext context) => ProductChatScreen(
-                  otherUser: user,
-                  chatID: '${AuthMethods.uid}${product.pid}',
-                  product: product,
+          child: _isLoading
+              ? const ShowLoading()
+              : CustomElevatedButton(
+                  title: 'Send offer message',
+                  onTap: () async {
+                    final int _time = DateTime.now().microsecondsSinceEpoch;
+                    await ChatAPI().sendMessage(
+                      Chat(
+                        chatID:
+                            ChatAPI.getProductChatID(pid: widget.product.pid),
+                        persons: <String>[AuthMethods.uid, widget.user.uid],
+                        lastMessage:
+                            '''Hello\nI'm interested in your product.\nMy price is ${widget.offer}''',
+                        timestamp: _time,
+                        pid: widget.product.pid,
+                        prodIsVideo: widget.product.prodURL[0].isVideo,
+                      ),
+                      Message(
+                        messageID: _time.toString(),
+                        message:
+                            '''Hello\nI'm interested in your product.\nMy price is ${widget.offer}''',
+                        timestamp: _time,
+                        sendBy: AuthMethods.uid,
+                        type: MessageTypeEnum.PROD_OFFER,
+                      ),
+                    );
+                    Navigator.of(context).pop();
+                    // Navigator.of(context).push(MaterialPageRoute<ProductChatScreen>(
+                    //   builder: (BuildContext context) => ProductChatScreen(
+                    //     otherUser: user,
+                    //     chatID: '${AuthMethods.uid}${product.pid}',
+                    //     product: product,
+                    //   ),
+                    // ));
+                  },
                 ),
-              ));
-            },
-          ),
         )
       ],
     );
   }
 
   void _addNumber(String num) {
-    String _temp = offer;
+    String _temp = widget.offer;
     if (_temp == '0') {
       _temp = num;
     } else {
       _temp += num;
     }
-    updateOffer(_temp);
+    widget.updateOffer(_temp);
   }
 
   Container _divider() {

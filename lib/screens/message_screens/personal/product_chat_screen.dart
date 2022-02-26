@@ -125,26 +125,27 @@ class _ProductChatScreenState extends State<ProductChatScreen> {
             _ProductTile(product: widget.product, user: widget.otherUser),
             const SizedBox(height: 8),
             ChatTestFormField(
-                controller: _text,
-                onSendPressed: () async {
-                  int _time = DateTime.now().microsecondsSinceEpoch;
-                  await ChatAPI().sendMessage(
-                    Chat(
-                      chatID: widget.chatID,
-                      persons: <String>[AuthMethods.uid, widget.otherUser.uid],
-                      lastMessage: _text.text.trim(),
-                      timestamp: _time,
-                      pid: widget.product.pid,
-                    ),
-                    Message(
-                      messageID: _time.toString(),
-                      message: _text.text.trim(),
-                      timestamp: _time,
-                      sendBy: AuthMethods.uid,
-                    ),
-                  );
-                  _text.clear();
-                }),
+              controller: _text,
+              onSendPressed: () async {
+                final int _time = DateTime.now().microsecondsSinceEpoch;
+                await ChatAPI().sendMessage(
+                  Chat(
+                    chatID: widget.chatID,
+                    persons: <String>[AuthMethods.uid, widget.otherUser.uid],
+                    lastMessage: _text.text.trim(),
+                    timestamp: _time,
+                    pid: widget.product.pid,
+                  ),
+                  Message(
+                    messageID: _time.toString(),
+                    message: _text.text.trim(),
+                    timestamp: _time,
+                    sendBy: AuthMethods.uid,
+                  ),
+                );
+                _text.clear();
+              },
+            ),
             SizedBox(height: Utilities.padding),
           ],
         ),

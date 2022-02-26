@@ -9,6 +9,7 @@ import '../../screens/message_screens/personal/product_chat_screen.dart';
 import '../../utilities/utilities.dart';
 import '../custom_widgets/custom_profile_image.dart';
 import '../custom_widgets/show_loading.dart';
+import '../video_widget.dart';
 
 class ProductChatDashboardTile extends StatelessWidget {
   const ProductChatDashboardTile({required this.chat, Key? key})
@@ -38,6 +39,13 @@ class ProductChatDashboardTile extends StatelessWidget {
                       return const ShowLoading();
                     } else {
                       final Product _product = snap.data!;
+                      bool _isVideo = true;
+                      int _index = _product.prodURL.indexWhere(
+                          (ProductURL element) => element.isVideo == false);
+                      if (_index < 0) {
+                        _isVideo = true;
+                        _index = 0;
+                      }
                       return ListTile(
                         onTap: () {
                           Navigator.of(context).push(
@@ -53,13 +61,19 @@ class ProductChatDashboardTile extends StatelessWidget {
                         dense: true,
                         leading: Stack(
                           children: <Widget>[
-                            CustomProfileImage(
-                              imageURL: _product
-                                  .prodURL[_product.prodURL.indexWhere(
-                                      (ProductURL element) =>
-                                          element.isVideo == false)]
-                                  .url,
-                            ),
+                            _isVideo
+                                ? SizedBox(
+                                    height: 40,
+                                    width: 40,
+                                    child: VideoWidget(
+                                      videoUrl: _product.prodURL[_index].url,
+                                      isMute: true,
+                                      isPause: true,
+                                    ),
+                                  )
+                                : CustomProfileImage(
+                                    imageURL: _product.prodURL[_index].url,
+                                  ),
                             Positioned(
                               bottom: 0,
                               right: 0,

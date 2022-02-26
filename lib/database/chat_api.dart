@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../widgets/custom_widgets/custom_toast.dart';
 import '../models/chat.dart';
 import '../models/message.dart';
-import '../services/user_local_data.dart';
+import 'auth_methods.dart';
 
 class ChatAPI {
   static const String _colloction = 'chats';
@@ -10,12 +10,16 @@ class ChatAPI {
   static final FirebaseFirestore _instance = FirebaseFirestore.instance;
   // functions
   static String getChatID({required String othersUID}) {
-    int _isGreaterThen = UserLocalData.getUID.compareTo(othersUID);
+    int _isGreaterThen = AuthMethods.uid.compareTo(othersUID);
     if (_isGreaterThen > 0) {
-      return '${UserLocalData.getUID}-chats-$othersUID';
+      return '${AuthMethods.uid}-chats-$othersUID';
     } else {
-      return '$othersUID-chats-${UserLocalData.getUID}';
+      return '$othersUID-chats-${AuthMethods.uid}';
     }
+  }
+  // functions
+  static String getProductChatID({required String pid}) {
+      return '${AuthMethods.uid}-product-$pid';
   }
 
   Future<void> sendMessage(Chat chat, Message messages) async {
