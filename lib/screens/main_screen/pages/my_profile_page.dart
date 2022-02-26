@@ -72,7 +72,9 @@ class MyProdilePage extends StatelessWidget {
               );
             default:
               if ((snapshot.hasError)) {
-                return const Text('Error');
+                return const Center(
+                  child: Text('Facing some issues while feching posts'),
+                );
               } else {
                 if (snapshot.hasData) {
                   if (snapshot.data!.isNotEmpty) {

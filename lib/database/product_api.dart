@@ -22,6 +22,7 @@ class ProductAPI {
     final QuerySnapshot<Map<String, dynamic>> doc = await _instance
         .collection(_collection)
         .where('uid', isEqualTo: uid)
+        .orderBy('timestamp', descending: true)
         .get();
     for (DocumentSnapshot<Map<String, dynamic>> element in doc.docs) {
       _products.add(Product.fromDoc(element));
