@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../../database/auth_methods.dart';
 import '../../../../../database/group_chat_api.dart';
 import '../../../../../enums/messages/message_type_enum.dart';
@@ -10,6 +11,8 @@ import '../../../../../utilities/utilities.dart';
 import '../../../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../../../widgets/messages/chat_textformfield.dart';
 import '../../../../../widgets/messages/personal_message_tile.dart';
+import '../../../providers/user_provider.dart';
+import '../../../widgets/messages/group_message_tile.dart';
 import 'group_info_screen.dart';
 
 class GroupChatScreen extends StatefulWidget {
@@ -73,20 +76,24 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
                                   ],
                                 ),
                               )
-                            : ListView.builder(
-                                shrinkWrap: true,
-                                reverse: true,
-                                itemCount: _messages.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return PersonalMessageTile(
-                                    boxWidth: _size.width * 0.65,
-                                    message: _messages[index],
-                                    displayName: (_messages[index].sendBy ==
-                                            AuthMethods.uid)
-                                        ? UserLocalData.getDisplayName
-                                        : 'Sender Name',
-                                  );
-                                },
+                            : Consumer<UserProvider>(
+                                builder: (_, UserProvider provider, __) =>
+                                    ListView.builder(
+                                  shrinkWrap: true,
+                                  reverse: true,
+                                  itemCount: _messages.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return GroupMessageTile(
+                                      boxWidth: _size.width * 0.65,
+                                      message: _messages[index],
+                                      user: provider.user(
+                                        uid: _messages[index].sendBy ??
+                                            AuthMethods.uid,
+                                      ),
+                                    );
+                                  },
+                                ),
                               );
                       } else {
                         return Column(
