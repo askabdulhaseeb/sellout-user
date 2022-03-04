@@ -13,6 +13,7 @@ import '../../message_screens/group/create_group_screen.dart';
 import '../../message_screens/group/group_chat_dashboard.dart';
 import '../../message_screens/personal/personal_chat_dashboard.dart';
 import '../../message_screens/personal/personal_chat_screen.dart';
+import '../../message_screens/stories/add_media_story_screen.dart';
 import '../../message_screens/stories/stories_dashboard.dart';
 
 class MessagePage extends StatelessWidget {
@@ -51,9 +52,12 @@ class MessagePage extends StatelessWidget {
                         context: context,
                         users: _suppters,
                       );
-                    } else {
+                    } else if (_page.currentTab == MessageTabBarEnum.GROUPS) {
                       Navigator.of(context)
                           .pushNamed(CreateChatGroupScreen.routeName);
+                    } else {
+                      Navigator.of(context)
+                          .pushNamed(AddMediaStoryScreen.routeName);
                     }
                   },
                   splashRadius: 16,
