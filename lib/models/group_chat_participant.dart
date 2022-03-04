@@ -1,4 +1,6 @@
+import '../database/auth_methods.dart';
 import '../enums/messages/role_in_chat_group.dart';
+
 class GroupChatParticipant {
   GroupChatParticipant({
     required this.uid,
@@ -15,7 +17,7 @@ class GroupChatParticipant {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'user': uid,
+      'uid': uid,
       'role': GroupParticipantRoleTypeConverter.formEnum(role),
       'isMute': isMute,
       'invitation_accepted': invitationAccepted,
@@ -26,11 +28,12 @@ class GroupChatParticipant {
   // ignore: sort_constructors_first
   factory GroupChatParticipant.fromMap(Map<String, dynamic> map) {
     return GroupChatParticipant(
-      uid: map['uid'],
-      role: GroupParticipantRoleTypeConverter.fromString(map['role']),
-      isMute: map['isMute'],
-      invitationAccepted: map['invitation_accepted'],
-      addedBy: map['added_by'],
+      uid: map['uid'] ?? '',
+      role:
+          GroupParticipantRoleTypeConverter.fromString(map['role'] ?? 'MEMBER'),
+      isMute: map['isMute'] ?? false,
+      invitationAccepted: map['invitation_accepted'] ?? false,
+      addedBy: map['added_by'] ?? AuthMethods.uid,
     );
   }
 }
