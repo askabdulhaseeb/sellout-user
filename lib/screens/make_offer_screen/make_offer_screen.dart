@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../database/auth_methods.dart';
 import '../../database/chat_api.dart';
-import '../../enums/messages/message_tabbar_enum.dart';
 import '../../enums/messages/message_type_enum.dart';
 import '../../models/app_user.dart';
 import '../../models/chat.dart';
@@ -24,7 +23,6 @@ class MakeOfferScreen extends StatefulWidget {
 class _MakeOfferScreenState extends State<MakeOfferScreen> {
   String _offer = '0';
   void updateOffer(String newOffer) {
-    print(newOffer);
     _offer = newOffer;
     setState(() {});
   }
@@ -178,7 +176,11 @@ class _DigitalKeyboardState extends State<_DigitalKeyboard> {
               : CustomElevatedButton(
                   title: 'Send offer message',
                   onTap: () async {
+                    if (widget.offer == '0') return;
                     final int _time = DateTime.now().microsecondsSinceEpoch;
+                    setState(() {
+                      _isLoading = true;
+                    });
                     await ChatAPI().sendMessage(
                       Chat(
                         chatID:
