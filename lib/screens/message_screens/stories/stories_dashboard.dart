@@ -38,16 +38,19 @@ class StoriesDashboard extends StatelessWidget {
                   .cast<Story>()
                   .toList();
               for (String supportingUID in UserLocalData.getSupporting) {
-                _othersStories.add(_allStories
+                List<Story> _oTempList = _allStories
                     .where((Story oElement) => oElement.uid == supportingUID)
                     .cast<Story>()
-                    .toList());
+                    .toList();
+                if (_oTempList.isNotEmpty) {
+                  _othersStories.add(_oTempList);
+                }
               }
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   _MyStoryTile(stories: _myStoires),
-                  const Divider(),
+                  const SizedBox(height: 10),
                   Text(
                     'Recent Updates',
                     style: TextStyle(
@@ -63,18 +66,25 @@ class StoriesDashboard extends StatelessWidget {
                           )
                         : Consumer<UserProvider>(
                             builder: (_, UserProvider value, __) =>
-                                ListView.separated(
-                              itemCount: _othersStories.length,
-                              separatorBuilder: (_, __) =>
-                                  const Divider(height: 1),
-                              itemBuilder: (_, int index) {
-                                return StoryTile(
-                                  user: value.user(
-                                      uid: _othersStories[index][0].uid ?? ''),
-                                  stories: _othersStories[index],
-                                );
-                              },
-                            ),
+                                _othersStories.isEmpty
+                                    ? const Center(
+                                        child: Text('No Story Available'),
+                                      )
+                                    : ListView.separated(
+                                        itemCount: _othersStories.length,
+                                        separatorBuilder: (_, __) =>
+                                            const Divider(height: 1),
+                                        itemBuilder: (_, int index) {
+                                          return StoryTile(
+                                            user: value.user(
+                                              uid: _othersStories[index][0]
+                                                      .uid ??
+                                                  '',
+                                            ),
+                                            stories: _othersStories[index],
+                                          );
+                                        },
+                                      ),
                           ),
                   ),
                 ],
