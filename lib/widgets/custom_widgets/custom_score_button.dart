@@ -41,40 +41,40 @@ class CustomScoreButton extends StatelessWidget {
           ),
         ],
       ),
-      child: Material(
+      // child: Material(
+      //   borderRadius:
+      //       borderRadius ?? BorderRadius.circular(Utilities.borderRadius / 2),
+      //   color: bgColor ?? Theme.of(context).scaffoldBackgroundColor,
+      child: InkWell(
+        onTap: onTap,
         borderRadius:
             borderRadius ?? BorderRadius.circular(Utilities.borderRadius / 2),
-        color: bgColor ?? Theme.of(context).scaffoldBackgroundColor,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius:
-              borderRadius ?? BorderRadius.circular(Utilities.borderRadius / 2),
-          child: Container(
-            height: height,
-            width: width,
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  score,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 18,
-                  ),
+        child: Container(
+          height: height,
+          width: width,
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                score,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 18,
                 ),
-                Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 9),
-                ),
-              ],
-            ),
+              ),
+              Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 9),
+              ),
+            ],
           ),
         ),
       ),
+      // ),
     );
   }
 }

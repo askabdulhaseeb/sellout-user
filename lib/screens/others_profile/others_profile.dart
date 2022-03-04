@@ -152,12 +152,7 @@ class OthersProfile extends StatelessWidget {
           const SizedBox(width: 8),
           IconButton(
             onPressed: () {
-              // TODO: on cart click
-              showInfoDialog(
-                context,
-                title: 'Comimg Soon',
-                message: 'Will be in working soon',
-              );
+              
             },
             padding: const EdgeInsets.all(0),
             splashRadius: 24,
@@ -208,28 +203,16 @@ class OthersProfile extends StatelessWidget {
             title: 'Supporting',
             height: _boxWidth - 10,
             width: _boxWidth,
-            onTap: () {
-              // TODO: on Supporting click
-              showInfoDialog(
-                context,
-                title: 'Comimg Soon',
-                message: 'Will be in working soon',
-              );
-            },
+            key: UniqueKey(),
+            onTap: () async {},
           ),
           CustomScoreButton(
             score: user.supporters?.length.toString() ?? '-',
             title: 'Supporters',
             height: _boxWidth - 10,
             width: _boxWidth,
-            onTap: () {
-              // TODO: on Supporters click
-              showInfoDialog(
-                context,
-                title: 'Comimg Soon',
-                message: 'Will be in working soon',
-              );
-            },
+            key: UniqueKey(),
+            onTap: () {},
           ),
         ],
       ),
