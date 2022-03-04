@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../database/auth_methods.dart';
-import '../../../database/chat_api.dart';
 import '../../../enums/messages/message_tabbar_enum.dart';
 import '../../../functions/user_bottom_sheets.dart';
 import '../../../models/app_user.dart';
 import '../../../providers/message_page_provider.dart';
 import '../../../providers/user_provider.dart';
-import '../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../widgets/messages/message_person_search.dart';
 import '../../message_screens/group/create_group_screen.dart';
 import '../../message_screens/group/group_chat_dashboard.dart';
 import '../../message_screens/personal/personal_chat_dashboard.dart';
-import '../../message_screens/personal/personal_chat_screen.dart';
 import '../../message_screens/stories/add_media_story_screen.dart';
 import '../../message_screens/stories/stories_dashboard.dart';
 

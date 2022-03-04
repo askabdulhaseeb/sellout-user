@@ -32,14 +32,10 @@ class StoriesDashboard extends StatelessWidget {
                 _allStories.add(Story.fromDoc(element));
               }
               List<List<Story>> _othersStories = <List<Story>>[];
-              print('Print: all Stories Length: ${_allStories.length} ');
-              _allStories.forEach((element) => print(
-                  'Print: ${element.uid}, ${element.uid == AuthMethods.uid}'));
               List<Story> _myStoires = _allStories
                   .where((Story myElement) => myElement.uid == AuthMethods.uid)
                   .cast<Story>()
                   .toList();
-              print('Print: ${_myStoires.length}');
               for (String supportingUID in UserLocalData.getSupporting) {
                 List<Story> _oTempList = _allStories
                     .where((Story oElement) => oElement.uid == supportingUID)
