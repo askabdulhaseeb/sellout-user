@@ -7,8 +7,7 @@ class MainBottomNavigationBar extends StatelessWidget {
   const MainBottomNavigationBar({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    AppProvider _navBar =
-        Provider.of<AppProvider>(context);
+    AppProvider _navBar = Provider.of<AppProvider>(context);
     return BottomNavigationBar(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       selectedLabelStyle: TextStyle(color: Theme.of(context).primaryColor),
@@ -20,23 +19,28 @@ class MainBottomNavigationBar extends StatelessWidget {
       onTap: (int index) => _navBar.onTabTapped(index),
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.home),
+          icon: Icon(Icons.home_outlined),
+          activeIcon: Icon(Icons.home_rounded),
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart),
+          icon: Icon(Icons.shopping_cart_outlined),
+          activeIcon: Icon(Icons.shopping_cart),
           label: 'Cart',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.add_box),
+          icon: Icon(Icons.add_box_outlined),
+          activeIcon: Icon(Icons.add_box),
           label: 'Add',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.chat),
+          icon: Icon(Icons.chat_outlined),
+          activeIcon: Icon(Icons.chat),
           label: 'chat',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.account_box),
+          icon: Icon(Icons.account_box_outlined),
+          activeIcon: Icon(Icons.account_box),
           label: 'Profile',
         ),
       ],
