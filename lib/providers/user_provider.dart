@@ -43,6 +43,14 @@ class UserProvider extends ChangeNotifier {
     return _supporters;
   }
 
+  List<AppUser> usersFromListOfString({required List<String> uidsList}) {
+    List<AppUser> _tempList = <AppUser>[];
+    for (String element in uidsList) {
+      _tempList.add(_user[_indexOf(element)]);
+    }
+    return _tempList;
+  }
+
   List<AppUser> supportings({required String uid}) {
     List<AppUser> _supporting = <AppUser>[];
     int index = _indexOf(uid);
