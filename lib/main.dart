@@ -59,6 +59,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'SellOut',
         theme: ThemeData(
+          dividerTheme: const DividerThemeData(thickness: 0.5, space: 0),
           appBarTheme: AppBarTheme(
             systemOverlayStyle: CustomService.systemUIOverlayStyle(),
             centerTitle: false,

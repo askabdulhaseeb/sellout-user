@@ -10,6 +10,7 @@ import '../../../../../widgets/messages/story_tile.dart';
 import '../../../database/stories_api.dart';
 import '../../../providers/user_provider.dart';
 import 'add_media_story_screen.dart';
+import 'my_stories_screen.dart';
 import 'stories_view_screen.dart';
 
 class StoriesDashboard extends StatelessWidget {
@@ -100,26 +101,22 @@ class StoriesDashboard extends StatelessWidget {
   }
 }
 
-class _MyStoryTile extends StatefulWidget {
+class _MyStoryTile extends StatelessWidget {
   const _MyStoryTile({required this.stories, Key? key}) : super(key: key);
   final List<Story> stories;
-  @override
-  State<_MyStoryTile> createState() => _MyStoryTileState();
-}
 
-class _MyStoryTileState extends State<_MyStoryTile> {
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            (widget.stories.isEmpty)
+            (stories.isEmpty)
                 ? Navigator.of(context).pushNamed(AddMediaStoryScreen.routeName)
                 : Navigator.of(context).push(
                     MaterialPageRoute<StoriesViewScreen>(
                       builder: (_) => StoriesViewScreen(
-                        stories: widget.stories,
+                        stories: stories,
                         user: UserLocalData().user,
                       ),
                     ),
@@ -129,7 +126,7 @@ class _MyStoryTileState extends State<_MyStoryTile> {
             padding: const EdgeInsets.all(1.5),
             decoration: BoxDecoration(
               border: Border.all(
-                color: (widget.stories.isEmpty)
+                color: (stories.isEmpty)
                     ? Colors.grey
                     : Theme.of(context).primaryColor,
               ),
@@ -139,18 +136,25 @@ class _MyStoryTileState extends State<_MyStoryTile> {
           ),
         ),
         const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const <Widget>[
-            Text(
-              'My Stories',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'Share your stories here',
-              style: TextStyle(fontSize: 12, color: Colors.grey),
-            )
-          ],
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute<MyStoiresScreen>(
+              builder: (_) => MyStoiresScreen(stories: stories),
+            ));
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const <Widget>[
+              Text(
+                'My Stories',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                'Share your stories here',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              )
+            ],
+          ),
         ),
         const Spacer(),
         IconButton(
