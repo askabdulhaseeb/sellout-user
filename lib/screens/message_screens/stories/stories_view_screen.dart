@@ -44,7 +44,7 @@ class StoriesViewScreen extends StatelessWidget {
                   ),
                 ),
                 CustomProfileImage(imageURL: user.imageURL ?? ''),
-                const SizedBox(width: 4),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,6 +73,7 @@ class StoriesViewScreen extends StatelessWidget {
               stories[0].caption ?? '',
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
               style: const TextStyle(color: Colors.white),
             ),
           )
