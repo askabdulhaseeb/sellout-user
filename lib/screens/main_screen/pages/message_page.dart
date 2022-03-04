@@ -87,7 +87,7 @@ class MessagePage extends StatelessWidget {
                   icon: Icon(Icons.adaptive.arrow_back_rounded),
                 ),
                 const Text(
-                  'Supporters',
+                  'New Chat',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
