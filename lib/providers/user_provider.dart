@@ -31,14 +31,34 @@ class UserProvider extends ChangeNotifier {
     _user.clear();
   }
 
+  List<AppUser> supporters({required String uid}) {
+    List<AppUser> _supporters = <AppUser>[];
+    int index = _indexOf(uid);
+    final AppUser _tempUser = _user[index];
+    if (index >= 0) {
+      for (String element in _tempUser.supporters!) {
+        _supporters.add(_user[_indexOf(element)]);
+      }
+    }
+    return _supporters;
+  }
+
+  List<AppUser> supportings({required String uid}) {
+    List<AppUser> _supporting = <AppUser>[];
+    int index = _indexOf(uid);
+    final AppUser _tempUser = _user[index];
+    if (index >= 0) {
+      for (String element in _tempUser.supporting!) {
+        _supporting.add(_user[_indexOf(element)]);
+      }
+    }
+    return _supporting;
+  }
+
   List<AppUser> get users => <AppUser>[..._user];
 
   AppUser user({required String uid}) {
-    int index = _user.indexWhere((AppUser element) => element.uid == uid);
-    if (index < 0) {
-      _fetchData(uid);
-      index = _user.indexWhere((AppUser element) => element.uid == uid);
-    }
+    int index = _indexOf(uid);
     return _user[index];
   }
 
@@ -46,5 +66,14 @@ class UserProvider extends ChangeNotifier {
     final AppUser? _userInfo = await UserAPI().getInfo(uid: uid);
     _user.add(_userInfo!);
     notifyListeners();
+  }
+
+  int _indexOf(String uid) {
+    int index = _user.indexWhere((AppUser element) => element.uid == uid);
+    if (index < 0) {
+      _fetchData(uid);
+      index = _user.indexWhere((AppUser element) => element.uid == uid);
+    }
+    return index;
   }
 }
