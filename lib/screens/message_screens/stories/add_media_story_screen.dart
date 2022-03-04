@@ -105,6 +105,7 @@ class _AddMediaStoryScreenState extends State<AddMediaStoryScreen> {
     setState(() {
       _isUploading = true;
     });
+    if (_file == null) return;
     final String? _url =
         await StoriesAPI().uploadImage(file: File(_file!.path!));
     if (_url == null) {
