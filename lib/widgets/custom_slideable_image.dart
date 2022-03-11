@@ -3,6 +3,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:provider/provider.dart';
 import '../models/product.dart';
 import '../providers/main_bottom_nav_bar_provider.dart';
+import 'custom_widgets/custom_network_image.dart';
 import 'video_widget.dart';
 
 class CustomSlidableURLsTile extends StatelessWidget {
@@ -44,10 +45,8 @@ class CustomSlidableURLsTile extends StatelessWidget {
                             ),
                           )
                         : InteractiveViewer(
-                            child: ExtendedImage.network(
-                              urls[index].url,
-                              fit: BoxFit.cover,
-                              timeLimit: const Duration(days: 2),
+                            child: CustomNetworkImage(
+                              imageURL: urls[index].url,
                             ),
                           ),
                   ),
