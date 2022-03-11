@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../database/product_api.dart';
 import '../../../models/product.dart';
+import '../../../providers/prod_provider.dart';
 import '../../../services/custom_services.dart';
 import '../../../widgets/product/prod_post_tile.dart';
 import '../../../widgets/custom_widgets/show_loading.dart';
@@ -33,28 +35,22 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      body: FutureBuilder<List<Product>>(
-        future: ProductAPI().getProducts(),
-        builder: (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
-          if (snapshot.hasError) {
-            return const _ErrorWidget();
-          } else {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const ShowLoading();
-            } else {
-              List<Product> _products = snapshot.data!;
-              return ListView.separated(
-                itemCount: _products.length,
-                separatorBuilder: (BuildContext context, int index) => Divider(
-                  color: Colors.grey[200],
-                  thickness: 4,
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  return ProdPostTile(product: _products[index]);
-                },
-              );
-            }
-          }
+      body: Consumer<ProdProvider>(
+        builder: (BuildContext context, ProdProvider prodProvider, _) {
+          List<Product> _products = prodProvider.products;
+          return RefreshIndicator(
+            child: ListView.separated(
+              itemCount: _products.length,
+              separatorBuilder: (BuildContext context, int index) => Divider(
+                color: Colors.grey[200],
+                thickness: 4,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                return ProdPostTile(product: _products[index]);
+              },
+            ),
+            onRefresh: () => prodProvider.refresh(),
+          );
         },
       ),
     );

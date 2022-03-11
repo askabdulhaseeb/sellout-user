@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../providers/prod_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../services/custom_services.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
@@ -35,6 +36,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     int _currentIndex = Provider.of<AppProvider>(context).currentTap;
     Provider.of<UserProvider>(context).init();
+    Provider.of<ProdProvider>(context).init();
     return Scaffold(
         body: _pages[_currentIndex],
         bottomNavigationBar: const MainBottomNavigationBar());
