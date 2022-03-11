@@ -163,7 +163,6 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
 
 class _AuctionInfo extends StatelessWidget {
   const _AuctionInfo({required this.auction, Key? key}) : super(key: key);
-
   final Auction auction;
 
   @override
@@ -186,7 +185,6 @@ class _AuctionInfo extends StatelessWidget {
               title: 'No. of Bets',
               height: 60,
               width: 90,
-              key: UniqueKey(),
               onTap: () {},
             ),
             CustomScoreButton(
@@ -194,7 +192,6 @@ class _AuctionInfo extends StatelessWidget {
               title: 'Starting price',
               height: 60,
               width: 90,
-              key: UniqueKey(),
               onTap: () {},
             ),
             CustomScoreButton(
@@ -202,7 +199,6 @@ class _AuctionInfo extends StatelessWidget {
               title: 'New Price',
               height: 60,
               width: 90,
-              key: UniqueKey(),
               onTap: () {},
             ),
           ],
