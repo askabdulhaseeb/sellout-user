@@ -3,13 +3,14 @@ import 'package:provider/provider.dart';
 import '../../providers/user_provider.dart';
 import '../../services/custom_services.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
+import '../bit_screen/bit_screen.dart';
 import 'main_bottom_navigation_bar.dart';
 import 'pages/add_page.dart';
 import 'pages/message_page.dart';
 import 'pages/my_profile_page.dart';
 import 'pages/home_page.dart';
 
-class MainScreen extends StatefulWidget{
+class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
   static const String rotueName = '/MainScrenn';
   @override
@@ -25,15 +26,14 @@ class _MainScreenState extends State<MainScreen> {
 
   static const List<Widget> _pages = <Widget>[
     HomePage(),
-    Center(child: Text('Cart')),
+    BitScreen(),
     AddPage(),
     MessagePage(),
     MyProdilePage(),
   ];
   @override
   Widget build(BuildContext context) {
-    int _currentIndex =
-        Provider.of<AppProvider>(context).currentTap;
+    int _currentIndex = Provider.of<AppProvider>(context).currentTap;
     Provider.of<UserProvider>(context).init();
     return Scaffold(
         body: _pages[_currentIndex],

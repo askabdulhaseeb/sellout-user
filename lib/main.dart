@@ -12,6 +12,7 @@ import 'screens/auth/forget_password_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
 import 'screens/edit_profile/edit_profile_screen.dart';
+import 'screens/bit_screen/bit_screen.dart';
 import 'screens/main_screen/main_screen.dart';
 import 'screens/message_screens/group/create_group_screen.dart';
 import 'screens/message_screens/stories/add_media_story_screen.dart';
@@ -93,6 +94,8 @@ class MyApp extends StatelessWidget {
           CreateChatGroupScreen.routeName: (_) => const CreateChatGroupScreen(),
           EditProfileScreen.routeName: (_) => const EditProfileScreen(),
           AddMediaStoryScreen.routeName: (_) => const AddMediaStoryScreen(),
+          // Bit Screen
+          BitScreen.routeName: (_) => const BitScreen(),
         },
       ),
     );
