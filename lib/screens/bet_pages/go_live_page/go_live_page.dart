@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../database/auth_methods.dart';
-import '../../../database/bet_api.dart';
+import '../../../database/auction_api.dart';
 import '../../../enums/privacy_type.dart';
 import '../../../functions/time_date_functions.dart';
 import '../../../models/auction.dart';
@@ -96,7 +96,8 @@ class _GoLivePageState extends State<GoLivePage> {
                             });
                             final int _time = TimeDateFunctions.timestamp;
                             final Auction _auction = Auction(
-                              id: '${AuthMethods.uid}$_time',
+                              auctionID: '${AuthMethods.uid}$_time',
+                              uid: AuthMethods.uid,
                               name: _name.text,
                               decription: _decription.text,
                               startingPrice: double.parse(_price.text),

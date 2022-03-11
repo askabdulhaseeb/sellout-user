@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'providers/auction_provider.dart';
 import 'providers/user_provider.dart';
 import 'providers/auth_state_provider.dart';
 import 'providers/main_bottom_nav_bar_provider.dart';
@@ -54,6 +55,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<MessagePageProvider>(
           create: (BuildContext context) => MessagePageProvider(),
+        ),
+        ChangeNotifierProvider<AuctionProvider>(
+          create: (BuildContext context) => AuctionProvider(),
         ),
       ],
       child: MaterialApp(

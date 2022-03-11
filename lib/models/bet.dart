@@ -28,9 +28,9 @@ class Bet {
   factory Bet.fromMap(Map<String, dynamic> map) {
     return Bet(
       uid: map['uid'] ?? '',
-      amount: double.parse(map['amount'] ?? '0.0'),
+      amount: double.parse(map['amount'].toString()),
       isSold: map['isSold'] ?? false,
-      timestamp: int.parse(map['timestamp'] ?? 0),
+      timestamp: int.parse(map['timestamp'].toString()),
     );
   }
 }
