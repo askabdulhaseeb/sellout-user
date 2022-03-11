@@ -5,8 +5,8 @@ import '../../../database/auth_methods.dart';
 import '../../../database/bet_api.dart';
 import '../../../enums/privacy_type.dart';
 import '../../../functions/time_date_functions.dart';
-import '../../../models/bet.dart';
 import '../../../models/auction.dart';
+import '../../../models/bet.dart';
 import '../../../providers/main_bottom_nav_bar_provider.dart';
 import '../../../services/custom_services.dart';
 import '../../../utilities/custom_validators.dart';
@@ -15,7 +15,6 @@ import '../../../widgets/custom_widgets/custom_textformfield.dart';
 import '../../../widgets/custom_widgets/custom_toast.dart';
 import '../../../widgets/custom_widgets/show_loading.dart';
 import '../../../widgets/product/prod_privacy_widget.dart';
-import '../../main_screen/main_bottom_navigation_bar.dart';
 
 class GoLivePage extends StatefulWidget {
   const GoLivePage({Key? key}) : super(key: key);
