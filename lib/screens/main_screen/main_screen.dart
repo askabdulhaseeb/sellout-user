@@ -4,7 +4,7 @@ import '../../providers/prod_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../services/custom_services.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
-import '../bit_screen/bit_screen.dart';
+import '../bet_screen/bet_screen.dart';
 import 'main_bottom_navigation_bar.dart';
 import 'pages/add_page.dart';
 import 'pages/message_page.dart';
@@ -27,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
 
   static const List<Widget> _pages = <Widget>[
     HomePage(),
-    BitScreen(),
+    BetScreen(),
     AddPage(),
     MessagePage(),
     MyProdilePage(),

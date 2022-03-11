@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../bit_pages/explore_page/explore_page.dart';
-import '../bit_pages/go_live_page/go_live_page.dart';
-import '../bit_pages/live_bit_page/live_bit_page.dart';
+import '../bet_pages/explore_page/explore_page.dart';
+import '../bet_pages/go_live_page/go_live_page.dart';
+import '../bet_pages/live_bit_page/live_bit_page.dart';
 
-class BitScreen extends StatelessWidget {
-  const BitScreen({Key? key}) : super(key: key);
+class BetScreen extends StatelessWidget {
+  const BetScreen({Key? key}) : super(key: key);
   static const String routeName = '/BitScreen';
 
   static const List<Widget> _tabs = <Widget>[
