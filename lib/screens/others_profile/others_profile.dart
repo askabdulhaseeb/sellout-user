@@ -5,10 +5,12 @@ import '../../database/auth_methods.dart';
 import '../../database/chat_api.dart';
 import '../../database/product_api.dart';
 import '../../database/user_api.dart';
+import '../../functions/user_bottom_sheets.dart';
 import '../../models/app_user.dart';
 import '../../models/prod_category.dart';
 import '../../models/product.dart';
 import '../../providers/product_category_provider.dart';
+import '../../providers/user_provider.dart';
 import '../../services/custom_services.dart';
 import '../../services/user_local_data.dart';
 import '../../utilities/utilities.dart';
@@ -151,9 +153,7 @@ class OthersProfile extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           IconButton(
-            onPressed: () {
-              
-            },
+            onPressed: () {},
             padding: const EdgeInsets.all(0),
             splashRadius: 24,
             icon: const Icon(CupertinoIcons.shopping_cart, size: 28),
@@ -166,55 +166,74 @@ class OthersProfile extends StatelessWidget {
   Widget _scoreSection(BuildContext context) {
     final double _totalWidth = MediaQuery.of(context).size.width;
     final double _boxWidth = (_totalWidth / 4) - 14;
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: Utilities.padding),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          CustomIconButton(
-            height: _boxWidth - 10,
-            width: _boxWidth,
-            icon: Icons.wallet_membership,
-            onTap: () {
-              // TODO: on wallet click
-              showInfoDialog(
-                context,
-                title: 'Comimg Soon',
-                message: 'Will be in working soon',
-              );
-            },
-          ),
-          CustomScoreButton(
-            score: user.posts?.length.toString() ?? '-',
-            title: 'Posts',
-            height: _boxWidth - 10,
-            width: _boxWidth,
-            onTap: () {
-              // TODO: on Posts click
-              showInfoDialog(
-                context,
-                title: 'Comimg Soon',
-                message: 'Will be in working soon',
-              );
-            },
-          ),
-          CustomScoreButton(
-            score: user.supporting?.length.toString() ?? '-',
-            title: 'Supporting',
-            height: _boxWidth - 10,
-            width: _boxWidth,
-            key: UniqueKey(),
-            onTap: () async {},
-          ),
-          CustomScoreButton(
-            score: user.supporters?.length.toString() ?? '-',
-            title: 'Supporters',
-            height: _boxWidth - 10,
-            width: _boxWidth,
-            key: UniqueKey(),
-            onTap: () {},
-          ),
-        ],
+    UserProvider _provider = Provider.of<UserProvider>(context);
+
+    return Builder(
+      builder: (context) => Padding(
+        padding:
+            EdgeInsets.symmetric(vertical: 8, horizontal: Utilities.padding),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            CustomIconButton(
+              height: _boxWidth - 10,
+              width: _boxWidth,
+              icon: Icons.wallet_membership,
+              onTap: () {
+                // TODO: on wallet click
+                showInfoDialog(
+                  context,
+                  title: 'Comimg Soon',
+                  message: 'Will be in working soon',
+                );
+              },
+            ),
+            CustomScoreButton(
+              score: user.posts?.length.toString() ?? '-',
+              title: 'Posts',
+              height: _boxWidth - 10,
+              width: _boxWidth,
+              onTap: () {
+                // TODO: on Posts click
+                showInfoDialog(
+                  context,
+                  title: 'Comimg Soon',
+                  message: 'Will be in working soon',
+                );
+              },
+            ),
+            CustomScoreButton(
+              score: user.supporting?.length.toString() ?? '-',
+              title: 'Supporting',
+              height: _boxWidth - 10,
+              width: _boxWidth,
+              key: UniqueKey(),
+              onTap: () {
+                UserBottomSheets().showUsersBottomSheet(
+                  context: context,
+                  title: 'Supporting',
+                  showBackButton: false,
+                  users: _provider.supportings(uid: user.uid),
+                );
+              },
+            ),
+            CustomScoreButton(
+              score: user.supporters?.length.toString() ?? '-',
+              title: 'Supporters',
+              height: _boxWidth - 10,
+              width: _boxWidth,
+              key: UniqueKey(),
+              onTap: () {
+                UserBottomSheets().showUsersBottomSheet(
+                  context: context,
+                  title: 'Supporters',
+                  showBackButton: false,
+                  users: _provider.supporters(uid: user.uid),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

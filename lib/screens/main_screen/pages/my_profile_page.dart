@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../database/auth_methods.dart';
 import '../../../database/product_api.dart';
+import '../../../functions/user_bottom_sheets.dart';
 import '../../../models/prod_category.dart';
 import '../../../models/product.dart';
 import '../../../providers/user_provider.dart';
@@ -153,47 +154,60 @@ class MyProdilePage extends StatelessWidget {
   Widget _scoreSection(BuildContext context) {
     final double _totalWidth = MediaQuery.of(context).size.width;
     final double _boxWidth = (_totalWidth / 4) - 14;
-    return Padding(
-      padding: EdgeInsets.all(Utilities.padding),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          CustomIconButton(
-            height: _boxWidth - 10,
-            width: _boxWidth,
-            icon: Icons.account_balance,
-            onTap: () {
-              // TODO: on wallet click
-            },
-          ),
-          CustomScoreButton(
-            score: UserLocalData.getPost.length.toString(),
-            title: 'Posts',
-            height: _boxWidth - 10,
-            width: _boxWidth,
-            onTap: () {
-              // TODO: on Posts click
-            },
-          ),
-          CustomScoreButton(
-            score: UserLocalData.getSupporting.length.toString(),
-            title: 'Supporting',
-            height: _boxWidth - 10,
-            width: _boxWidth,
-            onTap: () {
-              // TODO: on Supporting click
-            },
-          ),
-          CustomScoreButton(
-            score: UserLocalData.getSupporters.length.toString(),
-            title: 'Supporters',
-            height: _boxWidth - 10,
-            width: _boxWidth,
-            onTap: () {
-              // TODO: on Supporters click
-            },
-          ),
-        ],
+    UserProvider _provider = Provider.of<UserProvider>(context);
+    return Builder(
+      builder: (BuildContext context) => Padding(
+        padding: EdgeInsets.all(Utilities.padding),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            CustomIconButton(
+              height: _boxWidth - 10,
+              width: _boxWidth,
+              icon: Icons.account_balance,
+              onTap: () {
+                // TODO: on wallet click
+              },
+            ),
+            CustomScoreButton(
+              score: UserLocalData.getPost.length.toString(),
+              title: 'Posts',
+              height: _boxWidth - 10,
+              width: _boxWidth,
+              onTap: () {
+                // TODO: on Posts click
+              },
+            ),
+            CustomScoreButton(
+              score: UserLocalData.getSupporting.length.toString(),
+              title: 'Supporting',
+              height: _boxWidth - 10,
+              width: _boxWidth,
+              onTap: () {
+                UserBottomSheets().showUsersBottomSheet(
+                  context: context,
+                  title: 'Supporting',
+                  showBackButton: false,
+                  users: _provider.supportings(uid: AuthMethods.uid),
+                );
+              },
+            ),
+            CustomScoreButton(
+              score: UserLocalData.getSupporters.length.toString(),
+              title: 'Supporters',
+              height: _boxWidth - 10,
+              width: _boxWidth,
+              onTap: () {
+                UserBottomSheets().showUsersBottomSheet(
+                  context: context,
+                  title: 'Supporters',
+                  showBackButton: false,
+                  users: _provider.supporters(uid: AuthMethods.uid),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

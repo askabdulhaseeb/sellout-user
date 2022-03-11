@@ -73,27 +73,28 @@ class UserBottomSheets {
     required BuildContext context,
     required List<AppUser> users,
     String title = '',
+    bool showBackButton = true,
   }) {
     return showBottomSheet(
       context: context,
       enableDrag: true,
       builder: (BuildContext context) => Column(
         children: <Widget>[
-          const SizedBox(height: 30),
-          Row(
-            children: <Widget>[
-              IconButton(
-                splashRadius: 20,
-                onPressed: () => Navigator.of(context).pop(),
-                icon: Icon(Icons.adaptive.arrow_back_rounded),
-              ),
-              Text(
-                title,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          Flexible(
+          if (showBackButton)
+            Row(
+              children: <Widget>[
+                IconButton(
+                  splashRadius: 20,
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: Icon(Icons.adaptive.arrow_back_rounded),
+                ),
+                Text(
+                  title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          Expanded(
             child: ListView.builder(
               shrinkWrap: true,
               primary: false,
