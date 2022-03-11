@@ -36,70 +36,74 @@ class _CreateChatGroupScreenState extends State<CreateChatGroupScreen> {
               color: Theme.of(context).primaryColor),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: Utilities.padding),
-        child: Form(
-          key: _key,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              CustomFileImageBox(
-                file: _pickedImage,
-                onTap: () => _uploadImage(),
-              ),
-              _titleText('Group Name'),
-              CustomTextFormField(
-                controller: _name,
-                readOnly: _isLoading,
-                hint: 'A short name of your group',
-                validator: (String? value) => CustomValidator.lessThen2(value),
-              ),
-              const SizedBox(height: 6),
-              _titleText('Group Description'),
-              CustomTextFormField(
-                controller: _description,
-                readOnly: _isLoading,
-                hint: 'Add group description',
-                maxLines: 4,
-                validator: (String? value) => CustomValidator.retaunNull(value),
-              ),
-              const SizedBox(height: 10),
-              _isLoading
-                  ? const ShowLoading()
-                  : CustomElevatedButton(
-                      title: 'Create Group',
-                      onTap: () async {
-                        if (_key.currentState!.validate()) {
-                          setState(() {
-                            _isLoading = true;
-                          });
-                          String _url = '';
-                          if (_pickedImage != null) {
-                            String? _tempURL =
-                                await GroupChatAPI().uploadGroupImage(
-                              file: File(_pickedImage!.path!),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: Utilities.padding),
+          child: Form(
+            key: _key,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                CustomFileImageBox(
+                  file: _pickedImage,
+                  onTap: () => _uploadImage(),
+                ),
+                _titleText('Group Name'),
+                CustomTextFormField(
+                  controller: _name,
+                  readOnly: _isLoading,
+                  hint: 'A short name of your group',
+                  validator: (String? value) =>
+                      CustomValidator.lessThen2(value),
+                ),
+                const SizedBox(height: 6),
+                _titleText('Group Description'),
+                CustomTextFormField(
+                  controller: _description,
+                  readOnly: _isLoading,
+                  hint: 'Add group description',
+                  maxLines: 4,
+                  validator: (String? value) =>
+                      CustomValidator.retaunNull(value),
+                ),
+                const SizedBox(height: 10),
+                _isLoading
+                    ? const ShowLoading()
+                    : CustomElevatedButton(
+                        title: 'Create Group',
+                        onTap: () async {
+                          if (_key.currentState!.validate()) {
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            String _url = '';
+                            if (_pickedImage != null) {
+                              String? _tempURL =
+                                  await GroupChatAPI().uploadGroupImage(
+                                file: File(_pickedImage!.path!),
+                              );
+                              _url = _tempURL ?? '';
+                            }
+                            GroupChat _group = GroupChat(
+                              name: _name.text,
+                              description: _description.text,
+                              imageURL: _url,
                             );
-                            _url = _tempURL ?? '';
+                            final bool _uploaded =
+                                await GroupChatAPI().createGroup(_group);
+                            setState(() {
+                              _isLoading = false;
+                            });
+                            if (_uploaded) {
+                              CustomToast.successToast(
+                                  message: 'New Group Created');
+                              Navigator.of(context).pop();
+                            }
                           }
-                          GroupChat _group = GroupChat(
-                            name: _name.text,
-                            description: _description.text,
-                            imageURL: _url,
-                          );
-                          final bool _uploaded =
-                              await GroupChatAPI().createGroup(_group);
-                          setState(() {
-                            _isLoading = false;
-                          });
-                          if (_uploaded) {
-                            CustomToast.successToast(
-                                message: 'New Group Created');
-                            Navigator.of(context).pop();
-                          }
-                        }
-                      },
-                    )
-            ],
+                        },
+                      )
+              ],
+            ),
           ),
         ),
       ),
