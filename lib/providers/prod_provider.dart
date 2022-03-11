@@ -4,8 +4,24 @@ import '../models/product.dart';
 
 class ProdProvider extends ChangeNotifier {
   List<Product> _products = <Product>[];
+  String? _searchText = '';
 
   List<Product> get products => <Product>[..._products];
+
+  List<Product> filterdProducts() {
+    List<Product> _tempProducts = <Product>[];
+    if (_searchText == null || _searchText!.isEmpty) {
+      return <Product>[..._products];
+    }
+    _tempProducts = _products
+        .where((element) {
+          return (element.title.toLowerCase().contains(_searchText!) ||
+              element.description.toLowerCase().contains(_searchText!));
+        })
+        .cast<Product>()
+        .toList();
+    return _tempProducts;
+  }
 
   void init() async {
     if (_products.isNotEmpty) return;
@@ -15,6 +31,11 @@ class ProdProvider extends ChangeNotifier {
 
   Future<void> refresh() async {
     await _load();
+  }
+
+  onSearch(String? value) {
+    _searchText = value!.toLowerCase();
+    notifyListeners();
   }
 
   Future<void> _load() async {

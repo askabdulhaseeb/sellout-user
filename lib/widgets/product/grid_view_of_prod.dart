@@ -1,15 +1,14 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import '../../models/app_user.dart';
+import 'package:provider/provider.dart';
 import '../../models/product.dart';
+import '../../providers/user_provider.dart';
 import '../../screens/product_detail_screen/product_detail_screen.dart';
 import '../video_widget.dart';
 
 class GridViewOfProducts extends StatelessWidget {
-  const GridViewOfProducts({required this.posts, required this.user, Key? key})
-      : super(key: key);
+  const GridViewOfProducts({required this.posts, Key? key}) : super(key: key);
   final List<Product> posts;
-  final AppUser user;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +18,7 @@ class GridViewOfProducts extends StatelessWidget {
         crossAxisSpacing: 2,
         mainAxisSpacing: 2,
       ),
+      primary: false,
       shrinkWrap: true,
       itemCount: posts.length,
       itemBuilder: (BuildContext context, int index) => InkWell(
@@ -27,7 +27,9 @@ class GridViewOfProducts extends StatelessWidget {
             MaterialPageRoute<ProductDetailScreen>(
               builder: (_) => ProductDetailScreen(
                 product: posts[index],
-                user: user,
+                user: Provider.of<UserProvider>(context).user(
+                  uid: posts[index].uid,
+                ),
               ),
             ),
           );

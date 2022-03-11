@@ -91,7 +91,6 @@ class OthersProfile extends StatelessWidget {
                   if (snapshot.data!.isNotEmpty) {
                     return GridViewOfProducts(
                       posts: snapshot.data!,
-                      user: user,
                     );
                   } else {
                     return const Center(

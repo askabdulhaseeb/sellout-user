@@ -81,7 +81,6 @@ class MyProdilePage extends StatelessWidget {
                   if (snapshot.data!.isNotEmpty) {
                     return GridViewOfProducts(
                       posts: snapshot.data!,
-                      user: UserLocalData().user,
                     );
                   } else {
                     return const Center(
