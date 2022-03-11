@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../bet_pages/explore_page/explore_page.dart';
 import '../bet_pages/go_live_page/go_live_page.dart';
-import '../bet_pages/live_bit_page/live_bit_page.dart';
+import '../bet_pages/live_bet_page/live_bet_page.dart';
 
 class BetScreen extends StatelessWidget {
   const BetScreen({Key? key}) : super(key: key);
@@ -31,7 +31,7 @@ class BetScreen extends StatelessWidget {
         ),
         body: const TabBarView(
           children: <Widget>[
-            LiveBitPage(),
+            LiveBetPage(),
             ExplorePage(),
             GoLivePage(),
           ],
