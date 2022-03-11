@@ -28,6 +28,7 @@ class CustomSlidableURLsTile extends StatelessWidget {
           height: height ?? double.infinity,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
+            physics: const ClampingScrollPhysics(),
             itemCount: urls.length,
             itemBuilder: (BuildContext context, int index) {
               return Stack(
