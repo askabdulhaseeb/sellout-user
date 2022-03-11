@@ -15,6 +15,7 @@ class CustomTextFormField extends StatefulWidget {
     this.contentPadding,
     this.minLines = 1,
     this.maxLines = 1,
+    this.maxLength,
     this.showPrefixIcon = true,
     this.readOnly = false,
     this.autoFocus = false,
@@ -31,6 +32,7 @@ class CustomTextFormField extends StatefulWidget {
   final EdgeInsetsGeometry? contentPadding;
   final int? minLines;
   final int? maxLines;
+  final int? maxLength;
   final Color? color;
   final String? initialValue;
   final String? hint;
@@ -78,9 +80,11 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
         onChanged: widget.onChanged,
         minLines: widget.minLines,
         maxLines: (widget._controller.text.isEmpty) ? 1 : widget.maxLines,
+        maxLength: widget.maxLength,
         validator: (String? value) => widget.validator!(value),
         cursorColor: Theme.of(context).colorScheme.secondary,
         decoration: InputDecoration(
+          fillColor: widget.color ?? Colors.grey[300],
           contentPadding: widget.contentPadding ??
               const EdgeInsets.symmetric(horizontal: 12),
           hintText: widget.hint,

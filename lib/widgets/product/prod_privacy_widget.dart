@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import '../../enums/privacy_type.dart';
 
 class ProdPrivacyWidget extends StatefulWidget {
-  const ProdPrivacyWidget({required this.onChanged, Key? key})
-      : super(key: key);
+  const ProdPrivacyWidget({
+    required this.onChanged,
+    this.initialValue,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+    Key? key,
+  }) : super(key: key);
   final void Function(ProdPrivacyTypeEnum?)? onChanged;
+  final ProdPrivacyTypeEnum? initialValue;
+  final MainAxisAlignment mainAxisAlignment;
   @override
   State<ProdPrivacyWidget> createState() => _ProdPrivacyWidgetState();
 }
@@ -12,8 +18,15 @@ class ProdPrivacyWidget extends StatefulWidget {
 class _ProdPrivacyWidgetState extends State<ProdPrivacyWidget> {
   ProdPrivacyTypeEnum _privacy = ProdPrivacyTypeEnum.PUBLIC;
   @override
+  void initState() {
+    _privacy = widget.initialValue ?? ProdPrivacyTypeEnum.PUBLIC;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: widget.mainAxisAlignment,
       children: <Widget>[
         InkWell(
           onTap: () {
