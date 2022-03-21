@@ -168,7 +168,7 @@ class OthersProfile extends StatelessWidget {
     UserProvider _provider = Provider.of<UserProvider>(context);
 
     return Builder(
-      builder: (context) => Padding(
+      builder: (BuildContext context) => Padding(
         padding:
             EdgeInsets.symmetric(vertical: 8, horizontal: Utilities.padding),
         child: Row(
@@ -272,7 +272,7 @@ class OthersProfile extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         )
                       : Text(
-                          UserLocalData.getBio,
+                          user.bio ?? '',
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),
