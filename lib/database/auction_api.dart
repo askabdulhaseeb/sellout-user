@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:extended_image/extended_image.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../models/auction.dart';
 import '../widgets/custom_widgets/custom_toast.dart';
+import 'auth_methods.dart';
 
 class AuctionAPI {
   static const String _colloction = 'auction';
@@ -41,5 +44,17 @@ class AuctionAPI {
         .collection(_colloction)
         .doc(auction.auctionID)
         .update(auction.updateBets());
+  }
+
+  Future<String?> uploadImage({required String id, required File file}) async {
+    try {
+      TaskSnapshot snapshot = await FirebaseStorage.instance
+          .ref('auctions/${AuthMethods.uid}/$id')
+          .putFile(file);
+      String url = await snapshot.ref.getDownloadURL();
+      return url;
+    } catch (e) {
+      return null;
+    }
   }
 }

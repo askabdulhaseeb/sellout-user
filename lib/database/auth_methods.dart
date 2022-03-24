@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import '../functions/time_date_functions.dart';
 import '../models/app_user.dart';
 import '../services/user_local_data.dart';
 import '../widgets/custom_widgets/gender_selection_button.dart';
@@ -12,6 +13,8 @@ class AuthMethods {
   static User? get getCurrentUser => _auth.currentUser;
 
   static String get uid => _auth.currentUser?.uid ?? '';
+  
+  static String get uniqueID => uid + TimeDateFunctions.timestamp.toString();
 
   Future<bool> signinWithGoogle() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();

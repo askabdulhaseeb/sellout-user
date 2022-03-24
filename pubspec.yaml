@@ -23,6 +23,7 @@ dependencies:
   cupertino_icons: ^1.0.4
   extended_image: ^6.0.1
   file_picker: ^4.3.3
+
   font_awesome_flutter: ^9.2.0
   video_player: ^2.2.18
   intl: ^0.17.0

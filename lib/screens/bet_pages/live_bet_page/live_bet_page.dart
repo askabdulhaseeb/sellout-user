@@ -40,7 +40,9 @@ class LiveBetPage extends StatelessWidget {
                       ),
                     );
                   },
-                  leading: const CustomProfileImage(imageURL: ''),
+                  leading: CustomProfileImage(
+                    imageURL: _provider.auctions[index].thumbnail,
+                  ),
                   title: Text(_provider.auctions[index].name),
                   subtitle: Text(
                     TimeDateFunctions.timeInWords(

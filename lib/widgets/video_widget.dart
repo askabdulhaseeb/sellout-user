@@ -39,7 +39,12 @@ class _VideoAppState extends State<VideoWidget> {
     return Stack(
       alignment: Alignment.bottomRight,
       children: <Widget>[
-        VideoPlayer(_controller!),
+        Center(
+          child: AspectRatio(
+            aspectRatio: _controller!.value.aspectRatio,
+            child: VideoPlayer(_controller!),
+          ),
+        ),
         (widget.isPause)
             ? const Padding(
                 padding: EdgeInsets.all(4),

@@ -8,16 +8,18 @@ class Auction {
     required this.auctionID,
     required this.uid,
     required this.name,
+    required this.thumbnail,
     required this.decription,
     required this.startingPrice,
-    this.bets,
     required this.timestamp,
     required this.privacy,
+    this.bets,
   });
 
   final String auctionID;
   final String uid;
   final String name;
+  final String thumbnail;
   final String decription;
   final double startingPrice;
   final List<Bet>? bets;
@@ -33,6 +35,7 @@ class Auction {
       'auction_id': auctionID,
       'uid': uid,
       'name': name,
+      'thumbnail': thumbnail,
       'decription': decription,
       'startingPrice': startingPrice,
       'bets': _mapp,
@@ -60,6 +63,7 @@ class Auction {
       auctionID: doc.data()?['auction_id'] ?? '',
       uid: doc.data()?['uid'] ?? AuthMethods.uid,
       name: doc.data()?['name'] ?? '',
+      thumbnail: doc.data()?['thumbnail'] ?? '',
       decription: doc.data()?['decription'] ?? '',
       startingPrice:
           double.parse(doc.data()?['startingPrice'].toString() ?? '0.0'),

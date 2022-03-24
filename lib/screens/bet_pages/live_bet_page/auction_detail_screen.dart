@@ -65,7 +65,7 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
               children: <Widget>[
                 AspectRatio(
                   aspectRatio: 16 / 9,
-                  child: CustomNetworkImage(imageURL: AppImages.doneURL),
+                  child: CustomNetworkImage(imageURL: widget.auction.thumbnail),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16),

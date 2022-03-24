@@ -1,16 +1,21 @@
+import 'package:extended_image/extended_image.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../database/auth_methods.dart';
 import '../../../database/auction_api.dart';
 import '../../../enums/privacy_type.dart';
+import '../../../functions/picker_functions.dart';
 import '../../../functions/time_date_functions.dart';
 import '../../../models/auction.dart';
 import '../../../models/bet.dart';
+import '../../../providers/auction_provider.dart';
 import '../../../providers/main_bottom_nav_bar_provider.dart';
 import '../../../services/custom_services.dart';
 import '../../../utilities/custom_validators.dart';
 import '../../../widgets/custom_widgets/custom_elevated_button.dart';
+import '../../../widgets/custom_widgets/custom_file_image_box.dart';
 import '../../../widgets/custom_widgets/custom_textformfield.dart';
 import '../../../widgets/custom_widgets/custom_toast.dart';
 import '../../../widgets/custom_widgets/show_loading.dart';
@@ -27,6 +32,7 @@ class _GoLivePageState extends State<GoLivePage> {
   final TextEditingController _decription = TextEditingController();
   final TextEditingController _price = TextEditingController();
   ProdPrivacyTypeEnum? _privacy;
+  PlatformFile? _file;
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   bool _isLoading = false;
   @override
@@ -50,6 +56,15 @@ class _GoLivePageState extends State<GoLivePage> {
                   ),
                 ),
                 const SizedBox(height: 20),
+                CustomFileImageBox(
+                  file: _file,
+                  onTap: () async {
+                    _file = await PickerFunctions().pick(type: FileType.image);
+                    if (_file == null) return;
+                    setState(() {});
+                  },
+                  title: 'Thumbnail',
+                ),
                 _title('Bit Name'),
                 CustomTextFormField(
                   controller: _name,
@@ -90,15 +105,26 @@ class _GoLivePageState extends State<GoLivePage> {
                     : CustomElevatedButton(
                         title: 'Go Live',
                         onTap: () async {
+                          if (_file == null) {
+                            CustomToast.errorToast(
+                              message: 'Image is required',
+                            );
+                            return;
+                          }
                           if (_key.currentState!.validate()) {
                             setState(() {
                               _isLoading = true;
                             });
+                            final String _id = AuthMethods.uniqueID;
                             final int _time = TimeDateFunctions.timestamp;
+                            String? _url = '';
+                            _url = await AuctionAPI()
+                                .uploadImage(id: _id, file: File(_file!.path!));
                             final Auction _auction = Auction(
-                              auctionID: '${AuthMethods.uid}$_time',
+                              auctionID: _id,
                               uid: AuthMethods.uid,
                               name: _name.text,
+                              thumbnail: _url ?? '',
                               decription: _decription.text,
                               startingPrice: double.parse(_price.text),
                               bets: <Bet>[],
@@ -115,6 +141,9 @@ class _GoLivePageState extends State<GoLivePage> {
                                 context: context,
                                 text: 'Auction started successfully',
                               );
+                              Provider.of<AuctionProvider>(context,
+                                      listen: false)
+                                  .refresh();
                               Provider.of<AppProvider>(context, listen: false)
                                   .onTabTapped(0);
                             }
