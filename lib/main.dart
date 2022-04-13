@@ -17,6 +17,7 @@ import 'screens/bet_screen/bet_screen.dart';
 import 'screens/main_screen/main_screen.dart';
 import 'screens/message_screens/group/create_group_screen.dart';
 import 'screens/message_screens/stories/add_media_story_screen.dart';
+import 'screens/notification_screen/notification_screen.dart';
 import 'services/custom_services.dart';
 import 'services/user_local_data.dart';
 
@@ -100,6 +101,8 @@ class MyApp extends StatelessWidget {
           AddMediaStoryScreen.routeName: (_) => const AddMediaStoryScreen(),
           // Bit Screen
           BetScreen.routeName: (_) => const BetScreen(),
+          // Notification Screen
+          NotificationScreen.routeName: (_) => const NotificationScreen(),
         },
       ),
     );

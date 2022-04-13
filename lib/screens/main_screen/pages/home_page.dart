@@ -6,6 +6,7 @@ import '../../../providers/prod_provider.dart';
 import '../../../services/custom_services.dart';
 import '../../../widgets/product/prod_post_tile.dart';
 import '../../../widgets/custom_widgets/show_loading.dart';
+import '../../notification_screen/notification_screen.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -30,7 +31,9 @@ class HomePage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             splashRadius: 20,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(NotificationScreen.routeName);
+            },
             icon: const Icon(Icons.notifications),
           )
         ],
