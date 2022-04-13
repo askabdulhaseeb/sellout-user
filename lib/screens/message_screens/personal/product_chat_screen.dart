@@ -8,7 +8,7 @@ import '../../../../../models/message.dart';
 import '../../../../../models/product.dart';
 import '../../../../../services/user_local_data.dart';
 import '../../../../../utilities/utilities.dart';
-import '../../../../../widgets/custom_slideable_image.dart';
+import '../../../widgets/custom_slideable_urls_tile.dart';
 import '../../../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../../../../widgets/messages/chat_textformfield.dart';
 import '../../../../../widgets/messages/personal_message_tile.dart';

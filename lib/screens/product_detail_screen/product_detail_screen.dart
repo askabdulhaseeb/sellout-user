@@ -7,7 +7,7 @@ import '../../models/app_user.dart';
 import '../../models/product.dart';
 import '../../providers/main_bottom_nav_bar_provider.dart';
 import '../../utilities/utilities.dart';
-import '../../widgets/custom_slideable_image.dart';
+import '../../widgets/custom_slideable_urls_tile.dart';
 import '../../widgets/custom_widgets/custom_elevated_button.dart';
 import '../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../widgets/custom_widgets/custom_rating_stars.dart';

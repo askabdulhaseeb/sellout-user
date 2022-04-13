@@ -4,7 +4,7 @@ import '../../enums/delivery_type.dart';
 import '../../models/product.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/utilities.dart';
-import '../../widgets/custom_slideable_image.dart';
+import '../../widgets/custom_slideable_urls_tile.dart';
 import '../payment_success_screen/payment_success_screen.dart';
 
 class BuyNowScreen extends StatelessWidget {

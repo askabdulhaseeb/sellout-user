@@ -11,7 +11,7 @@ import '../../screens/message_screens/personal/product_chat_screen.dart';
 import '../../screens/others_profile/others_profile.dart';
 import '../../screens/product_detail_screen/product_detail_screen.dart';
 import '../../utilities/utilities.dart';
-import '../custom_slideable_image.dart';
+import '../custom_slideable_urls_tile.dart';
 import '../custom_widgets/custom_elevated_button.dart';
 import '../custom_widgets/custom_profile_image.dart';
 import '../custom_widgets/show_info_dialog.dart';
