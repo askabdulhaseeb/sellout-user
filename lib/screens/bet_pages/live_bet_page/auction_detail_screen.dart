@@ -120,9 +120,13 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                               _isLoading
                                   ? const ShowLoading()
                                   : CustomElevatedButton(
-                                      title: 'Bet Now',
+                                      title: 'Bid Now',
                                       onTap: () async {
                                         if (_key.currentState!.validate()) {
+                                          if (double.parse(_offer.text) <
+                                              _auctionStream.startingPrice) {
+                                            return;
+                                          }
                                           setState(() {
                                             _isLoading = true;
                                           });

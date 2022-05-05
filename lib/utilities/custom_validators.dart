@@ -36,7 +36,7 @@ class CustomValidator {
   }
 
   static String? greaterThen(String? input, double compairWith) {
-    return (double.parse(input ?? '0') > compairWith)
+    return (double.parse(input ?? '0') < compairWith)
         ? 'New input must be greater'
         : null;
   }

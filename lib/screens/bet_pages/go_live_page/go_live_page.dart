@@ -65,7 +65,7 @@ class _GoLivePageState extends State<GoLivePage> {
                   },
                   title: 'Thumbnail',
                 ),
-                _title('Bit Name'),
+                _title('Bid Name'),
                 CustomTextFormField(
                   controller: _name,
                   validator: (String? value) =>
@@ -73,7 +73,7 @@ class _GoLivePageState extends State<GoLivePage> {
                   maxLength: 30,
                   readOnly: _isLoading,
                 ),
-                _title('Item Decription'),
+                _title('Item Description'),
                 CustomTextFormField(
                   controller: _decription,
                   maxLines: 4,

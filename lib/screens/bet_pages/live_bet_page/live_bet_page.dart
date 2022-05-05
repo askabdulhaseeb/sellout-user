@@ -18,7 +18,7 @@ class LiveBetPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Live Bet',
+            'Live Bid',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
