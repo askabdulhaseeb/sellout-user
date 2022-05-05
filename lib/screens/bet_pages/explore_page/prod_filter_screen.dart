@@ -202,8 +202,11 @@ class _PriceRangeWidgetState extends State<_PriceRangeWidget> {
   @override
   void initState() {
     final ProdProvider _pro = Provider.of<ProdProvider>(context, listen: false);
-    _minPrice = TextEditingController(text: _pro.minPrice.toString());
-    _maxPrice = TextEditingController(text: _pro.maxPrice.toString());
+    final double _min = _pro.minPrice;
+    double _max = _pro.maxPrice;
+    if (_max < 0) _max = 0;
+    _minPrice = TextEditingController(text: _min.toString());
+    _maxPrice = TextEditingController(text: _max.toString());
     super.initState();
   }
 

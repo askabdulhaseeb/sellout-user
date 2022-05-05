@@ -48,10 +48,12 @@ class ProdProvider extends ChangeNotifier {
 
   onMinPriceUpdate(String? value) {
     _minPrice = double.parse(value ?? '0');
+    notifyListeners();
   }
 
   onMaxPriceUpdate(String? value) {
     _maxPrice = double.parse(value ?? '0');
+    notifyListeners();
   }
 
   resetPrice() {
