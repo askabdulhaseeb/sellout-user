@@ -10,6 +10,7 @@ import '../../../providers/prod_provider.dart';
 import '../../../providers/product_category_provider.dart';
 import '../../../widgets/custom_widgets/custom_elevated_button.dart';
 import '../../../widgets/custom_widgets/custom_textformfield.dart';
+import '../../../widgets/custom_widgets/custom_toast.dart';
 import '../../../widgets/product/prod_cat_dropdown.dart';
 import '../../../widgets/product/prod_confition_widget.dart';
 import '../../../widgets/product/prod_delivery_type_widget.dart';
@@ -198,6 +199,7 @@ class _PriceRangeWidget extends StatefulWidget {
 class _PriceRangeWidgetState extends State<_PriceRangeWidget> {
   late TextEditingController _minPrice;
   late TextEditingController _maxPrice;
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -212,66 +214,81 @@ class _PriceRangeWidgetState extends State<_PriceRangeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16).copyWith(top: 0),
-      child: Consumer<ProdProvider>(
-        builder: (BuildContext context, ProdProvider prodPro, _) {
-          return Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  const Text(
-                    'Choose your Price',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  TextButton(
-                    onPressed: () => prodPro.resetPrice(),
-                    child: const Text('Reset'),
-                  ),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Flexible(
-                    child: CustomTextFormField(
-                      controller: _minPrice,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
-                      hint: 'Min Price',
-                      validator: (String? value) => null,
+    return Form(
+      key: _key,
+      child: Padding(
+        padding: const EdgeInsets.all(16).copyWith(top: 0),
+        child: Consumer<ProdProvider>(
+          builder: (BuildContext context, ProdProvider prodPro, _) {
+            return Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const Text(
+                      'Choose your Price',
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Flexible(
-                    child: CustomTextFormField(
-                      controller: _maxPrice,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
-                      hint: 'Max Price',
-                      validator: (String? value) => null,
+                    TextButton(
+                      onPressed: () => prodPro.resetPrice(),
+                      child: const Text('Reset'),
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const <Widget>[
-                  Text('  Min.'),
-                  Text('Max. '),
-                ],
-              ),
-              const SizedBox(height: 16),
-              CustomElevatedButton(
-                title: 'Save',
-                onTap: () {
-                  prodPro.onMinPriceUpdate(_minPrice.text);
-                  prodPro.onMaxPriceUpdate(_maxPrice.text);
-                },
-              ),
-            ],
-          );
-        },
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Flexible(
+                      child: CustomTextFormField(
+                        controller: _minPrice,
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        hint: 'Min Price',
+                        validator: (String? value) => null,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Flexible(
+                      child: CustomTextFormField(
+                        controller: _maxPrice,
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        hint: 'Max Price',
+                        validator: (String? value) {
+                          if (double.parse(_maxPrice.text) <
+                              double.parse(_minPrice.text)) {
+                            CustomToast.errorToast(
+                              message:
+                                  'Max Price should be greater then min price',
+                            );
+                            return 'Max Price should be greater then min price';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const <Widget>[
+                    Text('  Min.'),
+                    Text('Max. '),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                CustomElevatedButton(
+                  title: 'Save',
+                  onTap: () {
+                    if (_key.currentState!.validate()) {
+                      prodPro.onMinPriceUpdate(_minPrice.text);
+                      prodPro.onMaxPriceUpdate(_maxPrice.text);
+                    }
+                  },
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
