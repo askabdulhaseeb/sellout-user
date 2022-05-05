@@ -4,7 +4,7 @@ import '../../utilities/utilities.dart';
 
 class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
-    required TextEditingController controller,
+    TextEditingController? controller,
     this.keyboardType,
     this.textInputAction,
     this.onChanged,
@@ -23,7 +23,7 @@ class CustomTextFormField extends StatefulWidget {
     Key? key,
   })  : _controller = controller,
         super(key: key);
-  final TextEditingController _controller;
+  final TextEditingController? _controller;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final void Function(String)? onChanged;
@@ -47,13 +47,13 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
   void _onListen() => setState(() {});
   @override
   void initState() {
-    widget._controller.addListener(_onListen);
+    widget._controller!.addListener(_onListen);
     super.initState();
   }
 
   @override
   void dispose() {
-    widget._controller.removeListener(_onListen);
+    widget._controller!.removeListener(_onListen);
     super.dispose();
   }
 
@@ -79,7 +79,7 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
         textAlign: widget.textAlign,
         onChanged: widget.onChanged,
         minLines: widget.minLines,
-        maxLines: (widget._controller.text.isEmpty) ? 1 : widget.maxLines,
+        maxLines: (widget._controller!.text.isEmpty) ? 1 : widget.maxLines,
         maxLength: widget.maxLength,
         validator: (String? value) => widget.validator!(value),
         cursorColor: Theme.of(context).colorScheme.secondary,
@@ -91,14 +91,14 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
           hintStyle: widget.hint!.length > 15
               ? const TextStyle(fontSize: 14)
               : const TextStyle(fontSize: 15),
-          suffixIcon: (widget._controller.text.isEmpty)
+          suffixIcon: (widget._controller!.text.isEmpty)
               ? const SizedBox(width: 0, height: 0)
               : (widget.showPrefixIcon == false)
                   ? const SizedBox(width: 0, height: 0)
                   : IconButton(
                       splashRadius: Utilities.padding,
                       onPressed: () => setState(() {
-                        widget._controller.clear();
+                        widget._controller!.clear();
                       }),
                       icon: const Icon(CupertinoIcons.clear, size: 18),
                     ),

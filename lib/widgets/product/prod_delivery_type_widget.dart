@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import '../../enums/delivery_type.dart';
 
 class ProdDeliveryTypeWidget extends StatefulWidget {
-  const ProdDeliveryTypeWidget({required this.onChanged, Key? key})
-      : super(key: key);
+  const ProdDeliveryTypeWidget({
+    required this.onChanged,
+    this.initialValue,
+    Key? key,
+  }) : super(key: key);
   final void Function(DeliveryTypeEnum?)? onChanged;
+  final DeliveryTypeEnum? initialValue;
   @override
   State<ProdDeliveryTypeWidget> createState() => _ProdDeliveryTypeWidgetState();
 }
