@@ -41,12 +41,6 @@ class ProdProvider extends ChangeNotifier {
     return (_index < 0) ? _null() : _products[_index];
   }
 
-  List<Product> filteredProduct() {
-    List<Product> _temp = <Product>[];
-
-    return _temp;
-  }
-
   onSearch(String? value) {
     _searchText = value!.toLowerCase();
     notifyListeners();
@@ -83,17 +77,54 @@ class ProdProvider extends ChangeNotifier {
 
   List<Product> filterdProducts() {
     List<Product> _tempProducts = <Product>[];
+    List<Product> _temp = <Product>[];
     if (_searchText == null || _searchText!.isEmpty) {
-      return <Product>[..._products];
+      _tempProducts = _products;
+    } else {
+      _tempProducts = _products
+          .where((Product element) {
+            return (element.title.toLowerCase().contains(_searchText!) ||
+                element.description.toLowerCase().contains(_searchText!));
+          })
+          .cast<Product>()
+          .toList();
     }
-    _tempProducts = _products
-        .where((Product element) {
-          return (element.title.toLowerCase().contains(_searchText!) ||
-              element.description.toLowerCase().contains(_searchText!));
-        })
-        .cast<Product>()
-        .toList();
-    return _tempProducts;
+
+    for (Product element in _tempProducts) {
+      bool _pricePass = false;
+      bool _condPadd = false;
+      bool _deliveryPass = false;
+      //
+      // price
+      //
+      if (_maxPrice > _minPrice) {
+        if (element.price >= _minPrice && element.price <= _maxPrice) {
+          _pricePass = true;
+        }
+      } else {
+        _pricePass = true;
+      }
+      //
+      // condition
+      //
+      if (_condition != null) {
+        if (element.condition == _condition) _condPadd = true;
+      } else {
+        _condPadd = true;
+      }
+      //
+      // Delivery
+      //
+      if (_deliveryType != null) {
+        if (element.delivery == _deliveryType) _deliveryPass = true;
+      } else {
+        _deliveryPass = true;
+      }
+      if (_pricePass && _condPadd && _deliveryPass) {
+        _temp.add(element);
+      }
+    }
+    return _temp;
   }
 
   Future<void> _load() async {
