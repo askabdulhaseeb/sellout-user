@@ -34,35 +34,38 @@ class GridViewOfProducts extends StatelessWidget {
             ),
           );
         },
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Hero(
-              tag: posts[index].pid,
-              child: AspectRatio(
-                aspectRatio: 4 / 3,
-                child: posts[index].prodURL[0].isVideo
-                    ? VideoWidget(
-                        videoUrl: posts[index].prodURL[0].url,
-                        isMute: true,
-                        isPause: true,
-                      )
-                    : ExtendedImage.network(
-                        posts[index].prodURL[0].url,
-                        fit: BoxFit.cover,
-                      ),
+        child: Container(
+          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Hero(
+                tag: posts[index].pid,
+                child: AspectRatio(
+                  aspectRatio: 4 / 3,
+                  child: posts[index].prodURL[0].isVideo
+                      ? VideoWidget(
+                          videoUrl: posts[index].prodURL[0].url,
+                          isMute: true,
+                          isPause: true,
+                        )
+                      : ExtendedImage.network(
+                          posts[index].prodURL[0].url,
+                          fit: BoxFit.cover,
+                        ),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-              child: Text(
-                ' ${posts[index].price} - ${posts[index].title}',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            )
-          ],
+              SizedBox(
+                height: 20,
+                child: Text(
+                  ' ${posts[index].price} - ${posts[index].title}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
