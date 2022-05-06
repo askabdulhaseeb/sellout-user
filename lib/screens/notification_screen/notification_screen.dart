@@ -24,15 +24,15 @@ class _NotificationScreenState extends State<NotificationScreen>
   final List<Widget> _tabs = <Widget>[
     const Text(
       'REQUEST',
-      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      style: TextStyle(fontWeight: FontWeight.bold),
     ),
     const Text(
       'MENTIONS',
-      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      style: TextStyle(fontWeight: FontWeight.bold),
     ),
     const Text(
       'SHARED',
-      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      style: TextStyle(fontWeight: FontWeight.bold),
     ),
   ];
   @override
