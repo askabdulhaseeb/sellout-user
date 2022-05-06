@@ -20,6 +20,7 @@ class CustomTextFormField extends StatefulWidget {
     this.readOnly = false,
     this.autoFocus = false,
     this.textAlign = TextAlign.start,
+    this.border,
     Key? key,
   })  : _controller = controller,
         super(key: key);
@@ -39,6 +40,7 @@ class CustomTextFormField extends StatefulWidget {
   final bool readOnly;
   final bool autoFocus;
   final TextAlign textAlign;
+  final InputBorder? border;
   @override
   CustomTextFormFieldState createState() => CustomTextFormFieldState();
 }
@@ -103,9 +105,10 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
                       icon: const Icon(CupertinoIcons.clear, size: 18),
                     ),
           focusColor: Theme.of(context).primaryColor,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
-          ),
+          border: widget.border ??
+              OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
         ),
       ),
     );
