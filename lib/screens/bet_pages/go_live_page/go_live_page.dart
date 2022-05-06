@@ -23,6 +23,7 @@ import '../../../widgets/product/prod_privacy_widget.dart';
 
 class GoLivePage extends StatefulWidget {
   const GoLivePage({Key? key}) : super(key: key);
+  static const String routeName = '/GoLivePage';
   @override
   State<GoLivePage> createState() => _GoLivePageState();
 }
@@ -38,6 +39,16 @@ class _GoLivePageState extends State<GoLivePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Go Live',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Form(
@@ -48,15 +59,6 @@ class _GoLivePageState extends State<GoLivePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    'Go Live',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
                   CustomFileImageBox(
                     file: _file,
                     onTap: () async {

@@ -13,6 +13,7 @@ import 'screens/auth/forget_password_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
 import 'screens/bet_pages/explore_page/prod_filter_screen.dart';
+import 'screens/bet_pages/go_live_page/go_live_page.dart';
 import 'screens/edit_profile/edit_profile_screen.dart';
 import 'screens/bet_screen/bet_screen.dart';
 import 'screens/main_screen/main_screen.dart';
@@ -102,6 +103,7 @@ class MyApp extends StatelessWidget {
           AddMediaStoryScreen.routeName: (_) => const AddMediaStoryScreen(),
           // Bit Screen
           BetScreen.routeName: (_) => const BetScreen(),
+          GoLivePage.routeName: (_) => const GoLivePage(),
           ProdFilterScreen.routeName: (_) => const ProdFilterScreen(),
           // Notification Screen
           NotificationScreen.routeName: (_) => const NotificationScreen(),

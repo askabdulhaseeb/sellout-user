@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../functions/time_date_functions.dart';
 import '../../../providers/auction_provider.dart';
 import '../../../widgets/custom_widgets/custom_profile_image.dart';
+import '../go_live_page/go_live_page.dart';
 import 'auction_detail_screen.dart';
 
 class LiveBetPage extends StatelessWidget {
@@ -17,15 +19,26 @@ class LiveBetPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            'Live Bid',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).primaryColor,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                'Live Bid',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              TextButton.icon(
+                icon: const Icon(Icons.add, size: 18),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(GoLivePage.routeName);
+                },
+                label: const Text('Go Live'),
+              ),
+            ],
           ),
-          const SizedBox(height: 12),
           Expanded(
             child: RefreshIndicator(
               child: ListView.builder(
