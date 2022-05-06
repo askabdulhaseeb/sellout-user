@@ -72,6 +72,7 @@ class _GoLivePageState extends State<GoLivePage> {
                   _title('Bid Name'),
                   CustomTextFormField(
                     controller: _name,
+                    border: InputBorder.none,
                     validator: (String? value) =>
                         CustomValidator.lessThen3(value),
                     maxLength: 30,
