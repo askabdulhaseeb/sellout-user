@@ -22,7 +22,7 @@ class ExplorePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Sellout Market',
+            'SellOut Market',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
