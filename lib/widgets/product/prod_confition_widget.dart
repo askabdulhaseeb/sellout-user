@@ -37,7 +37,7 @@ class _ProdConditionWidgetState extends State<ProdConditionWidget> {
                   widget.onChanged!(value);
                 },
               ),
-              const Text('NEW'),
+              const Text('New'),
               const SizedBox(width: 16),
             ],
           ),
@@ -64,7 +64,7 @@ class _ProdConditionWidgetState extends State<ProdConditionWidget> {
                   widget.onChanged!(value);
                 },
               ),
-              const Text('USED'),
+              const Text('Used'),
               const SizedBox(width: 16),
             ],
           ),
