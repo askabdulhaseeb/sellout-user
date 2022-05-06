@@ -17,15 +17,6 @@ class _ProdAcceptOfferWidgetState extends State<ProdAcceptOfferWidget> {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        // Padding(
-        //   padding: const EdgeInsets.only(top: 8),
-        //   child: Text(
-        //     'Accept Offer'.toUpperCase(),
-        //     style: const TextStyle(
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        // ),
         InkWell(
           onTap: () {
             setState(() {
@@ -48,7 +39,7 @@ class _ProdAcceptOfferWidgetState extends State<ProdAcceptOfferWidget> {
                   widget.onChanged!(true);
                 },
               ),
-              const Text('YES'),
+              const Text('Yes'),
             ],
           ),
         ),
@@ -74,7 +65,7 @@ class _ProdAcceptOfferWidgetState extends State<ProdAcceptOfferWidget> {
                   widget.onChanged!(false);
                 },
               ),
-              const Text('NO'),
+              const Text('No'),
             ],
           ),
         ),
