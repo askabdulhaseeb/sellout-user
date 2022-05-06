@@ -142,6 +142,7 @@ class OthersProfile extends StatelessWidget {
                 child: ProdCatDropdown(
                   items: cat.category,
                   selectedItem: cat.selectedCategroy,
+                  borderRadius: BorderRadius.circular(10),
                   padding: const EdgeInsets.only(bottom: 14, left: 8, right: 8),
                   margin: const EdgeInsets.symmetric(vertical: 0),
                   onChanged: (ProdCategory? update) =>
