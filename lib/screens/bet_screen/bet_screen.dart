@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import '../bet_pages/explore_page/explore_page.dart';
-import '../bet_pages/go_live_page/go_live_page.dart';
 import '../bet_pages/live_bet_page/live_bet_page.dart';
 
 class BetScreen extends StatelessWidget {
@@ -11,13 +9,12 @@ class BetScreen extends StatelessWidget {
   static const List<Widget> _tabs = <Widget>[
     Tab(icon: Icon(Icons.live_tv)),
     Tab(icon: Icon(Icons.explore)),
-    Tab(icon: Icon(Icons.video_call_rounded)),
   ];
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: _tabs.length,
       child: Scaffold(
         appBar: AppBar(
           title: TabBar(
@@ -33,7 +30,6 @@ class BetScreen extends StatelessWidget {
           children: <Widget>[
             LiveBetPage(),
             ExplorePage(),
-            GoLivePage(),
           ],
         ),
       ),
