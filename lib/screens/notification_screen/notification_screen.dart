@@ -82,7 +82,7 @@ class _Request extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return NotificationTile(
           trailing: SizedBox(
-            width: 120,
+            width: 130,
             height: 40,
             child: CustomElevatedButton(
               onTap: () {},
