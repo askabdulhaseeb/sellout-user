@@ -37,120 +37,124 @@ class _GoLivePageState extends State<GoLivePage> {
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Form(
-        key: _key,
-        child: SingleChildScrollView(
-          child: GestureDetector(
-            onTap: () => CustomService.dismissKeyboard(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'Go Live',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Form(
+          key: _key,
+          child: SingleChildScrollView(
+            child: GestureDetector(
+              onTap: () => CustomService.dismissKeyboard(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Go Live',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                CustomFileImageBox(
-                  file: _file,
-                  onTap: () async {
-                    _file = await PickerFunctions().pick(type: FileType.image);
-                    if (_file == null) return;
-                    setState(() {});
-                  },
-                  title: 'Thumbnail',
-                ),
-                _title('Bid Name'),
-                CustomTextFormField(
-                  controller: _name,
-                  validator: (String? value) =>
-                      CustomValidator.lessThen3(value),
-                  maxLength: 30,
-                  readOnly: _isLoading,
-                ),
-                _title('Item Description'),
-                CustomTextFormField(
-                  controller: _decription,
-                  maxLines: 4,
-                  readOnly: _isLoading,
-                  keyboardType: TextInputType.multiline,
-                  textInputAction: TextInputAction.newline,
-                  validator: (String? value) =>
-                      CustomValidator.lessThen3(value),
-                ),
-                _title('Starting Price'),
-                CustomTextFormField(
-                  controller: _price,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  textInputAction: TextInputAction.done,
-                  readOnly: _isLoading,
-                  validator: (String? value) => CustomValidator.isEmpty(value),
-                ),
-                _title('Privacy'),
-                ProdPrivacyWidget(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  onChanged: (ProdPrivacyTypeEnum? newPrivacy) {
-                    _privacy = newPrivacy;
-                  },
-                ),
-                const SizedBox(height: 10),
-                _isLoading
-                    ? const ShowLoading()
-                    : CustomElevatedButton(
-                        title: 'Go Live',
-                        onTap: () async {
-                          if (_file == null) {
-                            CustomToast.errorToast(
-                              message: 'Image is required',
-                            );
-                            return;
-                          }
-                          if (_key.currentState!.validate()) {
-                            setState(() {
-                              _isLoading = true;
-                            });
-                            final String _id = AuthMethods.uniqueID;
-                            final int _time = TimeDateFunctions.timestamp;
-                            String? _url = '';
-                            _url = await AuctionAPI()
-                                .uploadImage(id: _id, file: File(_file!.path!));
-                            final Auction _auction = Auction(
-                              auctionID: _id,
-                              uid: AuthMethods.uid,
-                              name: _name.text,
-                              thumbnail: _url ?? '',
-                              decription: _decription.text,
-                              startingPrice: double.parse(_price.text),
-                              bets: <Bet>[],
-                              timestamp: _time,
-                              privacy: _privacy ?? ProdPrivacyTypeEnum.PUBLIC,
-                            );
-                            final bool _started =
-                                await AuctionAPI().startAuction(_auction);
-                            setState(() {
-                              _isLoading = false;
-                            });
-                            if (_started) {
-                              CustomToast.successSnackBar(
-                                context: context,
-                                text: 'Auction started successfully',
+                  const SizedBox(height: 20),
+                  CustomFileImageBox(
+                    file: _file,
+                    onTap: () async {
+                      _file =
+                          await PickerFunctions().pick(type: FileType.image);
+                      if (_file == null) return;
+                      setState(() {});
+                    },
+                    title: 'Thumbnail',
+                  ),
+                  _title('Bid Name'),
+                  CustomTextFormField(
+                    controller: _name,
+                    validator: (String? value) =>
+                        CustomValidator.lessThen3(value),
+                    maxLength: 30,
+                    readOnly: _isLoading,
+                  ),
+                  _title('Item Description'),
+                  CustomTextFormField(
+                    controller: _decription,
+                    maxLines: 4,
+                    readOnly: _isLoading,
+                    keyboardType: TextInputType.multiline,
+                    textInputAction: TextInputAction.newline,
+                    validator: (String? value) =>
+                        CustomValidator.lessThen3(value),
+                  ),
+                  _title('Starting Price'),
+                  CustomTextFormField(
+                    controller: _price,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    textInputAction: TextInputAction.done,
+                    readOnly: _isLoading,
+                    validator: (String? value) =>
+                        CustomValidator.isEmpty(value),
+                  ),
+                  _title('Privacy'),
+                  ProdPrivacyWidget(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    onChanged: (ProdPrivacyTypeEnum? newPrivacy) {
+                      _privacy = newPrivacy;
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  _isLoading
+                      ? const ShowLoading()
+                      : CustomElevatedButton(
+                          title: 'Go Live',
+                          onTap: () async {
+                            if (_file == null) {
+                              CustomToast.errorToast(
+                                message: 'Image is required',
                               );
-                              Provider.of<AuctionProvider>(context,
-                                      listen: false)
-                                  .refresh();
-                              Provider.of<AppProvider>(context, listen: false)
-                                  .onTabTapped(0);
+                              return;
                             }
-                          }
-                        },
-                      ),
-              ],
+                            if (_key.currentState!.validate()) {
+                              setState(() {
+                                _isLoading = true;
+                              });
+                              final String _id = AuthMethods.uniqueID;
+                              final int _time = TimeDateFunctions.timestamp;
+                              String? _url = '';
+                              _url = await AuctionAPI().uploadImage(
+                                  id: _id, file: File(_file!.path!));
+                              final Auction _auction = Auction(
+                                auctionID: _id,
+                                uid: AuthMethods.uid,
+                                name: _name.text,
+                                thumbnail: _url ?? '',
+                                decription: _decription.text,
+                                startingPrice: double.parse(_price.text),
+                                bets: <Bet>[],
+                                timestamp: _time,
+                                privacy: _privacy ?? ProdPrivacyTypeEnum.PUBLIC,
+                              );
+                              final bool _started =
+                                  await AuctionAPI().startAuction(_auction);
+                              setState(() {
+                                _isLoading = false;
+                              });
+                              if (_started) {
+                                CustomToast.successSnackBar(
+                                  context: context,
+                                  text: 'Auction started successfully',
+                                );
+                                Provider.of<AuctionProvider>(context,
+                                        listen: false)
+                                    .refresh();
+                                Provider.of<AppProvider>(context, listen: false)
+                                    .onTabTapped(0);
+                              }
+                            }
+                          },
+                        ),
+                ],
+              ),
             ),
           ),
         ),
