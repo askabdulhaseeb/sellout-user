@@ -24,15 +24,15 @@ class _NotificationScreenState extends State<NotificationScreen>
   final List<Widget> _tabs = <Widget>[
     const Text(
       'REQUEST',
-      style: TextStyle(fontWeight: FontWeight.bold),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
     ),
     const Text(
       'MENTIONS',
-      style: TextStyle(fontWeight: FontWeight.bold),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
     ),
     const Text(
       'SHARED',
-      style: TextStyle(fontWeight: FontWeight.bold),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
     ),
   ];
   @override
@@ -82,7 +82,7 @@ class _Request extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return NotificationTile(
           trailing: SizedBox(
-            width: 100,
+            width: 120,
             height: 40,
             child: CustomElevatedButton(
               onTap: () {},
