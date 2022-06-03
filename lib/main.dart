@@ -36,8 +36,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // const Color _kPrimaryColor = Color(0xFFC01719);
-    const Color _kPrimaryColor = Color(0xFFD32F2F);
-    const Color _kSecondaryColor = Color(0xFF7C4DFF);
+    const Color kPrimaryColor = Color(0xFFD32F2F);
+    const Color kSecondaryColor = Color(0xFF7C4DFF);
     return MultiProvider(
       // ignore: always_specify_types
       providers: [
@@ -74,10 +74,10 @@ class MyApp extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
           ),
-          primaryColor: _kPrimaryColor,
+          primaryColor: kPrimaryColor,
           colorScheme: const ColorScheme(
-            primary: _kPrimaryColor,
-            secondary: _kSecondaryColor,
+            primary: kPrimaryColor,
+            secondary: kSecondaryColor,
             surface: Colors.white,
             background: Colors.white,
             error: Colors.red,
