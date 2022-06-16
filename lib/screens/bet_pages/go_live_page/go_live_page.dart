@@ -149,6 +149,7 @@ class _GoLivePageState extends State<GoLivePage> {
                                   context: context,
                                   text: 'Auction started successfully',
                                 );
+                                if (!mounted) return;
                                 Provider.of<AuctionProvider>(context,
                                         listen: false)
                                     .refresh();
