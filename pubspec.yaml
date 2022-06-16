@@ -37,6 +37,9 @@ dependencies:
 
   # story_view: ^0.13.2
 
+  agora_rtm: ^1.1.1
+  agora_rtc_engine: ^5.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

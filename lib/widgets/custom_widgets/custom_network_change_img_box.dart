@@ -45,10 +45,10 @@ class CustomNetworkChangeImageBox extends StatelessWidget {
           ),
           TextButton(
             onPressed: onTap,
-            child: Text(title, style: const TextStyle(height: 1)),
             style: TextButton.styleFrom(
               padding: const EdgeInsets.all(0),
             ),
+            child: Text(title, style: const TextStyle(height: 1)),
           ),
         ],
       ),

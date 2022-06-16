@@ -16,8 +16,8 @@ class GroupChatAPI {
   //
   Future<bool> createGroup(GroupChat group) async {
     try {
-      Map<String, dynamic> _mapp = group.createGroup();
-      await _instance.collection(_colloction).doc(_mapp['group_id']).set(_mapp);
+      Map<String, dynamic> mapp = group.createGroup();
+      await _instance.collection(_colloction).doc(mapp['group_id']).set(mapp);
     } catch (e) {
       CustomToast.errorToast(message: e.toString());
       return false;
@@ -26,7 +26,7 @@ class GroupChatAPI {
   }
 
   Future<List<GroupChat>> getGroups() async {
-    List<GroupChat> _groups = <GroupChat>[];
+    List<GroupChat> groups = <GroupChat>[];
     try {
       final  Stream<QuerySnapshot<Map<String, dynamic>>> docs = _instance
           .collection(_colloction)
@@ -35,13 +35,13 @@ class GroupChatAPI {
           .snapshots();
       docs.forEach((QuerySnapshot<Map<String, dynamic>> snap) {
         for (DocumentSnapshot<Map<String, dynamic>> element in snap.docs) {
-          _groups.add(GroupChat.fromDoc(element));
+          groups.add(GroupChat.fromDoc(element));
         }
       });
     } catch (e) {
       CustomToast.errorToast(message: e.toString());
     }
-    return _groups;
+    return groups;
   }
 
   Future<void> sendMessage({
@@ -68,7 +68,7 @@ class GroupChatAPI {
   }
 
   Future<List<Message>> getMessages({required String groupID}) async {
-    List<Message> _message = <Message>[];
+    List<Message> message = <Message>[];
     try {
       final Stream<QuerySnapshot<Map<String, dynamic>>> docs = _instance
           .collection(_colloction)
@@ -78,13 +78,13 @@ class GroupChatAPI {
           .snapshots();
       docs.forEach((QuerySnapshot<Map<String, dynamic>> snap) {
         for (DocumentSnapshot<Map<String, dynamic>> element in snap.docs) {
-          _message.add(Message.fromDoc(element));
+          message.add(Message.fromDoc(element));
         }
       });
     } catch (e) {
       CustomToast.errorToast(message: e.toString());
     }
-    return _message;
+    return message;
   }
 
   Future<String?> uploadGroupImage({required File file}) async {

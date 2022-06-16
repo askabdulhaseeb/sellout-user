@@ -26,21 +26,21 @@ class PersonalChatDashboard extends StatelessWidget {
             return const SizedBox();
           } else {
             if (snapshot.hasData) {
-              List<Chat> _chat = <Chat>[];
+              List<Chat> chat = <Chat>[];
               for (QueryDocumentSnapshot<Map<String, dynamic>> doc
                   in snapshot.data!.docs) {
-                _chat.add(Chat.fromDoc(doc));
+                chat.add(Chat.fromDoc(doc));
               }
               return ListView.separated(
-                itemCount: _chat.length,
+                itemCount: chat.length,
                 separatorBuilder: (_, __) => const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Divider(height: 1),
                 ),
                 itemBuilder: (_, int index) {
-                  return _chat[index].pid == null
-                      ? ChatDashboardTile(chat: _chat[index])
-                      : ProductChatDashboardTile(chat: _chat[index]);
+                  return chat[index].pid == null
+                      ? ChatDashboardTile(chat: chat[index])
+                      : ProductChatDashboardTile(chat: chat[index]);
                 },
               );
             } else {

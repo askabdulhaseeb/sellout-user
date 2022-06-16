@@ -30,30 +30,30 @@ class AuthMethods {
               accessToken: googleAuth.accessToken,
             ),
           );
-          final User _user = authResult.user!;
-          final AppUser? _alreadySignin =
-              await UserAPI().getInfo(uid: _user.uid);
-          if (_alreadySignin == null) {
-            final AppUser _appUser = AppUser(
-              uid: _user.uid,
-              displayName: _user.displayName!,
-              email: _user.email!,
-              imageURL: _user.photoURL!,
+          final User user = authResult.user!;
+          final AppUser? alreadySignin =
+              await UserAPI().getInfo(uid: user.uid);
+          if (alreadySignin == null) {
+            final AppUser appUser = AppUser(
+              uid: user.uid,
+              displayName: user.displayName!,
+              email: user.email!,
+              imageURL: user.photoURL!,
               countryCode: '',
               phoneNumber: '',
               dob: '',
               gender: GenderTypes.NOTAVAIABLE,
-              username: _user.email!,
+              username: user.email!,
             );
 
-            final bool _isOkay = await UserAPI().addUser(_appUser);
-            if (_isOkay) {
-              UserLocalData().storeAppUserData(appUser: _appUser);
+            final bool isOkay = await UserAPI().addUser(appUser);
+            if (isOkay) {
+              UserLocalData().storeAppUserData(appUser: appUser);
             } else {
               return false;
             }
           } else {
-            UserLocalData().storeAppUserData(appUser: _alreadySignin);
+            UserLocalData().storeAppUserData(appUser: alreadySignin);
           }
           return true;
         } catch (error) {

@@ -10,7 +10,6 @@ import '../../../models/auction.dart';
 import '../../../models/bet.dart';
 import '../../../providers/user_provider.dart';
 import '../../../services/custom_services.dart';
-import '../../../utilities/app_images.dart';
 import '../../../utilities/custom_validators.dart';
 import '../../../widgets/custom_widgets/custom_elevated_button.dart';
 import '../../../widgets/custom_widgets/custom_network_image.dart';
@@ -42,16 +41,16 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AppUser _user =
+    final AppUser user =
         Provider.of<UserProvider>(context).user(uid: widget.auction.uid);
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 20,
         title: Row(
           children: <Widget>[
-            CustomProfileImage(imageURL: _user.imageURL ?? ''),
+            CustomProfileImage(imageURL: user.imageURL ?? ''),
             const SizedBox(width: 10),
-            Text(_user.displayName ?? 'name fetching issue'),
+            Text(user.displayName ?? 'name fetching issue'),
           ],
         ),
       ),
@@ -78,11 +77,11 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                             snapshot,
                       ) {
                         if (snapshot.hasData) {
-                          Auction _auctionStream =
+                          Auction auctionStream =
                               Auction.fromDoc(snapshot.data!);
                           return Column(
                             children: <Widget>[
-                              _AuctionInfo(auction: _auctionStream),
+                              _AuctionInfo(auction: auctionStream),
                               const SizedBox(height: 10),
                               Row(
                                 children: <Widget>[
@@ -101,7 +100,7 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                                       validator: (String? value) =>
                                           CustomValidator.greaterThen(
                                         value,
-                                        _auctionStream.startingPrice,
+                                        auctionStream.startingPrice,
                                       ),
                                       keyboardType: TextInputType.number,
                                     ),
@@ -124,21 +123,21 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                                       onTap: () async {
                                         if (_key.currentState!.validate()) {
                                           if (double.parse(_offer.text) <
-                                              _auctionStream.startingPrice) {
+                                              auctionStream.startingPrice) {
                                             return;
                                           }
                                           setState(() {
                                             _isLoading = true;
                                           });
-                                          final Bet _newBet = Bet(
+                                          final Bet newBet = Bet(
                                             uid: AuthMethods.uid,
                                             amount: double.parse(_offer.text),
                                             timestamp:
                                                 TimeDateFunctions.timestamp,
                                           );
-                                          _auctionStream.bets!.add(_newBet);
+                                          auctionStream.bets!.add(newBet);
                                           await AuctionAPI().updateBet(
-                                              auction: _auctionStream);
+                                              auction: auctionStream);
                                           setState(() {
                                             _isLoading = false;
                                           });

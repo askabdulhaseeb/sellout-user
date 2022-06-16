@@ -33,7 +33,7 @@ class _ProductChatScreenState extends State<ProductChatScreen> {
   final TextEditingController _text = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final Size _size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: _appBar(otherUser: widget.otherUser),
       body: Padding(
@@ -59,12 +59,12 @@ class _ProductChatScreenState extends State<ProductChatScreen> {
                         );
                       default:
                         if (snapshot.hasData) {
-                          List<Message> _messages = <Message>[];
+                          List<Message> messages = <Message>[];
                           for (QueryDocumentSnapshot<Map<String, dynamic>> doc
                               in snapshot.data!.docs) {
-                            _messages.add(Message.fromDoc(doc));
+                            messages.add(Message.fromDoc(doc));
                           }
-                          return (_messages.isEmpty)
+                          return (messages.isEmpty)
                               ? SizedBox(
                                   width: double.infinity,
                                   child: Column(
@@ -87,15 +87,15 @@ class _ProductChatScreenState extends State<ProductChatScreen> {
                               : ListView.builder(
                                   shrinkWrap: true,
                                   reverse: true,
-                                  itemCount: _messages.length,
+                                  itemCount: messages.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return Material(
                                       child: SizedBox(
                                         child: PersonalMessageTile(
-                                          boxWidth: _size.width * 0.65,
-                                          message: _messages[index],
-                                          displayName: (_messages[index]
+                                          boxWidth: size.width * 0.65,
+                                          message: messages[index],
+                                          displayName: (messages[index]
                                                       .sendBy ==
                                                   AuthMethods.uid)
                                               ? UserLocalData.getDisplayName
@@ -127,19 +127,19 @@ class _ProductChatScreenState extends State<ProductChatScreen> {
             ChatTestFormField(
               controller: _text,
               onSendPressed: () async {
-                final int _time = DateTime.now().microsecondsSinceEpoch;
+                final int time = DateTime.now().microsecondsSinceEpoch;
                 await ChatAPI().sendMessage(
                   Chat(
                     chatID: widget.chatID,
                     persons: <String>[AuthMethods.uid, widget.otherUser.uid],
                     lastMessage: _text.text.trim(),
-                    timestamp: _time,
+                    timestamp: time,
                     pid: widget.product.pid,
                   ),
                   Message(
-                    messageID: _time.toString(),
+                    messageID: time.toString(),
                     message: _text.text.trim(),
-                    timestamp: _time,
+                    timestamp: time,
                     sendBy: AuthMethods.uid,
                   ),
                 );
@@ -217,7 +217,7 @@ class _ProductTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double _imageSize = 100;
+    const double imageSize = 100;
 
     return InkWell(
       onTap: () {
@@ -241,12 +241,12 @@ class _ProductTile extends StatelessWidget {
             Row(
               children: <Widget>[
                 SizedBox(
-                  height: _imageSize,
-                  width: _imageSize,
+                  height: imageSize,
+                  width: imageSize,
                   child: CustomSlidableURLsTile(
                     urls: product.prodURL,
-                    width: _imageSize,
-                    height: _imageSize,
+                    width: imageSize,
+                    height: imageSize,
                   ),
                 ),
                 const SizedBox(width: 16),

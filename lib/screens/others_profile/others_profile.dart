@@ -164,9 +164,9 @@ class OthersProfile extends StatelessWidget {
   }
 
   Widget _scoreSection(BuildContext context) {
-    final double _totalWidth = MediaQuery.of(context).size.width;
-    final double _boxWidth = (_totalWidth / 4) - 14;
-    UserProvider _provider = Provider.of<UserProvider>(context);
+    final double totalWidth = MediaQuery.of(context).size.width;
+    final double boxWidth = (totalWidth / 4) - 14;
+    UserProvider provider = Provider.of<UserProvider>(context);
 
     return Builder(
       builder: (BuildContext context) => Padding(
@@ -176,8 +176,8 @@ class OthersProfile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             CustomIconButton(
-              height: _boxWidth - 10,
-              width: _boxWidth,
+              height: boxWidth - 10,
+              width: boxWidth,
               icon: Icons.wallet_membership,
               onTap: () {
                 // TODO: on wallet click
@@ -191,8 +191,8 @@ class OthersProfile extends StatelessWidget {
             CustomScoreButton(
               score: user.posts?.length.toString() ?? '-',
               title: 'Posts',
-              height: _boxWidth - 10,
-              width: _boxWidth,
+              height: boxWidth - 10,
+              width: boxWidth,
               onTap: () {
                 // TODO: on Posts click
                 showInfoDialog(
@@ -205,30 +205,30 @@ class OthersProfile extends StatelessWidget {
             CustomScoreButton(
               score: user.supporting?.length.toString() ?? '-',
               title: 'Supporting',
-              height: _boxWidth - 10,
-              width: _boxWidth,
+              height: boxWidth - 10,
+              width: boxWidth,
               key: UniqueKey(),
               onTap: () {
                 UserBottomSheets().showUsersBottomSheet(
                   context: context,
                   title: 'Supporting',
                   showBackButton: false,
-                  users: _provider.supportings(uid: user.uid),
+                  users: provider.supportings(uid: user.uid),
                 );
               },
             ),
             CustomScoreButton(
               score: user.supporters?.length.toString() ?? '-',
               title: 'Supporters',
-              height: _boxWidth - 10,
-              width: _boxWidth,
+              height: boxWidth - 10,
+              width: boxWidth,
               key: UniqueKey(),
               onTap: () {
                 UserBottomSheets().showUsersBottomSheet(
                   context: context,
                   title: 'Supporters',
                   showBackButton: false,
-                  users: _provider.supporters(uid: user.uid),
+                  users: provider.supporters(uid: user.uid),
                 );
               },
             ),
@@ -239,8 +239,8 @@ class OthersProfile extends StatelessWidget {
   }
 
   Widget _headerSection(BuildContext context) {
-    final double _totalWidth = MediaQuery.of(context).size.width;
-    const double _imageRadius = 50;
+    final double totalWidth = MediaQuery.of(context).size.width;
+    const double imageRadius = 50;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Utilities.padding),
       child: Row(
@@ -249,11 +249,11 @@ class OthersProfile extends StatelessWidget {
         children: <Widget>[
           CustomProfileImage(
             imageURL: user.imageURL!,
-            radius: _imageRadius,
+            radius: imageRadius,
           ),
           const SizedBox(width: 6),
           SizedBox(
-            width: _totalWidth - (_imageRadius) - (Utilities.padding * 2) - 56,
+            width: totalWidth - (imageRadius) - (Utilities.padding * 2) - 56,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -265,7 +265,7 @@ class OthersProfile extends StatelessWidget {
                 ),
                 CustomRatingStars(rating: UserLocalData.getRating),
                 SizedBox(
-                  width: _totalWidth / 1.6,
+                  width: totalWidth / 1.6,
                   child: user.bio == ''
                       ? const Text(
                           'No Bio',
@@ -312,12 +312,12 @@ class _SuppoertAndMessageButtonState extends State<_SuppoertAndMessageButton> {
           Flexible(
             child: InkWell(
               onTap: () async {
-                final String _chatID =
+                final String chatID =
                     ChatAPI.getChatID(othersUID: widget.user.uid);
                 Navigator.of(context).push(
                   MaterialPageRoute<PersonalChatScreen>(
                     builder: (BuildContext context) => PersonalChatScreen(
-                        otherUser: widget.user, chatID: _chatID),
+                        otherUser: widget.user, chatID: chatID),
                   ),
                 );
               },
@@ -342,8 +342,8 @@ class _SuppoertAndMessageButtonState extends State<_SuppoertAndMessageButton> {
         ? CustomElevatedButton(
             onTap: () async {
               widget.user.supporters!.remove(AuthMethods.uid);
-              List<String> _temp = UserLocalData.getSupporting;
-              _temp.remove(widget.user.uid);
+              List<String> temp = UserLocalData.getSupporting;
+              temp.remove(widget.user.uid);
               setState(() {});
               await UserAPI().updateSupporting(
                 me: UserLocalData().user,
@@ -364,10 +364,10 @@ class _SuppoertAndMessageButtonState extends State<_SuppoertAndMessageButton> {
                   if (!widget.user.supporters!.contains(AuthMethods.uid)) {
                     widget.user.supporters!.add(AuthMethods.uid);
                   }
-                  List<String> _temp = UserLocalData.getSupporting;
-                  if (!_temp.contains(widget.user.uid)) {
-                    _temp.add(widget.user.uid);
-                    UserLocalData.setSupporting(_temp);
+                  List<String> temp = UserLocalData.getSupporting;
+                  if (!temp.contains(widget.user.uid)) {
+                    temp.add(widget.user.uid);
+                    UserLocalData.setSupporting(temp);
                   }
                   setState(() {});
                   await UserAPI().updateSupporting(
@@ -386,10 +386,10 @@ class _SuppoertAndMessageButtonState extends State<_SuppoertAndMessageButton> {
                   if (!widget.user.supporters!.contains(AuthMethods.uid)) {
                     widget.user.supporters!.add(AuthMethods.uid);
                   }
-                  List<String> _temp = UserLocalData.getSupporting;
-                  if (!_temp.contains(widget.user.uid)) {
-                    _temp.add(widget.user.uid);
-                    UserLocalData.setSupporting(_temp);
+                  List<String> temp = UserLocalData.getSupporting;
+                  if (!temp.contains(widget.user.uid)) {
+                    temp.add(widget.user.uid);
+                    UserLocalData.setSupporting(temp);
                   }
                   setState(() {});
                   await UserAPI().updateSupporting(

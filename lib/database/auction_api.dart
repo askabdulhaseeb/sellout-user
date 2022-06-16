@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../models/auction.dart';
@@ -31,14 +29,14 @@ class AuctionAPI {
   }
 
   Future<List<Auction>> getAllAuctions() async {
-    final List<Auction> _auction = <Auction>[];
+    final List<Auction> auction = <Auction>[];
     final QuerySnapshot<Map<String, dynamic>> doc =
         await _instance.collection(_colloction).get();
 
     for (DocumentSnapshot<Map<String, dynamic>> element in doc.docs) {
-      _auction.add(Auction.fromDoc(element));
+      auction.add(Auction.fromDoc(element));
     }
-    return _auction;
+    return auction;
   }
 
   Future<void> updateBet({required Auction auction}) async {

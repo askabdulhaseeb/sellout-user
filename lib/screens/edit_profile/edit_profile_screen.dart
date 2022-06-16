@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:extended_image/extended_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import '../../database/auth_methods.dart';
@@ -122,11 +121,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             setState(() {
                               _isloading = true;
                             });
-                            String _url = UserLocalData.getImageURL;
+                            String url = UserLocalData.getImageURL;
                             if (_pickedImage != null) {
-                              String? _tempURL = await UserAPI().uploadImage(
+                              String? tempURL = await UserAPI().uploadImage(
                                   File(_pickedImage!.path!), AuthMethods.uid);
-                              _url = _tempURL;
+                              url = tempURL;
                             }
                             AppUser appUser = AppUser(
                               uid: AuthMethods.uid,
@@ -134,11 +133,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               username: _username.text,
                               bio: _bio.text,
                               isPublicProfile: _profileDisplay,
-                              imageURL: _url,
+                              imageURL: url,
                             );
-                            final bool _updated =
+                            final bool updated =
                                 await UserAPI().updateProfile(appUser);
-                            if (_updated) {
+                            if (updated) {
+                              if (!mounted) return;
                               Navigator.of(context).pushNamedAndRemoveUntil(
                                   MainScreen.rotueName, (_) => false);
                             } else {
@@ -158,11 +158,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   _fetchMedia() async {
-    final FilePickerResult? _result = await FilePicker.platform.pickFiles(
+    final FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.image,
     );
-    if (_result == null) return;
-    _pickedImage = _result.files.first;
+    if (result == null) return;
+    _pickedImage = result.files.first;
     setState(() {});
   }
 }

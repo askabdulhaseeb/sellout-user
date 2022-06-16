@@ -22,10 +22,10 @@ class UserAPI {
 
   // functions
   Future<AppUser?>? getInfo({required String uid}) async {
-    final DocumentSnapshot<Map<String, dynamic>>? doc =
+    final DocumentSnapshot<Map<String, dynamic>> doc =
         await _instance.collection(_collection).doc(uid).get();
-    if (doc?.data() == null) return null;
-    return AppUser.fromDoc(doc!);
+    if (doc.data() == null) return null;
+    return AppUser.fromDoc(doc);
   }
 
   Future<bool> addUser(AppUser appUser) async {

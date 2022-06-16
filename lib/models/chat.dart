@@ -33,7 +33,7 @@ class Chat {
 
   // ignore: sort_constructors_first
   factory Chat.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
-    List<Message> _messages = <Message>[];
+    List<Message> messages = <Message>[];
     return Chat(
       chatID: doc.data()!['chatID'] ?? '',
       persons: List<String>.from(doc.data()!['persons']),
@@ -41,7 +41,7 @@ class Chat {
       timestamp: doc.data()!['timestamp'] ?? '',
       pid: doc.data()?['pid'],
       prodIsVideo: doc.data()?['prod_is_video'] ?? true,
-      messages: _messages,
+      messages: messages,
     );
   }
 }

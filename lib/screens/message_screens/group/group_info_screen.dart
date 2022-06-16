@@ -80,25 +80,25 @@ class GroupInfoScreen extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: group.participantsDetail?.length ?? 0,
                   itemBuilder: (_, int index) {
-                    final GroupChatParticipant _perticipant =
+                    final GroupChatParticipant perticipant =
                         group.participantsDetail![index];
-                    final AppUser _user = provider.user(uid: _perticipant.uid);
+                    final AppUser user = provider.user(uid: perticipant.uid);
                     return ListTile(
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute<OthersProfile>(
-                            builder: (_) => OthersProfile(user: _user),
+                            builder: (_) => OthersProfile(user: user),
                           ),
                         );
                       },
                       contentPadding:
                           const EdgeInsets.symmetric(horizontal: 16),
                       leading:
-                          CustomProfileImage(imageURL: _user.imageURL ?? ''),
-                      title: Text(_user.displayName ?? 'issue in name'),
+                          CustomProfileImage(imageURL: user.imageURL ?? ''),
+                      title: Text(user.displayName ?? 'issue in name'),
                       trailing: Text(
                         GroupParticipantRoleTypeConverter.formEnum(
-                                _perticipant.role)
+                                perticipant.role)
                             .toLowerCase(),
                       ),
                     );

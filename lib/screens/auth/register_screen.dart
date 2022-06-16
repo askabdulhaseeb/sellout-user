@@ -39,7 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   DateOfBirth _dob = DateOfBirth(date: 0, month: 0, year: 0);
   @override
   Widget build(BuildContext context) {
-    final AuthStateProvider _state = Provider.of<AuthStateProvider>(context);
+    final AuthStateProvider state = Provider.of<AuthStateProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Form(
@@ -108,18 +108,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       _titleText('CONFIRM PASSWORD'),
                       PasswordTextFormField(controller: _confirmPassword),
                       const SizedBox(height: 10),
-                      _state.currentState == ScreenStateEnum.WAITING
+                      state.currentState == ScreenStateEnum.WAITING
                           ? const ShowLoading()
                           : CustomElevatedButton(
                               title: 'Register',
-                              onTap: () => _submitForm(_state),
+                              onTap: () => _submitForm(state),
                             ),
                       const SizedBox(height: 160),
                     ],
                   ),
                 ),
               ),
-              _state.currentState == ScreenStateEnum.WAITING
+              state.currentState == ScreenStateEnum.WAITING
                   ? const SizedBox()
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -168,13 +168,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
         return;
       }
       state.updateState(ScreenStateEnum.WAITING);
-      final User? _myUser = await AuthMethods().signupWithEmailAndPassword(
+      final User? myUser = await AuthMethods().signupWithEmailAndPassword(
         email: _email.text,
         password: _password.text,
       );
-      if (_myUser != null) {
-        final AppUser _appUser = AppUser(
-          uid: _myUser.uid,
+      if (myUser != null) {
+        final AppUser appUser = AppUser(
+          uid: myUser.uid,
           displayName: _fullName.text.trim(),
           username: _username.text.trim(),
           gender: _gender,
@@ -183,10 +183,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
           phoneNumber: _number!.number,
           email: _email.text.trim(),
         );
-        final bool _okay = await UserAPI().addUser(_appUser);
+        final bool okay = await UserAPI().addUser(appUser);
         state.resetState();
-        if (_okay) {
+        if (okay) {
           CustomToast.successToast(message: 'Register Successfully');
+          if (!mounted) return;
           Navigator.of(context).pushNamedAndRemoveUntil(
             LoginScreen.routeName,
             (Route<dynamic> route) => false,

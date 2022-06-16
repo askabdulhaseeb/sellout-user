@@ -91,12 +91,13 @@ class _AddMediaStoryScreenState extends State<AddMediaStoryScreen> {
   }
 
   _pickfile() async {
-    final FilePickerResult? _result =
+    final FilePickerResult? result =
         await FilePicker.platform.pickFiles(type: FileType.image);
-    if (_result == null) {
+    if (result == null) {
+      if (!mounted) return;
       Navigator.of(context).pop();
     } else {
-      _file = _result.files.first;
+      _file = result.files.first;
       setState(() {});
     }
   }
@@ -106,25 +107,26 @@ class _AddMediaStoryScreenState extends State<AddMediaStoryScreen> {
       _isUploading = true;
     });
     if (_file == null) return;
-    final String? _url =
+    final String? url =
         await StoriesAPI().uploadImage(file: File(_file!.path!));
-    if (_url == null) {
+    if (url == null) {
       return;
     }
-    final int _time = DateTime.now().microsecondsSinceEpoch;
-    final Story _story = Story(
-      sid: '${AuthMethods.uid}$_time',
-      url: _url,
-      timestamp: _time,
+    final int time = DateTime.now().microsecondsSinceEpoch;
+    final Story story = Story(
+      sid: '${AuthMethods.uid}$time',
+      url: url,
+      timestamp: time,
       type: StoryMediaTypeEnum.PHOTO,
       caption: _caption.text.trim(),
       uid: AuthMethods.uid,
     );
-    final bool _uploaded = await StoriesAPI().addStory(story: _story);
+    final bool uploaded = await StoriesAPI().addStory(story: story);
     setState(() {
       _isUploading = false;
     });
-    if (_uploaded) {
+    if (uploaded) {
+      if (!mounted) return;
       Navigator.of(context).pop();
       CustomToast.successSnackBar(
         context: context,

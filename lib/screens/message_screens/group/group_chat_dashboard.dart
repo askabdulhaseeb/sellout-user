@@ -27,23 +27,23 @@ class GroupChatDashboaed extends StatelessWidget {
             return const ShowLoading();
           } else {
             if (snapshot.hasData) {
-              final List<GroupChat> _group = <GroupChat>[];
+              final List<GroupChat> group = <GroupChat>[];
               for (QueryDocumentSnapshot<Map<String, dynamic>> doc
                   in snapshot.data!.docs) {
-                _group.add(GroupChat.fromDoc(doc));
+                group.add(GroupChat.fromDoc(doc));
               }
-              return _group.isEmpty
+              return group.isEmpty
                   ? const Center(
                       child: Text('You are not a part of any group'),
                     )
                   : ListView.separated(
-                      itemCount: _group.length,
+                      itemCount: group.length,
                       separatorBuilder: (_, __) => const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: Divider(height: 1),
                       ),
                       itemBuilder: (_, int index) =>
-                          GroupChatDashboardTile(group: _group[index]),
+                          GroupChatDashboardTile(group: group[index]),
                     );
             } else {
               return const Text('Error Text');

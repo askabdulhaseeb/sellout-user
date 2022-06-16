@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:extended_image/extended_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import '../../../../../database/group_chat_api.dart';
@@ -78,27 +77,28 @@ class _CreateChatGroupScreenState extends State<CreateChatGroupScreen> {
                             setState(() {
                               _isLoading = true;
                             });
-                            String _url = '';
+                            String url = '';
                             if (_pickedImage != null) {
-                              String? _tempURL =
+                              String? tempURL =
                                   await GroupChatAPI().uploadGroupImage(
                                 file: File(_pickedImage!.path!),
                               );
-                              _url = _tempURL ?? '';
+                              url = tempURL ?? '';
                             }
-                            GroupChat _group = GroupChat(
+                            GroupChat group = GroupChat(
                               name: _name.text,
                               description: _description.text,
-                              imageURL: _url,
+                              imageURL: url,
                             );
-                            final bool _uploaded =
-                                await GroupChatAPI().createGroup(_group);
+                            final bool uploaded =
+                                await GroupChatAPI().createGroup(group);
                             setState(() {
                               _isLoading = false;
                             });
-                            if (_uploaded) {
+                            if (uploaded) {
                               CustomToast.successToast(
                                   message: 'New Group Created');
+                              if (!mounted) return;
                               Navigator.of(context).pop();
                             }
                           }
@@ -114,11 +114,11 @@ class _CreateChatGroupScreenState extends State<CreateChatGroupScreen> {
 
   _uploadImage() async {
     if (_isLoading == true) return;
-    final FilePickerResult? _result = await FilePicker.platform.pickFiles(
+    final FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.image,
     );
-    if (_result == null) return;
-    _pickedImage = _result.files[0];
+    if (result == null) return;
+    _pickedImage = result.files[0];
     setState(() {});
   }
 

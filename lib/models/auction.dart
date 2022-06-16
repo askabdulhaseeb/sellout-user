@@ -27,9 +27,9 @@ class Auction {
   final ProdPrivacyTypeEnum privacy;
 
   Map<String, dynamic> toMap() {
-    List<Map<String, dynamic>> _mapp = <Map<String, dynamic>>[];
+    List<Map<String, dynamic>> mapp = <Map<String, dynamic>>[];
     for (Bet element in bets ?? <Bet>[]) {
-      _mapp.add(element.toMap());
+      mapp.add(element.toMap());
     }
     return <String, dynamic>{
       'auction_id': auctionID,
@@ -38,27 +38,27 @@ class Auction {
       'thumbnail': thumbnail,
       'decription': decription,
       'startingPrice': startingPrice,
-      'bets': _mapp,
+      'bets': mapp,
       'timestamp': timestamp,
       'privacy': ProdPrivacyTypeEnumConvertor.enumToString(privacy: privacy),
     };
   }
 
   Map<String, dynamic> updateBets() {
-    List<Map<String, dynamic>> _mapp = <Map<String, dynamic>>[];
+    List<Map<String, dynamic>> mapp = <Map<String, dynamic>>[];
     for (Bet element in bets ?? <Bet>[]) {
-      _mapp.add(element.toMap());
+      mapp.add(element.toMap());
     }
     return <String, dynamic>{
-      'bets': _mapp,
+      'bets': mapp,
     };
   }
 
   // ignore: sort_constructors_first
   factory Auction.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
-    final List<Bet> _temp = <Bet>[];
-    final List<dynamic> _list = doc.data()?['bets'];
-    _list.forEach(((dynamic element) => _temp.add(Bet.fromMap(element))));
+    final List<Bet> temp = <Bet>[];
+    final List<dynamic> list = doc.data()?['bets'];
+    list.forEach(((dynamic element) => temp.add(Bet.fromMap(element))));
     return Auction(
       auctionID: doc.data()?['auction_id'] ?? '',
       uid: doc.data()?['uid'] ?? AuthMethods.uid,
@@ -67,7 +67,7 @@ class Auction {
       decription: doc.data()?['decription'] ?? '',
       startingPrice:
           double.parse(doc.data()?['startingPrice'].toString() ?? '0.0'),
-      bets: _temp,
+      bets: temp,
       timestamp: int.parse(doc.data()?['timestamp'].toString() ?? '0'),
       privacy: ProdPrivacyTypeEnumConvertor.stringToEnum(
         privacy: doc.data()?['privacy'] ?? ProdPrivacyTypeEnum.PUBLIC,

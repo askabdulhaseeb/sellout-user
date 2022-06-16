@@ -27,7 +27,7 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const TextStyle _boldTextStyle = TextStyle(fontWeight: FontWeight.bold);
+    const TextStyle boldTextStyle = TextStyle(fontWeight: FontWeight.bold);
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
@@ -50,7 +50,7 @@ class ProductDetailScreen extends StatelessWidget {
                     product.title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: _boldTextStyle,
+                    style: boldTextStyle,
                   ),
                   Row(
                     children: <Widget>[
@@ -96,7 +96,7 @@ class ProductDetailScreen extends StatelessWidget {
                                   user.displayName ?? 'null',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: _boldTextStyle,
+                                  style: boldTextStyle,
                                 ),
                                 CustomRatingStars(rating: user.rating ?? 0),
                               ],
@@ -149,7 +149,7 @@ class ProductDetailScreen extends StatelessWidget {
                   if (product.description != '')
                     const Text(
                       'About Product',
-                      style: _boldTextStyle,
+                      style: boldTextStyle,
                     ),
                   Text(product.description),
                 ],
@@ -226,23 +226,23 @@ class _TitleAndDetail extends StatelessWidget {
   final String subtitle;
   @override
   Widget build(BuildContext context) {
-    TextStyle _boldTextStyle = TextStyle(
+    TextStyle boldTextStyle = TextStyle(
       fontWeight: FontWeight.bold,
       color: Theme.of(context).textTheme.labelLarge!.color,
     );
-    TextStyle _simpleTextStyle = TextStyle(
+    TextStyle simpleTextStyle = TextStyle(
       color: Theme.of(context).textTheme.labelLarge!.color,
       fontWeight: FontWeight.w500,
     );
     return RichText(
       text: TextSpan(
         children: <TextSpan>[
-          TextSpan(text: '$title: ', style: _boldTextStyle),
+          TextSpan(text: '$title: ', style: boldTextStyle),
           TextSpan(
             text: subtitle,
           ),
         ],
-        style: _simpleTextStyle,
+        style: simpleTextStyle,
       ),
     );
   }

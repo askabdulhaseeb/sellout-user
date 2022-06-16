@@ -19,14 +19,14 @@ class PersonalChatScreen extends StatefulWidget {
   final AppUser otherUser;
   final String chatID;
   @override
-  _PersonalChatScreenState createState() => _PersonalChatScreenState();
+  State<PersonalChatScreen> createState() => _PersonalChatScreenState();
 }
 
 class _PersonalChatScreenState extends State<PersonalChatScreen> {
   final TextEditingController _text = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final Size _size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: _appBar(otherUser: widget.otherUser),
       body: Padding(
@@ -52,12 +52,12 @@ class _PersonalChatScreenState extends State<PersonalChatScreen> {
                       );
                     default:
                       if (snapshot.hasData) {
-                        List<Message> _messages = <Message>[];
+                        List<Message> messages = <Message>[];
                         for (QueryDocumentSnapshot<Map<String, dynamic>> doc
                             in snapshot.data!.docs) {
-                          _messages.add(Message.fromDoc(doc));
+                          messages.add(Message.fromDoc(doc));
                         }
-                        return (_messages.isEmpty)
+                        return (messages.isEmpty)
                             ? SizedBox(
                                 width: double.infinity,
                                 child: Column(
@@ -80,12 +80,12 @@ class _PersonalChatScreenState extends State<PersonalChatScreen> {
                             : ListView.builder(
                                 shrinkWrap: true,
                                 reverse: true,
-                                itemCount: _messages.length,
+                                itemCount: messages.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return PersonalMessageTile(
-                                    boxWidth: _size.width * 0.65,
-                                    message: _messages[index],
-                                    displayName: (_messages[index].sendBy ==
+                                    boxWidth: size.width * 0.65,
+                                    message: messages[index],
+                                    displayName: (messages[index].sendBy ==
                                             AuthMethods.uid)
                                         ? UserLocalData.getDisplayName
                                         : widget.otherUser.displayName!,
@@ -112,18 +112,18 @@ class _PersonalChatScreenState extends State<PersonalChatScreen> {
             ChatTestFormField(
                 controller: _text,
                 onSendPressed: () async {
-                  int _time = DateTime.now().microsecondsSinceEpoch;
+                  int time = DateTime.now().microsecondsSinceEpoch;
                   await ChatAPI().sendMessage(
                     Chat(
                       chatID: widget.chatID,
                       persons: <String>[AuthMethods.uid, widget.otherUser.uid],
                       lastMessage: _text.text.trim(),
-                      timestamp: _time,
+                      timestamp: time,
                     ),
                     Message(
-                      messageID: _time.toString(),
+                      messageID: time.toString(),
                       message: _text.text.trim(),
-                      timestamp: _time,
+                      timestamp: time,
                       sendBy: AuthMethods.uid,
                     ),
                   );

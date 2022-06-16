@@ -151,9 +151,9 @@ class MyProdilePage extends StatelessWidget {
   }
 
   Widget _scoreSection(BuildContext context) {
-    final double _totalWidth = MediaQuery.of(context).size.width;
-    final double _boxWidth = (_totalWidth / 4) - 14;
-    UserProvider _provider = Provider.of<UserProvider>(context);
+    final double totalWidth = MediaQuery.of(context).size.width;
+    final double boxWidth = (totalWidth / 4) - 14;
+    UserProvider provider = Provider.of<UserProvider>(context);
     return Builder(
       builder: (BuildContext context) => Padding(
         padding: EdgeInsets.all(Utilities.padding),
@@ -161,8 +161,8 @@ class MyProdilePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             CustomIconButton(
-              height: _boxWidth - 10,
-              width: _boxWidth,
+              height: boxWidth - 10,
+              width: boxWidth,
               icon: Icons.account_balance,
               onTap: () {
                 // TODO: on wallet click
@@ -171,8 +171,8 @@ class MyProdilePage extends StatelessWidget {
             CustomScoreButton(
               score: UserLocalData.getPost.length.toString(),
               title: 'Posts',
-              height: _boxWidth - 10,
-              width: _boxWidth,
+              height: boxWidth - 10,
+              width: boxWidth,
               onTap: () {
                 // TODO: on Posts click
               },
@@ -180,28 +180,28 @@ class MyProdilePage extends StatelessWidget {
             CustomScoreButton(
               score: UserLocalData.getSupporting.length.toString(),
               title: 'Supporting',
-              height: _boxWidth - 10,
-              width: _boxWidth,
+              height: boxWidth - 10,
+              width: boxWidth,
               onTap: () {
                 UserBottomSheets().showUsersBottomSheet(
                   context: context,
                   title: 'Supporting',
                   showBackButton: false,
-                  users: _provider.supportings(uid: AuthMethods.uid),
+                  users: provider.supportings(uid: AuthMethods.uid),
                 );
               },
             ),
             CustomScoreButton(
               score: UserLocalData.getSupporters.length.toString(),
               title: 'Supporters',
-              height: _boxWidth - 10,
-              width: _boxWidth,
+              height: boxWidth - 10,
+              width: boxWidth,
               onTap: () {
                 UserBottomSheets().showUsersBottomSheet(
                   context: context,
                   title: 'Supporters',
                   showBackButton: false,
-                  users: _provider.supporters(uid: AuthMethods.uid),
+                  users: provider.supporters(uid: AuthMethods.uid),
                 );
               },
             ),
@@ -212,8 +212,8 @@ class MyProdilePage extends StatelessWidget {
   }
 
   Widget _headerSection(BuildContext context) {
-    final double _totalWidth = MediaQuery.of(context).size.width;
-    const double _imageRadius = 60;
+    final double totalWidth = MediaQuery.of(context).size.width;
+    const double imageRadius = 60;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Utilities.padding),
       child: Row(
@@ -222,11 +222,11 @@ class MyProdilePage extends StatelessWidget {
         children: <Widget>[
           CustomProfileImage(
             imageURL: UserLocalData.getImageURL,
-            radius: _imageRadius,
+            radius: imageRadius,
           ),
           const SizedBox(width: 6),
           SizedBox(
-            width: _totalWidth - (_imageRadius) - (Utilities.padding * 2) - 56,
+            width: totalWidth - (imageRadius) - (Utilities.padding * 2) - 56,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -255,7 +255,7 @@ class MyProdilePage extends StatelessWidget {
                 ),
                 CustomRatingStars(rating: UserLocalData.getRating),
                 SizedBox(
-                  width: _totalWidth / 1.6,
+                  width: totalWidth / 1.6,
                   child: UserLocalData.getBio == ''
                       ? const Text('No Bio')
                       : Text(

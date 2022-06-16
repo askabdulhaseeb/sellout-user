@@ -153,7 +153,7 @@ class _DigitalKeyboardState extends State<_DigitalKeyboard> {
             _button(
               context,
               number: '.',
-              onTap: () => widget.updateOffer((widget.offer + '.')),
+              onTap: () => widget.updateOffer(('${widget.offer}.')),
             ),
             _divider(),
             _button(context, number: '0', onTap: () => _addNumber('0')),
@@ -177,7 +177,7 @@ class _DigitalKeyboardState extends State<_DigitalKeyboard> {
                   title: 'Send offer message',
                   onTap: () async {
                     if (widget.offer == '0') return;
-                    final int _time = DateTime.now().microsecondsSinceEpoch;
+                    final int time = DateTime.now().microsecondsSinceEpoch;
                     setState(() {
                       _isLoading = true;
                     });
@@ -188,27 +188,21 @@ class _DigitalKeyboardState extends State<_DigitalKeyboard> {
                         persons: <String>[AuthMethods.uid, widget.user.uid],
                         lastMessage:
                             '''Hello\nI'm interested in your product.\nMy price is ${widget.offer}''',
-                        timestamp: _time,
+                        timestamp: time,
                         pid: widget.product.pid,
                         prodIsVideo: widget.product.prodURL[0].isVideo,
                       ),
                       Message(
-                        messageID: _time.toString(),
+                        messageID: time.toString(),
                         message:
                             '''Hello\nI'm interested in your product.\nMy price is ${widget.offer}''',
-                        timestamp: _time,
+                        timestamp: time,
                         sendBy: AuthMethods.uid,
                         type: MessageTypeEnum.PROD_OFFER,
                       ),
                     );
+                    if (!mounted) return;
                     Navigator.of(context).pop();
-                    // Navigator.of(context).push(MaterialPageRoute<ProductChatScreen>(
-                    //   builder: (BuildContext context) => ProductChatScreen(
-                    //     otherUser: user,
-                    //     chatID: '${AuthMethods.uid}${product.pid}',
-                    //     product: product,
-                    //   ),
-                    // ));
                   },
                 ),
         )
@@ -217,13 +211,13 @@ class _DigitalKeyboardState extends State<_DigitalKeyboard> {
   }
 
   void _addNumber(String num) {
-    String _temp = widget.offer;
-    if (_temp == '0') {
-      _temp = num;
+    String temp = widget.offer;
+    if (temp == '0') {
+      temp = num;
     } else {
-      _temp += num;
+      temp += num;
     }
-    widget.updateOffer(_temp);
+    widget.updateOffer(temp);
   }
 
   Container _divider() {

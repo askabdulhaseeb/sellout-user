@@ -32,11 +32,11 @@ class GroupChat {
   MessageTypeEnum? type;
 
   Map<String, dynamic> createGroup() {
-    int _time = DateTime.now().microsecondsSinceEpoch;
+    int time = DateTime.now().microsecondsSinceEpoch;
     return <String, dynamic>{
-      'group_id': '${AuthMethods.uid}$_time',
+      'group_id': '${AuthMethods.uid}$time',
       'created_by': createdBy ?? AuthMethods.uid,
-      'created_date': createdDate ?? _time,
+      'created_date': createdDate ?? time,
       'name': name!.trim(),
       'imageURL': imageURL,
       'description': description!.trim(),
@@ -51,7 +51,7 @@ class GroupChat {
         ).toMap()
       ],
       'last_message': lastMessage ?? 'Just create new group',
-      'timestamp': timestamp ?? _time,
+      'timestamp': timestamp ?? time,
       'type': MessageTypeConverter.enumToString(
         type: type ?? MessageTypeEnum.ANNOUNCEMENT,
       ),
@@ -59,13 +59,13 @@ class GroupChat {
   }
 
   Map<String, dynamic> updateParticipant() {
-    List<Map<String, dynamic>> _map = <Map<String, dynamic>>[];
+    List<Map<String, dynamic>> map = <Map<String, dynamic>>[];
     for (GroupChatParticipant element in participantsDetail!) {
-      _map.add(element.toMap());
+      map.add(element.toMap());
     }
     return <String, dynamic>{
       'participants': participants,
-      'participants_details': _map,
+      'participants_details': map,
     };
   }
 
@@ -81,7 +81,7 @@ class GroupChat {
 
   // ignore: sort_constructors_first
   factory GroupChat.fromMap(Map<String, dynamic> map) {
-    List<GroupChatParticipant> _participants = <GroupChatParticipant>[];
+    List<GroupChatParticipant> participants = <GroupChatParticipant>[];
     return GroupChat(
       groupID: map['group_id'] ?? '',
       createdBy: map['created_by'] ?? '',
@@ -90,7 +90,7 @@ class GroupChat {
       imageURL: map['imageURL'],
       description: map['description'] ?? '',
       participants: List<String>.from(map['participants']),
-      participantsDetail: _participants,
+      participantsDetail: participants,
       lastMessage: map['last_message'] ?? '',
       timestamp: map['timestamp'] ?? '',
       type: MessageTypeConverter.stringToEnum(type: map['type'] ?? 'TEXT'),
@@ -99,11 +99,11 @@ class GroupChat {
 
   // ignore: sort_constructors_first
   factory GroupChat.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
-    List<GroupChatParticipant> _participantsDetail = <GroupChatParticipant>[];
-    List<dynamic> _detail = doc.data()?['participants_details'];
-    _detail.forEach(
+    List<GroupChatParticipant> participantsDetail = <GroupChatParticipant>[];
+    List<dynamic> detail = doc.data()?['participants_details'];
+    detail.forEach(
       ((dynamic map) {
-        _participantsDetail.add(GroupChatParticipant.fromMap(map));
+        participantsDetail.add(GroupChatParticipant.fromMap(map));
       }),
     );
     return GroupChat(
@@ -114,7 +114,7 @@ class GroupChat {
       imageURL: doc.data()?['imageURL'],
       description: doc.data()?['description'] ?? '',
       participants: List<String>.from(doc.data()?['participants']),
-      participantsDetail: _participantsDetail,
+      participantsDetail: participantsDetail,
       lastMessage: doc.data()?['last_message'] ?? '',
       timestamp: doc.data()?['timestamp'] ?? '',
       type: MessageTypeConverter.stringToEnum(

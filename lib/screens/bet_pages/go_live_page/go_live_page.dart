@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:extended_image/extended_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -123,32 +122,33 @@ class _GoLivePageState extends State<GoLivePage> {
                               setState(() {
                                 _isLoading = true;
                               });
-                              final String _id = AuthMethods.uniqueID;
-                              final int _time = TimeDateFunctions.timestamp;
-                              String? _url = '';
-                              _url = await AuctionAPI().uploadImage(
-                                  id: _id, file: File(_file!.path!));
-                              final Auction _auction = Auction(
-                                auctionID: _id,
+                              final String id = AuthMethods.uniqueID;
+                              final int time = TimeDateFunctions.timestamp;
+                              String? url = '';
+                              url = await AuctionAPI().uploadImage(
+                                  id: id, file: File(_file!.path!));
+                              final Auction auction = Auction(
+                                auctionID: id,
                                 uid: AuthMethods.uid,
                                 name: _name.text,
-                                thumbnail: _url ?? '',
+                                thumbnail: url ?? '',
                                 decription: _decription.text,
                                 startingPrice: double.parse(_price.text),
                                 bets: <Bet>[],
-                                timestamp: _time,
+                                timestamp: time,
                                 privacy: _privacy ?? ProdPrivacyTypeEnum.PUBLIC,
                               );
-                              final bool _started =
-                                  await AuctionAPI().startAuction(_auction);
+                              final bool started =
+                                  await AuctionAPI().startAuction(auction);
                               setState(() {
                                 _isLoading = false;
                               });
-                              if (_started) {
+                              if (started) {
                                 CustomToast.successSnackBar(
                                   context: context,
                                   text: 'Auction started successfully',
                                 );
+                                if (!mounted) return;
                                 Provider.of<AuctionProvider>(context,
                                         listen: false)
                                     .refresh();

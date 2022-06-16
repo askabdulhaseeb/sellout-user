@@ -4,9 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../enums/delivery_type.dart';
 import '../../../enums/product_condition.dart';
-import '../../../models/product.dart';
 import '../../../providers/prod_provider.dart';
-import '../../../services/user_local_data.dart';
 import '../../../widgets/product/grid_view_of_prod.dart';
 import 'prod_filter_screen.dart';
 
@@ -15,7 +13,7 @@ class ExplorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProdProvider _prodProvider = Provider.of<ProdProvider>(context);
+    final ProdProvider prodProvider = Provider.of<ProdProvider>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -31,7 +29,7 @@ class ExplorePage extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           CupertinoSearchTextField(
-            onChanged: (String? value) => _prodProvider.onSearch(value),
+            onChanged: (String? value) => prodProvider.onSearch(value),
           ),
           Row(
             children: <Widget>[
@@ -41,20 +39,20 @@ class ExplorePage extends StatelessWidget {
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: <Widget>[
-                      if (_prodProvider.maxPrice >= _prodProvider.minPrice)
+                      if (prodProvider.maxPrice >= prodProvider.minPrice)
                         _FilterTile(
                           title:
-                              'Price ${_prodProvider.minPrice}-${_prodProvider.maxPrice}',
+                              'Price ${prodProvider.minPrice}-${prodProvider.maxPrice}',
                         ),
-                      if (_prodProvider.condition != null)
+                      if (prodProvider.condition != null)
                         _FilterTile(
                           title:
-                              'Condition: ${ProdConditionEnumConvertor.enumToString(condition: _prodProvider.condition ?? ProdConditionEnum.NEW)}',
+                              'Condition: ${ProdConditionEnumConvertor.enumToString(condition: prodProvider.condition ?? ProdConditionEnum.NEW)}',
                         ),
-                      if (_prodProvider.deliveryType != null)
+                      if (prodProvider.deliveryType != null)
                         _FilterTile(
                           title:
-                              'Delivery Type: ${DeliveryTypeEnumConvertor.enumToString(delivery: _prodProvider.deliveryType ?? DeliveryTypeEnum.BOTH)}',
+                              'Delivery Type: ${DeliveryTypeEnumConvertor.enumToString(delivery: prodProvider.deliveryType ?? DeliveryTypeEnum.BOTH)}',
                         ),
                     ],
                   ),
@@ -69,12 +67,12 @@ class ExplorePage extends StatelessWidget {
             ],
           ),
           Flexible(
-            child: _prodProvider.filterdProducts().isEmpty
+            child: prodProvider.filterdProducts().isEmpty
                 ? const Center(
                     child: Text('No Product found'),
                   )
                 : GridViewOfProducts(
-                    posts: _prodProvider.filterdProducts(),
+                    posts: prodProvider.filterdProducts(),
                   ),
           ),
         ],

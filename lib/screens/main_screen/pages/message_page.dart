@@ -18,7 +18,7 @@ class MessagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MessagePageProvider _page = Provider.of<MessagePageProvider>(context);
+    MessagePageProvider page = Provider.of<MessagePageProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -41,15 +41,15 @@ class MessagePage extends StatelessWidget {
                 const SizedBox(width: 10),
                 IconButton(
                   onPressed: () {
-                    if (_page.currentTab == MessageTabBarEnum.CHATS) {
-                      final List<AppUser> _suppters =
+                    if (page.currentTab == MessageTabBarEnum.CHATS) {
+                      final List<AppUser> suppters =
                           Provider.of<UserProvider>(context, listen: false)
                               .supporters(uid: AuthMethods.uid);
                       UserBottomSheets().showNewChatPersons(
                         context: context,
-                        users: _suppters,
+                        users: suppters,
                       );
-                    } else if (_page.currentTab == MessageTabBarEnum.GROUPS) {
+                    } else if (page.currentTab == MessageTabBarEnum.GROUPS) {
                       Navigator.of(context)
                           .pushNamed(CreateChatGroupScreen.routeName);
                     } else {
@@ -64,11 +64,11 @@ class MessagePage extends StatelessWidget {
               ],
             ),
           ),
-          _TabBar(page: _page),
+          _TabBar(page: page),
           Expanded(
-            child: (_page.currentTab == MessageTabBarEnum.CHATS)
+            child: (page.currentTab == MessageTabBarEnum.CHATS)
                 ? const PersonalChatDashboard()
-                : (_page.currentTab == MessageTabBarEnum.GROUPS)
+                : (page.currentTab == MessageTabBarEnum.GROUPS)
                     ? const GroupChatDashboaed()
                     : const StoriesDashboard(),
           ),
@@ -137,17 +137,17 @@ class TabBarIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color? _color = isSelected
+    final Color? color = isSelected
         ? Theme.of(context).primaryColor
         : Theme.of(context).iconTheme.color;
     return GestureDetector(
       onTap: onTab,
       child: Column(
         children: <Widget>[
-          Icon(icon, color: _color),
+          Icon(icon, color: color),
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, color: _color),
+            style: TextStyle(fontWeight: FontWeight.bold, color: color),
           ),
         ],
       ),

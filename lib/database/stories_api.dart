@@ -28,11 +28,11 @@ class StoriesAPI {
             .orderBy('timestamp', descending: true)
             .snapshots();
       } else {
-        final List<String> _tempSupporting = UserLocalData.getSupporting;
-        _tempSupporting.add(AuthMethods.uid);
+        final List<String> tempSupporting = UserLocalData.getSupporting;
+        tempSupporting.add(AuthMethods.uid);
         return _instance
             .collection(_collection)
-            .where('uid', whereIn: _tempSupporting)
+            .where('uid', whereIn: tempSupporting)
             .orderBy('timestamp', descending: true)
             .snapshots();
       }

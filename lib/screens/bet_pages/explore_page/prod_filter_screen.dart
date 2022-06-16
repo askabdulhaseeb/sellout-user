@@ -12,8 +12,6 @@ import '../../../widgets/custom_widgets/custom_elevated_button.dart';
 import '../../../widgets/custom_widgets/custom_textformfield.dart';
 import '../../../widgets/custom_widgets/custom_toast.dart';
 import '../../../widgets/product/prod_cat_dropdown.dart';
-import '../../../widgets/product/prod_confition_widget.dart';
-import '../../../widgets/product/prod_delivery_type_widget.dart';
 import '../../../widgets/product/prod_sort_widget.dart';
 import '../../../widgets/product/prod_sub_cat_dropdown.dart';
 
@@ -203,12 +201,12 @@ class _PriceRangeWidgetState extends State<_PriceRangeWidget> {
 
   @override
   void initState() {
-    final ProdProvider _pro = Provider.of<ProdProvider>(context, listen: false);
-    final double _min = _pro.minPrice;
-    double _max = _pro.maxPrice;
-    if (_max < 0) _max = 0;
-    _minPrice = TextEditingController(text: _min.toString());
-    _maxPrice = TextEditingController(text: _max.toString());
+    final ProdProvider pro = Provider.of<ProdProvider>(context, listen: false);
+    final double min = pro.minPrice;
+    double max = pro.maxPrice;
+    if (max < 0) max = 0;
+    _minPrice = TextEditingController(text: min.toString());
+    _maxPrice = TextEditingController(text: max.toString());
     super.initState();
   }
 

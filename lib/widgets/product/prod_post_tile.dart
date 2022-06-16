@@ -22,17 +22,17 @@ class ProdPostTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppUser _user =
+    final AppUser user =
         Provider.of<UserProvider>(context).user(uid: product.uid);
     return Column(
       children: <Widget>[
-        _Header(product: product, user: _user),
+        _Header(product: product, user: user),
         GestureDetector(
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute<ProductDetailScreen>(
                 builder: (_) =>
-                    ProductDetailScreen(product: product, user: _user),
+                    ProductDetailScreen(product: product, user: user),
               ),
             );
           },
@@ -46,7 +46,7 @@ class ProdPostTile extends StatelessWidget {
             ],
           ),
         ),
-        _ButtonSection(user: _user, product: product),
+        _ButtonSection(user: user, product: product),
         const SizedBox(height: 10),
       ],
     );
@@ -210,8 +210,7 @@ class _Header extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           user.uid == AuthMethods.uid
-              ? Provider.of<AppProvider>(context, listen: false)
-                  .onTabTapped(4)
+              ? Provider.of<AppProvider>(context, listen: false).onTabTapped(4)
               : Navigator.of(context).push(
                   MaterialPageRoute<OthersProfile>(
                     builder: (BuildContext context) =>

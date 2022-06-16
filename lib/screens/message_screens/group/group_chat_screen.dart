@@ -24,7 +24,7 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
   final TextEditingController _text = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final Size _size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: _appBar(),
       body: Padding(
@@ -49,12 +49,12 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
                       );
                     default:
                       if (snapshot.hasData) {
-                        List<Message> _messages = <Message>[];
+                        List<Message> messages = <Message>[];
                         for (QueryDocumentSnapshot<Map<String, dynamic>> doc
                             in snapshot.data!.docs) {
-                          _messages.add(Message.fromDoc(doc));
+                          messages.add(Message.fromDoc(doc));
                         }
-                        return (_messages.isEmpty)
+                        return (messages.isEmpty)
                             ? SizedBox(
                                 width: double.infinity,
                                 child: Column(
@@ -79,14 +79,14 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
                                     ListView.builder(
                                   shrinkWrap: true,
                                   reverse: true,
-                                  itemCount: _messages.length,
+                                  itemCount: messages.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return GroupMessageTile(
-                                      boxWidth: _size.width * 0.65,
-                                      message: _messages[index],
+                                      boxWidth: size.width * 0.65,
+                                      message: messages[index],
                                       user: provider.user(
-                                        uid: _messages[index].sendBy ??
+                                        uid: messages[index].sendBy ??
                                             AuthMethods.uid,
                                       ),
                                     );
@@ -113,16 +113,16 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
             ChatTestFormField(
                 controller: _text,
                 onSendPressed: () async {
-                  int _time = DateTime.now().microsecondsSinceEpoch;
+                  int time = DateTime.now().microsecondsSinceEpoch;
                   widget.group.lastMessage = _text.text;
-                  widget.group.timestamp = _time;
+                  widget.group.timestamp = time;
                   widget.group.type = MessageTypeEnum.TEXT;
                   await GroupChatAPI().sendMessage(
                     group: widget.group,
                     messages: Message(
-                      messageID: _time.toString(),
+                      messageID: time.toString(),
                       message: _text.text.trim(),
-                      timestamp: _time,
+                      timestamp: time,
                     ),
                   );
                   _text.clear();

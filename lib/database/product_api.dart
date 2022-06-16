@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import '../services/user_local_data.dart';
+
 import '../models/product.dart';
+import '../services/user_local_data.dart';
 import 'user_api.dart';
 
 class ProductAPI {
@@ -13,35 +13,35 @@ class ProductAPI {
 
   // functions
   Future<Product?>? getProductByPID({required String pid}) async {
-    final DocumentSnapshot<Map<String, dynamic>>? doc =
+    final DocumentSnapshot<Map<String, dynamic>> doc =
         await _instance.collection(_collection).doc(pid).get();
-    if (doc?.data() == null) return null;
-    return Product.fromDoc(doc!);
+    if (doc.data() == null) return null;
+    return Product.fromDoc(doc);
   }
 
   Future<List<Product>> getProductsByUID({required String uid}) async {
-    List<Product> _products = <Product>[];
+    List<Product> products = <Product>[];
     final QuerySnapshot<Map<String, dynamic>> doc = await _instance
         .collection(_collection)
         .where('uid', isEqualTo: uid)
         .orderBy('timestamp', descending: true)
         .get();
     for (DocumentSnapshot<Map<String, dynamic>> element in doc.docs) {
-      _products.add(Product.fromDoc(element));
+      products.add(Product.fromDoc(element));
     }
-    return _products;
+    return products;
   }
 
   Future<List<Product>> getProducts() async {
-    List<Product> _products = <Product>[];
+    List<Product> products = <Product>[];
     final QuerySnapshot<Map<String, dynamic>> doc = await _instance
         .collection(_collection)
         .orderBy('timestamp', descending: true)
         .get();
     for (DocumentSnapshot<Map<String, dynamic>> element in doc.docs) {
-      _products.add(Product.fromDoc(element));
+      products.add(Product.fromDoc(element));
     }
-    return _products;
+    return products;
   }
 
   Future<bool> addProduct(Product product) async {

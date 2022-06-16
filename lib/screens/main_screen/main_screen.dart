@@ -34,11 +34,11 @@ class _MainScreenState extends State<MainScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    int _currentIndex = Provider.of<AppProvider>(context).currentTap;
+    int currentIndex = Provider.of<AppProvider>(context).currentTap;
     Provider.of<UserProvider>(context).init();
     Provider.of<ProdProvider>(context).init();
     return Scaffold(
-        body: _pages[_currentIndex],
+        body: _pages[currentIndex],
         bottomNavigationBar: const MainBottomNavigationBar());
   }
 }

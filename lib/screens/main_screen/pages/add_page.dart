@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:extended_image/extended_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -154,28 +153,28 @@ class _AddPageState extends State<AddPage> {
       setState(() {
         _isloading = true;
       });
-      String _pid = DateTime.now().microsecondsSinceEpoch.toString();
-      List<ProductURL> _urls = <ProductURL>[];
+      String pid = DateTime.now().microsecondsSinceEpoch.toString();
+      List<ProductURL> urls = <ProductURL>[];
       for (int i = 0; i < 10; i++) {
         if (_files[i] != null) {
-          String? _tempURL = await ProductAPI().uploadImage(
-            pid: _pid,
+          String? tempURL = await ProductAPI().uploadImage(
+            pid: pid,
             file: File(_files[i]!.path!),
           );
-          _urls.add(
+          urls.add(
             ProductURL(
-              url: _tempURL ?? '',
+              url: tempURL ?? '',
               isVideo: Utilities.isVideo(extension: _files[i]!.extension!),
               index: i,
             ),
           );
         }
       }
-      Product _product = Product(
+      Product product = Product(
         pid: DateTime.now().microsecondsSinceEpoch.toString(),
         uid: UserLocalData.getUID,
         title: _title.text.trim(),
-        prodURL: _urls,
+        prodURL: urls,
         thumbnail: '',
         condition: _condition,
         description: _description.text.trim(),
@@ -190,13 +189,13 @@ class _AddPageState extends State<AddPage> {
         isAvailable: true,
         timestamp: DateTime.now().microsecondsSinceEpoch,
       );
-      final bool _uploaded = await ProductAPI().addProduct(_product);
+      final bool uploaded = await ProductAPI().addProduct(product);
       setState(() {
         _isloading = false;
       });
-      if (_uploaded) {
-        Provider.of<AppProvider>(context, listen: false)
-            .onTabTapped(0);
+      if (uploaded) {
+        if (!mounted) return;
+        Provider.of<AppProvider>(context, listen: false).onTabTapped(0);
         _reset();
         CustomToast.successToast(message: 'Uploaded Successfully');
       } else {
@@ -206,17 +205,17 @@ class _AddPageState extends State<AddPage> {
   }
 
   _fetchMedia() async {
-    final FilePickerResult? _result = await FilePicker.platform.pickFiles(
+    final FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
       type: FileType.media,
     );
-    if (_result == null) return;
+    if (result == null) return;
     _files.clear();
-    for (PlatformFile element in _result.files) {
+    for (PlatformFile element in result.files) {
       // File mediaFile = File(element.path!);
       _files.add(element);
     }
-    for (int i = _result.files.length; i < 10; i++) {
+    for (int i = result.files.length; i < 10; i++) {
       _files.add(null);
     }
 
@@ -452,14 +451,14 @@ class _GetProductImages extends StatefulWidget {
 class __GetProductImagesState extends State<_GetProductImages> {
   @override
   Widget build(BuildContext context) {
-    final double _width = MediaQuery.of(context).size.width - 32 - 20;
+    final double width = MediaQuery.of(context).size.width - 32 - 20;
     return Column(
       children: <Widget>[
         InkWell(
           onTap: widget.onTap,
           child: Container(
             width: double.infinity,
-            height: (_width / 5) * 2,
+            height: (width / 5) * 2,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               border: Border.all(width: 0.5),
@@ -478,7 +477,7 @@ class __GetProductImagesState extends State<_GetProductImages> {
         ),
         const SizedBox(height: 6),
         SizedBox(
-          height: _width / 5,
+          height: width / 5,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: 5,
@@ -486,14 +485,14 @@ class __GetProductImagesState extends State<_GetProductImages> {
                 const SizedBox(width: 5),
             itemBuilder: (BuildContext context, int index) => _ImageBox(
               index: index + 1,
-              width: _width / 5,
+              width: width / 5,
               file: widget.file[index],
             ),
           ),
         ),
         const SizedBox(height: 6),
         SizedBox(
-          height: _width / 5,
+          height: width / 5,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: 5,
@@ -501,7 +500,7 @@ class __GetProductImagesState extends State<_GetProductImages> {
                 const SizedBox(width: 5),
             itemBuilder: (BuildContext context, int index) => _ImageBox(
               index: index + 6,
-              width: _width / 5,
+              width: width / 5,
               file: widget.file[index + 5],
             ),
           ),

@@ -26,7 +26,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthStateProvider _state = Provider.of<AuthStateProvider>(context);
+    final AuthStateProvider state = Provider.of<AuthStateProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -63,13 +63,13 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
-              _state.currentState == ScreenStateEnum.WAITING
+              state.currentState == ScreenStateEnum.WAITING
                   ? const ShowLoading()
                   : CustomElevatedButton(
                       title: 'Reset Password',
-                      onTap: () => _submitForm(_state),
+                      onTap: () => _submitForm(state),
                     ),
-              _state.currentState == ScreenStateEnum.WAITING
+              state.currentState == ScreenStateEnum.WAITING
                   ? const SizedBox()
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -101,6 +101,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       if (sended) {
         CustomToast.successSnackBar(
             context: context, text: 'Email send at ${_email.text.trim()}');
+        if (!mounted) return;
         Navigator.of(context).pushNamedAndRemoveUntil(
             LoginScreen.routeName, (Route<dynamic> route) => false);
       }

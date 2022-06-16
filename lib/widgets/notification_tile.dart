@@ -16,14 +16,13 @@ class NotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(
       builder: (BuildContext context, UserProvider userPro, _) {
-        final AppUser _sender = userPro.user(uid: notification.by);
-        final AppUser _to = userPro.user(uid: notification.to);
+        final AppUser sender = userPro.user(uid: notification.by);
         return ListTile(
           onTap: () {},
           dense: true,
-          leading: CustomProfileImage(imageURL: _sender.imageURL ?? ''),
+          leading: CustomProfileImage(imageURL: sender.imageURL ?? ''),
           title: Text(
-            _sender.displayName ?? 'name not found',
+            sender.displayName ?? 'name not found',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

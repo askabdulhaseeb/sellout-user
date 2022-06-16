@@ -27,29 +27,29 @@ class StoriesDashboard extends StatelessWidget {
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>?> snapshot,
           ) {
             if (snapshot.hasData) {
-              final List<Story> _allStories = <Story>[];
+              final List<Story> allStories = <Story>[];
               for (QueryDocumentSnapshot<Map<String, dynamic>> element
                   in snapshot.data!.docs) {
-                _allStories.add(Story.fromDoc(element));
+                allStories.add(Story.fromDoc(element));
               }
-              List<List<Story>> _othersStories = <List<Story>>[];
-              List<Story> _myStoires = _allStories
+              List<List<Story>> othersStories = <List<Story>>[];
+              List<Story> myStoires = allStories
                   .where((Story myElement) => myElement.uid == AuthMethods.uid)
                   .cast<Story>()
                   .toList();
               for (String supportingUID in UserLocalData.getSupporting) {
-                List<Story> _oTempList = _allStories
+                List<Story> oTempList = allStories
                     .where((Story oElement) => oElement.uid == supportingUID)
                     .cast<Story>()
                     .toList();
-                if (_oTempList.isNotEmpty) {
-                  _othersStories.add(_oTempList);
+                if (oTempList.isNotEmpty) {
+                  othersStories.add(oTempList);
                 }
               }
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  _MyStoryTile(stories: _myStoires),
+                  _MyStoryTile(stories: myStoires),
                   const SizedBox(height: 10),
                   Text(
                     'Recent Updates',
@@ -60,28 +60,28 @@ class StoriesDashboard extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Expanded(
-                    child: _othersStories.isEmpty
+                    child: othersStories.isEmpty
                         ? const Center(
                             child: Text('No story available yet'),
                           )
                         : Consumer<UserProvider>(
                             builder: (_, UserProvider value, __) =>
-                                _othersStories.isEmpty
+                                othersStories.isEmpty
                                     ? const Center(
                                         child: Text('No Story Available'),
                                       )
                                     : ListView.separated(
-                                        itemCount: _othersStories.length,
+                                        itemCount: othersStories.length,
                                         separatorBuilder: (_, __) =>
                                             const Divider(height: 1),
                                         itemBuilder: (_, int index) {
                                           return StoryTile(
                                             user: value.user(
-                                              uid: _othersStories[index][0]
-                                                      .uid ??
-                                                  '',
+                                              uid:
+                                                  othersStories[index][0].uid ??
+                                                      '',
                                             ),
-                                            stories: _othersStories[index],
+                                            stories: othersStories[index],
                                           );
                                         },
                                       ),

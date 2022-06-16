@@ -28,7 +28,7 @@ class ProductChatDashboardTile extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const ShowLoading();
           } else {
-            final AppUser _user = snapshot.data!;
+            final AppUser user = snapshot.data!;
             return FutureBuilder<Product?>(
                 future: ProductAPI().getProductByPID(pid: chat.pid!),
                 builder: (_, AsyncSnapshot<Product?> snap) {
@@ -38,22 +38,22 @@ class ProductChatDashboardTile extends StatelessWidget {
                     if (snap.connectionState == ConnectionState.waiting) {
                       return const ShowLoading();
                     } else {
-                      final Product _product = snap.data!;
-                      bool _isVideo = true;
-                      int _index = _product.prodURL.indexWhere(
+                      final Product product = snap.data!;
+                      bool isVideo = true;
+                      int index = product.prodURL.indexWhere(
                           (ProductURL element) => element.isVideo == false);
-                      if (_index < 0) {
-                        _isVideo = true;
-                        _index = 0;
+                      if (index < 0) {
+                        isVideo = true;
+                        index = 0;
                       }
                       return ListTile(
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute<ProductChatScreen>(
                               builder: (_) => ProductChatScreen(
-                                otherUser: _user,
+                                otherUser: user,
                                 chatID: chat.chatID,
-                                product: _product,
+                                product: product,
                               ),
                             ),
                           );
@@ -61,31 +61,31 @@ class ProductChatDashboardTile extends StatelessWidget {
                         dense: true,
                         leading: Stack(
                           children: <Widget>[
-                            _isVideo
+                            isVideo
                                 ? SizedBox(
                                     height: 40,
                                     width: 40,
                                     child: VideoWidget(
-                                      videoUrl: _product.prodURL[_index].url,
+                                      videoUrl: product.prodURL[index].url,
                                       isMute: true,
                                       isPause: true,
                                     ),
                                   )
                                 : CustomProfileImage(
-                                    imageURL: _product.prodURL[_index].url,
+                                    imageURL: product.prodURL[index].url,
                                   ),
                             Positioned(
                               bottom: 0,
                               right: 0,
                               child: CustomProfileImage(
-                                imageURL: _user.imageURL ?? '',
+                                imageURL: user.imageURL ?? '',
                                 radius: 28,
                               ),
                             ),
                           ],
                         ),
                         title: Text(
-                          _user.displayName ?? 'issue',
+                          user.displayName ?? 'issue',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(fontWeight: FontWeight.bold),

@@ -3,10 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../../database/auth_methods.dart';
 import '../../functions/time_date_functions.dart';
-import '../../models/app_user.dart';
 import '../../models/my_notification.dart';
 import '../../providers/prod_provider.dart';
-import '../../providers/user_provider.dart';
 import '../../widgets/custom_widgets/custom_elevated_button.dart';
 import '../../widgets/custom_widgets/custom_profile_image.dart';
 import '../../widgets/notification_tile.dart';

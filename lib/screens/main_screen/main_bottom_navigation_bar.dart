@@ -6,7 +6,7 @@ class MainBottomNavigationBar extends StatelessWidget {
   const MainBottomNavigationBar({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    AppProvider _navBar = Provider.of<AppProvider>(context);
+    AppProvider navBar = Provider.of<AppProvider>(context);
     return BottomNavigationBar(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       selectedLabelStyle: TextStyle(color: Theme.of(context).primaryColor),
@@ -14,8 +14,8 @@ class MainBottomNavigationBar extends StatelessWidget {
       showUnselectedLabels: false,
       showSelectedLabels: false,
       unselectedItemColor: Colors.grey,
-      currentIndex: _navBar.currentTap,
-      onTap: (int index) => _navBar.onTabTapped(index),
+      currentIndex: navBar.currentTap,
+      onTap: (int index) => navBar.onTabTapped(index),
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home_outlined),

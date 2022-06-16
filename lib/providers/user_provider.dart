@@ -32,35 +32,35 @@ class UserProvider extends ChangeNotifier {
   }
 
   List<AppUser> supporters({required String uid}) {
-    List<AppUser> _supporters = <AppUser>[];
+    List<AppUser> supporters = <AppUser>[];
     int index = _indexOf(uid);
-    final AppUser _tempUser = _user[index];
+    final AppUser tempUser = _user[index];
     if (index >= 0) {
-      for (String element in _tempUser.supporters!) {
-        _supporters.add(_user[_indexOf(element)]);
+      for (String element in tempUser.supporters!) {
+        supporters.add(_user[_indexOf(element)]);
       }
     }
-    return _supporters;
+    return supporters;
   }
 
   List<AppUser> usersFromListOfString({required List<String> uidsList}) {
-    List<AppUser> _tempList = <AppUser>[];
+    List<AppUser> tempList = <AppUser>[];
     for (String element in uidsList) {
-      _tempList.add(_user[_indexOf(element)]);
+      tempList.add(_user[_indexOf(element)]);
     }
-    return _tempList;
+    return tempList;
   }
 
   List<AppUser> supportings({required String uid}) {
-    List<AppUser> _supporting = <AppUser>[];
+    List<AppUser> supporting = <AppUser>[];
     int index = _indexOf(uid);
-    final AppUser _tempUser = _user[index];
+    final AppUser tempUser = _user[index];
     if (index >= 0) {
-      for (String element in _tempUser.supporting!) {
-        _supporting.add(_user[_indexOf(element)]);
+      for (String element in tempUser.supporting!) {
+        supporting.add(_user[_indexOf(element)]);
       }
     }
-    return _supporting;
+    return supporting;
   }
 
   List<AppUser> get users => <AppUser>[..._user];
@@ -71,8 +71,8 @@ class UserProvider extends ChangeNotifier {
   }
 
   void _fetchData(String uid) async {
-    final AppUser? _userInfo = await UserAPI().getInfo(uid: uid);
-    _user.add(_userInfo!);
+    final AppUser? userInfo = await UserAPI().getInfo(uid: uid);
+    _user.add(userInfo!);
     notifyListeners();
   }
 

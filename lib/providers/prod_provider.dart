@@ -36,9 +36,9 @@ class ProdProvider extends ChangeNotifier {
   }
 
   Product product(String pid) {
-    final int _index =
+    final int index =
         _products.indexWhere((Product element) => element.pid == pid);
-    return (_index < 0) ? _null() : _products[_index];
+    return (index < 0) ? _null() : _products[index];
   }
 
   onSearch(String? value) {
@@ -78,12 +78,12 @@ class ProdProvider extends ChangeNotifier {
   }
 
   List<Product> filterdProducts() {
-    List<Product> _tempProducts = <Product>[];
-    List<Product> _temp = <Product>[];
+    List<Product> tempProducts = <Product>[];
+    List<Product> temp = <Product>[];
     if (_searchText == null || _searchText!.isEmpty) {
-      _tempProducts = _products;
+      tempProducts = _products;
     } else {
-      _tempProducts = _products
+      tempProducts = _products
           .where((Product element) {
             return (element.title.toLowerCase().contains(_searchText!) ||
                 element.description.toLowerCase().contains(_searchText!));
@@ -92,46 +92,46 @@ class ProdProvider extends ChangeNotifier {
           .toList();
     }
 
-    for (Product element in _tempProducts) {
-      bool _pricePass = false;
-      bool _condPadd = false;
-      bool _deliveryPass = false;
+    for (Product element in tempProducts) {
+      bool pricePass = false;
+      bool condPadd = false;
+      bool deliveryPass = false;
       //
       // price
       //
       if (_maxPrice > _minPrice) {
         if (element.price >= _minPrice && element.price <= _maxPrice) {
-          _pricePass = true;
+          pricePass = true;
         }
       } else {
-        _pricePass = true;
+        pricePass = true;
       }
       //
       // condition
       //
       if (_condition != null) {
-        if (element.condition == _condition) _condPadd = true;
+        if (element.condition == _condition) condPadd = true;
       } else {
-        _condPadd = true;
+        condPadd = true;
       }
       //
       // Delivery
       //
       if (_deliveryType != null) {
-        if (element.delivery == _deliveryType) _deliveryPass = true;
+        if (element.delivery == _deliveryType) deliveryPass = true;
       } else {
-        _deliveryPass = true;
+        deliveryPass = true;
       }
-      if (_pricePass && _condPadd && _deliveryPass) {
-        _temp.add(element);
+      if (pricePass && condPadd && deliveryPass) {
+        temp.add(element);
       }
     }
-    return _temp;
+    return temp;
   }
 
   Future<void> _load() async {
-    final List<Product> _temp = await ProductAPI().getProducts();
-    _products = _temp;
+    final List<Product> temp = await ProductAPI().getProducts();
+    _products = temp;
     _products.shuffle();
     notifyListeners();
   }

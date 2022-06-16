@@ -10,8 +10,8 @@ class ChatAPI {
   static final FirebaseFirestore _instance = FirebaseFirestore.instance;
   // functions
   static String getChatID({required String othersUID}) {
-    int _isGreaterThen = AuthMethods.uid.compareTo(othersUID);
-    if (_isGreaterThen > 0) {
+    int isGreaterThen = AuthMethods.uid.compareTo(othersUID);
+    if (isGreaterThen > 0) {
       return '${AuthMethods.uid}-chats-$othersUID';
     } else {
       return '$othersUID-chats-${AuthMethods.uid}';
@@ -44,12 +44,12 @@ class ChatAPI {
     final DocumentSnapshot<Map<String, dynamic>> doc =
         await _instance.collection(_colloction).doc(chatID).get();
     if (!doc.exists) return null;
-    Chat _chat = Chat.fromDoc(doc);
-    return _chat;
+    Chat chat = Chat.fromDoc(doc);
+    return chat;
   }
 
   Future<List<Chat>> fetchChats(String uid) async {
-    List<Chat> _chat = <Chat>[];
+    List<Chat> chat = <Chat>[];
     try {
       final Stream<QuerySnapshot<Map<String, dynamic>>> docs = _instance
           .collection(_colloction)
@@ -58,13 +58,13 @@ class ChatAPI {
           .snapshots();
       docs.forEach((QuerySnapshot<Map<String, dynamic>> snap) {
         for (DocumentSnapshot<Map<String, dynamic>> element in snap.docs) {
-          _chat.add(Chat.fromDoc(element));
+          chat.add(Chat.fromDoc(element));
         }
       });
     } catch (e) {
       CustomToast.errorToast(message: e.toString());
     }
-    return _chat;
+    return chat;
   }
 
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>> fetchMessages(

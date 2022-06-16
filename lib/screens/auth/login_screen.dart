@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final AuthStateProvider _state = Provider.of<AuthStateProvider>(context);
+    final AuthStateProvider state = Provider.of<AuthStateProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
@@ -62,15 +62,15 @@ class _LoginScreenState extends State<LoginScreen> {
               _titleText('PASSWORD'),
               PasswordTextFormField(controller: _password),
               const SizedBox(height: 16),
-              _state.currentState == ScreenStateEnum.WAITING
+              state.currentState == ScreenStateEnum.WAITING
                   ? const ShowLoading()
                   : CustomElevatedButton(
                       title: 'Log In',
                       onTap: () => _submitForm(),
                     ),
-              _forgetPassword(_state),
+              _forgetPassword(state),
               const Spacer(),
-              _otherAuthMethods(_state),
+              _otherAuthMethods(state),
             ],
           ),
         ),
@@ -83,15 +83,15 @@ class _LoginScreenState extends State<LoginScreen> {
       CustomService.dismissKeyboard();
       Provider.of<AuthStateProvider>(context, listen: false)
           .updateState(ScreenStateEnum.WAITING);
-      final User? _user = await AuthMethods().loginWithEmailAndPassword(
+      final User? user = await AuthMethods().loginWithEmailAndPassword(
         _email.text,
         _password.text,
       );
+      if (!mounted) return;
       Provider.of<AuthStateProvider>(context, listen: false)
           .updateState(ScreenStateEnum.DONE);
-      if (_user != null) {
-        Provider.of<AppProvider>(context, listen: false)
-            .onTabTapped(0);
+      if (user != null) {
+        Provider.of<AppProvider>(context, listen: false).onTabTapped(0);
         Navigator.of(context).pushNamedAndRemoveUntil(
             MainScreen.rotueName, (Route<dynamic> route) => false);
       }

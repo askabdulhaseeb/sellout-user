@@ -124,23 +124,23 @@ class _Product_Info extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double _imageSize = 140;
+    const double imageSize = 140;
     return SizedBox(
-      height: _imageSize + 6,
+      height: imageSize + 6,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(
-            width: _imageSize,
-            height: _imageSize,
+            width: imageSize,
+            height: imageSize,
             child: Hero(
               tag: product.pid,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: CustomSlidableURLsTile(
                   urls: product.prodURL,
-                  width: _imageSize,
-                  height: _imageSize,
+                  width: imageSize,
+                  height: imageSize,
                 ),
               ),
             ),

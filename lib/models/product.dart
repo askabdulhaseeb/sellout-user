@@ -98,15 +98,15 @@ class Product {
 
   // ignore: sort_constructors_first
   factory Product.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
-    List<ProductURL> _prodURL = <ProductURL>[];
+    List<ProductURL> prodURL = <ProductURL>[];
     doc.data()!['prodURL'].forEach((dynamic e) {
-      _prodURL.add(ProductURL.fromMap(e));
+      prodURL.add(ProductURL.fromMap(e));
     });
     return Product(
       pid: doc.data()!['pid'] ?? '',
       uid: doc.data()!['uid'] ?? '',
       title: doc.data()!['title'] ?? '',
-      prodURL: _prodURL,
+      prodURL: prodURL,
       thumbnail: doc.data()!['thumbnail'] ?? '',
       condition: ProdConditionEnumConvertor.stringToEnum(
           condition: doc.data()!['condition']),

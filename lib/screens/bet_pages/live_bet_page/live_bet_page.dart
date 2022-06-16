@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../functions/time_date_functions.dart';
@@ -12,8 +11,8 @@ class LiveBetPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuctionProvider _provider = Provider.of<AuctionProvider>(context);
-    _provider.init();
+    final AuctionProvider provider = Provider.of<AuctionProvider>(context);
+    provider.init();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -42,28 +41,28 @@ class LiveBetPage extends StatelessWidget {
           Expanded(
             child: RefreshIndicator(
               child: ListView.builder(
-                itemCount: _provider.auctions.length,
+                itemCount: provider.auctions.length,
                 itemBuilder: (BuildContext context, int index) => ListTile(
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute<AuctionDetailScreen>(
                         builder: (_) => AuctionDetailScreen(
-                          auction: _provider.auctions[index],
+                          auction: provider.auctions[index],
                         ),
                       ),
                     );
                   },
                   leading: CustomProfileImage(
-                    imageURL: _provider.auctions[index].thumbnail,
+                    imageURL: provider.auctions[index].thumbnail,
                   ),
-                  title: Text(_provider.auctions[index].name),
+                  title: Text(provider.auctions[index].name),
                   subtitle: Text(
                     TimeDateFunctions.timeInWords(
-                        _provider.auctions[index].timestamp),
+                        provider.auctions[index].timestamp),
                   ),
                 ),
               ),
-              onRefresh: () => _provider.refresh(),
+              onRefresh: () => provider.refresh(),
             ),
           ),
         ],
