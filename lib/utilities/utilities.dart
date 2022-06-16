@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 class Utilities {
   static double get padding => 16;
   static double get borderRadius => 24;
+  static String get agoraID =>
+      'https://console.agora.io/invite?sign=834e8a098ebff498b8c7e08b5c71737f%3A91cf86afe3b5720a5cb764b2a74ba74a3a733fd21be30ec258c3328c8e356aa9';
   static List<String> get videosAndImages => <String>[
         'heic',
         'jpeg',
@@ -61,60 +63,60 @@ class Utilities {
     Duration diff = date.difference(now);
     String time = '';
 
-    int _inSec = diff.inSeconds.abs();
-    int _inMints = diff.inMinutes.abs();
-    int _inHour = diff.inHours.abs();
-    int _inDays = diff.inDays.abs();
+    int inSec = diff.inSeconds.abs();
+    int inMints = diff.inMinutes.abs();
+    int inHour = diff.inHours.abs();
+    int inDays = diff.inDays.abs();
 
-    if (_inSec <= 0 || _inSec > 0 && _inMints == 0) {
+    if (inSec <= 0 || inSec > 0 && inMints == 0) {
       time = 'few seconds ago';
       //
-    } else if (_inMints > 0 && _inHour == 0) {
+    } else if (inMints > 0 && inHour == 0) {
       //
-      if (_inMints < 1.5) {
-        time = _inMints.toStringAsFixed(0) + ' minute ago';
+      if (inMints < 1.5) {
+        time = '${inMints.toStringAsFixed(0)} minute ago';
       } else {
-        time = _inMints.toStringAsFixed(0) + ' minutes ago';
+        time = '${inMints.toStringAsFixed(0)} minutes ago';
       }
       //
-    } else if (_inHour > 0 && _inDays == 0) {
+    } else if (inHour > 0 && inDays == 0) {
       //
-      if (_inHour < 1.5) {
-        time = _inHour.toStringAsFixed(0) + ' hour ago';
+      if (inHour < 1.5) {
+        time = '${inHour.toStringAsFixed(0)} hour ago';
       } else {
-        time = _inHour.toStringAsFixed(0) + ' hours ago';
+        time = '${inHour.toStringAsFixed(0)} hours ago';
       }
       //
-    } else if (_inDays > 0 && _inDays < 7) {
+    } else if (inDays > 0 && inDays < 7) {
       //
-      if (_inDays < 1.5) {
-        time = _inDays.toStringAsFixed(0) + ' day ago';
+      if (inDays < 1.5) {
+        time = '${inDays.toStringAsFixed(0)} day ago';
       } else {
-        time = _inDays.toStringAsFixed(0) + ' days ago';
+        time = '${inDays.toStringAsFixed(0)} days ago';
       }
       //
-    } else if (_inDays >= 7 && _inDays < 30) {
-      double _temp = (diff.inDays.abs() / 7);
+    } else if (inDays >= 7 && inDays < 30) {
+      double temp = (diff.inDays.abs() / 7);
       //
-      if (_inDays < 14) {
-        time = _temp.toStringAsFixed(0) + ' week ago';
+      if (inDays < 14) {
+        time = '${temp.toStringAsFixed(0)} week ago';
       } else {
-        time = _temp.toStringAsFixed(0) + ' weeks ago';
+        time = '${temp.toStringAsFixed(0)} weeks ago';
       }
       //
     } else if (diff.inDays.abs() >= 30 && diff.inDays.abs() < 365) {
-      double _temp = (diff.inDays.abs() / 30);
-      if (_temp < 1.5) {
-        time = _temp.toStringAsFixed(0) + ' month ago';
+      double temp = (diff.inDays.abs() / 30);
+      if (temp < 1.5) {
+        time = '${temp.toStringAsFixed(0)} month ago';
       } else {
-        time = _temp.toStringAsFixed(0) + ' months ago';
+        time = '${temp.toStringAsFixed(0)} months ago';
       }
     } else {
-      double _temp = (diff.inDays.abs() / 365);
-      if (_temp < 1.5) {
-        time = _temp.toStringAsFixed(0) + ' year ago';
+      double temp = (diff.inDays.abs() / 365);
+      if (temp < 1.5) {
+        time = '${temp.toStringAsFixed(0)} year ago';
       } else {
-        time = _temp.toStringAsFixed(0) + ' years ago';
+        time = '${temp.toStringAsFixed(0)} years ago';
       }
     }
     return time;
