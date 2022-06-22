@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../../../functions/time_date_functions.dart';
 import '../../../providers/auction_provider.dart';
 import '../../../widgets/custom_widgets/custom_profile_image.dart';
 import '../go_live_page/go_live_page.dart';
+import '../live_stream_participent_screen.dart';
 import 'auction_detail_screen.dart';
 
 class LiveBetPage extends StatelessWidget {
@@ -43,14 +45,22 @@ class LiveBetPage extends StatelessWidget {
               child: ListView.builder(
                 itemCount: provider.auctions.length,
                 itemBuilder: (BuildContext context, int index) => ListTile(
-                  onTap: () {
+                  onTap: () async {
+                    await [Permission.camera, Permission.microphone].request();
                     Navigator.of(context).push(
-                      MaterialPageRoute<AuctionDetailScreen>(
-                        builder: (_) => AuctionDetailScreen(
-                          auction: provider.auctions[index],
+                      MaterialPageRoute<LiveStreamParticipantScreen>(
+                        builder: (_) => LiveStreamParticipantScreen(
+                          channelID: 'test',
                         ),
                       ),
                     );
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute<AuctionDetailScreen>(
+                    //     builder: (_) => AuctionDetailScreen(
+                    //       auction: provider.auctions[index],
+                    //     ),
+                    //   ),
+                    // );
                   },
                   leading: CustomProfileImage(
                     imageURL: provider.auctions[index].thumbnail,

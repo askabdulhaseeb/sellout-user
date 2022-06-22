@@ -3,8 +3,8 @@ import 'package:intl/intl.dart';
 class Utilities {
   static double get padding => 16;
   static double get borderRadius => 24;
-  static String get agoraID =>
-      'https://console.agora.io/invite?sign=834e8a098ebff498b8c7e08b5c71737f%3A91cf86afe3b5720a5cb764b2a74ba74a3a733fd21be30ec258c3328c8e356aa9';
+  static String get agoraID => '3733657481db442c807f842b2cdb351e';
+  static String get agoraToken => 'df165c265d02455bb9a726f34d5c6afa';
   static List<String> get videosAndImages => <String>[
         'heic',
         'jpeg',
