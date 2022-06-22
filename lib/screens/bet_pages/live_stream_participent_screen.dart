@@ -1,17 +1,17 @@
 import 'package:agora_rtc_engine/rtc_engine.dart';
-import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
-import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
-import 'package:agora_rtm/agora_rtm.dart';
+import 'package:agora_rtc_engine/rtc_local_view.dart' as rtc_local_view;
+import 'package:agora_rtc_engine/rtc_remote_view.dart' as rtc_remote_view;
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-import '../../functions/time_date_functions.dart';
+import '../../database/auth_methods.dart';
+import '../../models/auction.dart';
 import '../../utilities/utilities.dart';
 
 class LiveStreamParticipantScreen extends StatefulWidget {
-  const LiveStreamParticipantScreen({required this.channelID, Key? key})
+  const LiveStreamParticipantScreen({required this.auction, Key? key})
       : super(key: key);
-  final String channelID;
+  final Auction auction;
 
   @override
   State<LiveStreamParticipantScreen> createState() =>
@@ -20,113 +20,105 @@ class LiveStreamParticipantScreen extends StatefulWidget {
 
 class _LiveStreamParticipantScreenState
     extends State<LiveStreamParticipantScreen> {
-  final List<int> uids = <int>[];
-  late RtcEngine _engine;
-  AgoraRtmClient? _client;
-  AgoraRtmChannel? _channel;
+  int remoteUid = 0;
+  bool isJoined = false;
+  late RtcEngine engine;
+  ClientRole role = ClientRole.Broadcaster;
 
   @override
   void initState() {
     super.initState();
-    initializeAgora();
+    setLiveMode();
   }
 
   @override
   void dispose() {
-    uids.clear();
-    _engine.leaveChannel();
-    _engine.destroy();
-    _channel?.leave();
-    _client?.logout();
-    _client?.destroy();
+    engine.destroy();
     super.dispose();
   }
 
-  Future<void> initializeAgora() async {
-    final int _time = DateTime.now().millisecondsSinceEpoch;
-    _engine =
+  Future<void> setLiveMode() async {
+    String hostLive = widget.auction.uid;
+    if (hostLive == AuthMethods.uid) {
+      role = ClientRole.Broadcaster;
+    } else {
+      role = ClientRole.Audience;
+    }
+    await startBroadcast();
+  }
+
+  Future<void> startBroadcast() async {
+    await [Permission.camera, Permission.microphone].request();
+
+    engine =
         await RtcEngine.createWithContext(RtcEngineContext(Utilities.agoraID));
-    _client = await AgoraRtmClient.createInstance(Utilities.agoraID);
-    await _engine.enableVideo(); // to enable the video
-    await _engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    await _engine.setClientRole(ClientRole.Broadcaster);
 
-    final int _uuid =
-        int.parse(_time.toString().substring(1, _time.toString().length - 3));
-    print('Print: _uuid: $_uuid');
-    print('Print: Token: ${Utilities.agoraToken}');
+    engine.setEventHandler(
+      RtcEngineEventHandler(
+        joinChannelSuccess: (String channel, int uid, _) => joinChannel(),
+        userJoined: (int uid, _) => join(uid),
+        userOffline: (int uid, UserOfflineReason reason) => leave(uid),
+      ),
+    );
 
-    final _resp = await _client?.login(null, '$_uuid'); // 0 -> uid in int
-    print('Print: $_resp');
-    _channel = await _client?.createChannel(widget.channelID);
-    await _channel?.join();
-    await _engine.joinChannel(
-        null, widget.channelID, null, _uuid); //0 -> uid in int
+    await engine.enableVideo();
+    await engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
+    await engine.setClientRole(role);
+    await engine.joinChannel(
+        Utilities.agoraToken, AuthMethods.uid, null, 123456789);
+  }
 
-    // Callback for the RTC engine
-    _engine.setEventHandler(RtcEngineEventHandler(
-        joinChannelSuccess: (String channel, int uid, int elapsed) {
-      setState(() {
-        uids.add(uid);
-      });
-      print('Print: uid in Live stream participent: $uid');
-    }, leaveChannel: (RtcStats state) {
-      setState(() {
-        uids.clear();
-      });
-    }));
+  joinChannel() {
+    setState(() => isJoined = true);
+  }
 
-    // Callback for the RTC client
-    // Messaging
-    _client?.onMessageReceived = ((AgoraRtmMessage message, String peerId) {
-      print('Private message from $peerId:${message.text}');
-    });
+  join(int uid) {
+    setState(() => remoteUid = uid);
+  }
 
-    _client?.onConnectionStateChanged = (int state, int reason) {
-      print('Connection state changed: $state, reason:$reason');
-      if (state == 5) {
-        _channel?.leave();
-        _client?.logout();
-        _client?.destroy();
-        print('Logged out.');
-      }
-    };
-
-    // Callback for the RTC channel
-    _channel?.onMemberJoined = (AgoraRtmMember member) {
-      print('Member joined: ${member.userId} , channel:  ${member.channelId}');
-    };
-    _channel?.onMemberLeft = (AgoraRtmMember member) {
-      print('Member left: ${member.userId} channel: ${member.channelId}');
-    };
-    _channel?.onMessageReceived =
-        (AgoraRtmMessage message, AgoraRtmMember member) {
-      //TODO: implement this
-      print('Public Message from ${member.userId} - ${message.text}');
-    };
+  leave(int uid) {
+    setState(() => remoteUid = 0);
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: <Widget>[
-          _broadastView(),
-        ],
-      ),
+      body: (role == ClientRole.Broadcaster)
+          ? _renderLocalPreview()
+          : _renderRemoteVideo(),
     );
   }
 
-  Widget _broadastView() {
-    return uids.isEmpty
-        ? Center(
-            child: Text('No User'),
-          )
-        : Expanded(child: RtcLocalView.SurfaceView());
+  Widget _renderLocalPreview() {
+    if (isJoined) {
+      return const rtc_local_view.SurfaceView();
+    } else {
+      return const Text(
+        'Please join channel first',
+        textAlign: TextAlign.center,
+      );
+    }
+  }
+
+  Widget _renderRemoteVideo() {
+    if (remoteUid != 0) {
+      return rtc_remote_view.SurfaceView(
+        channelId: '123456789',
+        uid: remoteUid,
+        mirrorMode: VideoMirrorMode.Enabled,
+        renderMode: VideoRenderMode.Fit,
+      );
+    } else {
+      return const Text(
+        'Please wait remote user join',
+      );
+    }
   }
 }
 
+// ignore: unused_element
 class _ToolBarView extends StatelessWidget {
   const _ToolBarView({Key? key}) : super(key: key);
 
@@ -138,15 +130,15 @@ class _ToolBarView extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Icon(Icons.call),
-          shape: CircleBorder(),
+          shape: const CircleBorder(),
           padding: const EdgeInsets.all(10),
+          child: const Icon(Icons.call),
         ),
         RawMaterialButton(
           onPressed: () {},
-          child: Icon(Icons.mic_off),
-          shape: CircleBorder(),
+          shape: const CircleBorder(),
           padding: const EdgeInsets.all(10),
+          child: const Icon(Icons.mic_off),
         ),
       ],
     );

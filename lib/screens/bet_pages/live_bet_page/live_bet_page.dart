@@ -50,7 +50,7 @@ class LiveBetPage extends StatelessWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute<LiveStreamParticipantScreen>(
                         builder: (_) => LiveStreamParticipantScreen(
-                          channelID: 'test',
+                          auction: provider.auctions[index],
                         ),
                       ),
                     );
