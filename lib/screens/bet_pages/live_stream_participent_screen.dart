@@ -20,6 +20,8 @@ class LiveStreamParticipantScreen extends StatefulWidget {
 
 class _LiveStreamParticipantScreenState
     extends State<LiveStreamParticipantScreen> {
+  final List<int> _users = <int>[];
+  String chID = '';
   int remoteUid = 0;
   bool isJoined = false;
   late RtcEngine engine;
@@ -55,7 +57,8 @@ class _LiveStreamParticipantScreenState
 
     engine.setEventHandler(
       RtcEngineEventHandler(
-        joinChannelSuccess: (String channel, int uid, _) => joinChannel(),
+        joinChannelSuccess: (String channel, int uid, _) =>
+            joinChannel(channel, uid),
         userJoined: (int uid, _) => join(uid),
         userOffline: (int uid, UserOfflineReason reason) => leave(uid),
       ),
@@ -68,15 +71,20 @@ class _LiveStreamParticipantScreenState
         Utilities.agoraToken, AuthMethods.uid, null, 123456789);
   }
 
-  joinChannel() {
+  joinChannel(String channel, int uid) {
+    print('Print: channal id: $channel');
+    chID = channel;
+    _users.add(uid);
     setState(() => isJoined = true);
   }
 
   join(int uid) {
+    _users.add(uid);
     setState(() => remoteUid = uid);
   }
 
   leave(int uid) {
+    _users.remove(uid);
     setState(() => remoteUid = 0);
     Navigator.pop(context);
   }
@@ -105,7 +113,7 @@ class _LiveStreamParticipantScreenState
   Widget _renderRemoteVideo() {
     if (remoteUid != 0) {
       return rtc_remote_view.SurfaceView(
-        channelId: '123456789',
+        channelId: chID,
         uid: remoteUid,
         mirrorMode: VideoMirrorMode.Enabled,
         renderMode: VideoRenderMode.Fit,
