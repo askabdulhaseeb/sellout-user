@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:sellout/screens/bet_pages/broadcast_page.dart';
 
-import '../../../database/auth_methods.dart';
 import '../../../database/auction_api.dart';
+import '../../../database/auth_methods.dart';
 import '../../../enums/privacy_type.dart';
 import '../../../functions/picker_functions.dart';
 import '../../../functions/time_date_functions.dart';
@@ -154,6 +156,20 @@ class _GoLivePageState extends State<GoLivePage> {
                                     .refresh();
                                 Provider.of<AppProvider>(context, listen: false)
                                     .onTabTapped(0);
+                                await <Permission>[
+                                  Permission.camera,
+                                  Permission.microphone
+                                ].request();
+                                print("Joing channel: $id");
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => BroadcastPage(
+                                      channelName: id,
+                                      userName: _name.text,
+                                      isBroadcaster: true,
+                                    ),
+                                  ),
+                                );
                               }
                             }
                           },
