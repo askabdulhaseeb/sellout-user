@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 class Utilities {
   static double get padding => 16;
   static double get borderRadius => 24;
-  static String get agoraID => 'c033aa954ce147bcb6c7a97c9beda7f2';
+  static String get agoraID => 'dad9c77f168046f9b9c0397add34220c';
   static String get agoraToken => '499cccaf590c47008f154cf99bfe3829';
   static List<String> get videosAndImages => <String>[
         'heic',
