@@ -42,39 +42,45 @@ class LiveBetPage extends StatelessWidget {
           ),
           Expanded(
             child: RefreshIndicator(
-              child: ListView.builder(
-                itemCount: provider.auctions.length,
-                itemBuilder: (BuildContext context, int index) => ListTile(
-                  onTap: () async {
-                    await <Permission>[Permission.camera, Permission.microphone]
-                        .request();
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => BroadcastPage(
-                          channelName: provider.auctions[index].auctionID,
-                          userName: provider.auctions[index].name,
-                          isBroadcaster: false,
+              child: provider.auctions.isEmpty
+                  ? const Center(child: Text('No Bit Available'))
+                  : ListView.builder(
+                      itemCount: provider.auctions.length,
+                      itemBuilder: (BuildContext context, int index) =>
+                          ListTile(
+                        onTap: () async {
+                          await <Permission>[
+                            Permission.camera,
+                            Permission.microphone
+                          ].request();
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => BroadcastPage(
+                                // auction: provider.auctions[index],
+                                channelName: provider.auctions[index].auctionID,
+                                userName: provider.auctions[index].name,
+                                isBroadcaster: false,
+                              ),
+                            ),
+                          );
+                          // Navigator.of(context).push(
+                          //   MaterialPageRoute<AuctionDetailScreen>(
+                          //     builder: (_) => AuctionDetailScreen(
+                          //       auction: provider.auctions[index],
+                          //     ),
+                          //   ),
+                          // );
+                        },
+                        leading: CustomProfileImage(
+                          imageURL: provider.auctions[index].thumbnail,
+                        ),
+                        title: Text(provider.auctions[index].name),
+                        subtitle: Text(
+                          TimeDateFunctions.timeInWords(
+                              provider.auctions[index].timestamp),
                         ),
                       ),
-                    );
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute<AuctionDetailScreen>(
-                    //     builder: (_) => AuctionDetailScreen(
-                    //       auction: provider.auctions[index],
-                    //     ),
-                    //   ),
-                    // );
-                  },
-                  leading: CustomProfileImage(
-                    imageURL: provider.auctions[index].thumbnail,
-                  ),
-                  title: Text(provider.auctions[index].name),
-                  subtitle: Text(
-                    TimeDateFunctions.timeInWords(
-                        provider.auctions[index].timestamp),
-                  ),
-                ),
-              ),
+                    ),
               onRefresh: () => provider.refresh(),
             ),
           ),
