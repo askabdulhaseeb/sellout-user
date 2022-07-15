@@ -56,10 +56,7 @@ class LiveBetPage extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (_) => BroadcastPage(
-                                // auction: provider.auctions[index],
-                                channelName: provider.auctions[index].auctionID,
-                                userName: provider.auctions[index].name,
-                                isBroadcaster: false,
+                                auction: provider.auctions[index],
                               ),
                             ),
                           );

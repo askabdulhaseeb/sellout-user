@@ -12,6 +12,7 @@ class Auction {
     required this.decription,
     required this.startingPrice,
     required this.timestamp,
+    required this.isActive,
     required this.privacy,
     this.bets,
   });
@@ -23,6 +24,7 @@ class Auction {
   final String decription;
   final double startingPrice;
   final List<Bet>? bets;
+  bool isActive;
   final int timestamp;
   final ProdPrivacyTypeEnum privacy;
 
@@ -39,8 +41,15 @@ class Auction {
       'decription': decription,
       'startingPrice': startingPrice,
       'bets': mapp,
+      'is_active': isActive,
       'timestamp': timestamp,
       'privacy': ProdPrivacyTypeEnumConvertor.enumToString(privacy: privacy),
+    };
+  }
+
+  Map<String, dynamic> updateActivity() {
+    return {
+      'is_active': isActive,
     };
   }
 
@@ -68,6 +77,7 @@ class Auction {
       startingPrice:
           double.parse(doc.data()?['startingPrice'].toString() ?? '0.0'),
       bets: temp,
+      isActive: doc.data()?['is_active'] ?? false,
       timestamp: int.parse(doc.data()?['timestamp'].toString() ?? '0'),
       privacy: ProdPrivacyTypeEnumConvertor.stringToEnum(
         privacy: doc.data()?['privacy'] ?? ProdPrivacyTypeEnum.PUBLIC,

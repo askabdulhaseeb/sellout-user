@@ -137,6 +137,7 @@ class _GoLivePageState extends State<GoLivePage> {
                                 decription: _decription.text,
                                 startingPrice: double.parse(_price.text),
                                 bets: <Bet>[],
+                                isActive: true,
                                 timestamp: time,
                                 privacy: _privacy ?? ProdPrivacyTypeEnum.PUBLIC,
                               );
@@ -163,11 +164,8 @@ class _GoLivePageState extends State<GoLivePage> {
                                 print("Joing channel: $id");
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (_) => BroadcastPage(
-                                      channelName: id,
-                                      userName: _name.text,
-                                      isBroadcaster: true,
-                                    ),
+                                    builder: (_) =>
+                                        BroadcastPage(auction: auction),
                                   ),
                                 );
                               }

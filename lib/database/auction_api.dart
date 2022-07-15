@@ -30,8 +30,11 @@ class AuctionAPI {
 
   Future<List<Auction>> getAllAuctions() async {
     final List<Auction> auction = <Auction>[];
-    final QuerySnapshot<Map<String, dynamic>> doc =
-        await _instance.collection(_colloction).get();
+    final QuerySnapshot<Map<String, dynamic>> doc = await _instance
+        .collection(_colloction)
+        .where('is_active', isEqualTo: true)
+        .orderBy('timestamp', descending: false)
+        .get();
 
     for (DocumentSnapshot<Map<String, dynamic>> element in doc.docs) {
       auction.add(Auction.fromDoc(element));
@@ -39,6 +42,12 @@ class AuctionAPI {
     return auction;
   }
 
+  Future<void> updateActivity({required Auction auction}) async {
+    await _instance
+        .collection(_colloction)
+        .doc(auction.auctionID)
+        .update(auction.updateActivity());
+  }
   Future<void> updateBet({required Auction auction}) async {
     await _instance
         .collection(_colloction)
